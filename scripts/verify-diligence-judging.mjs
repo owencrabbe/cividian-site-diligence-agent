@@ -23,7 +23,7 @@ export function inferenceReceipt(brief) {
     providerError: inference.providerError || null, finishReason: model.finishReason || null, attempts: model.attempts ?? null,
     costEstimate: model.costEstimate, validator: brief.reasoning?.validated === true ? "PASS" : "FAIL",
     accepted: inference.accepted ?? null,
-    rejected: (inference.rejected || brief.reasoning?.rejected || []).map(({ section, index, reason }) => ({ section, index, reason })),
+    rejected: (inference.rejected || brief.reasoning?.rejected || []).map(({ path, reason }) => ({ path, reason })),
   };
 }
 

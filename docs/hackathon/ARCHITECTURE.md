@@ -227,4 +227,5 @@ spending limits are unchanged. NVIDIA documents this generation control at
 https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8 .
 Nebius accepts extra request properties in its chat-completion API schema:
 https://docs.tokenfactory.nebius.com/api-reference/inference/create-chat-completion .
-The next live acceptance determines whether these settings work on Nebius.
+Hosted acceptance passed with these settings: 4,362 input tokens, 708 output
+tokens, 3,910 ms and finish_reason=stop. All 12 journey checks passed.

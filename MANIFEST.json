@@ -1,8 +1,8 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-20T19:03:14.223Z",
+  "generatedAt": "2026-09-20T19:10:10.514Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "078fc914c21c1d5e07b71a6818c5cc9f59bfb9f0",
+  "sourceCommit": "3e1ddb656060dd8543a29a2296e2487c03ca1b3f",
   "branch": "feat/nebius-site-diligence-agent",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
@@ -77,8 +77,8 @@
     },
     {
       "path": "diligence.html",
-      "bytes": 67456,
-      "sha256": "cdd78a2235e62241a3b7b87c40058a7c1ff14e623173fe1965c5b0351b60c308",
+      "bytes": 67581,
+      "sha256": "e78f056542c76a0160ff7be10bde62d561e00806d42c272d0beb20345b5cecbe",
       "origin": "diligence.html",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -91,22 +91,22 @@
     },
     {
       "path": "docs/hackathon/ARCHITECTURE.md",
-      "bytes": 13939,
-      "sha256": "1722917ce961f910dca7bf5b4274096614961d5e91ca2df6c1af845b48b51fe8",
+      "bytes": 14012,
+      "sha256": "fe60730ffe346355b36d095a672935ff9872cd580e6be22ac7cd82c72162c637",
       "origin": "docs/hackathon/ARCHITECTURE.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "docs/hackathon/DEPLOYMENT_JUDGING.md",
-      "bytes": 9766,
-      "sha256": "37a1da365fd60c3bb42e496fdf2362789ec4754e171005bc8ec452aa405414be",
+      "bytes": 9944,
+      "sha256": "3ad89830b158d7bb1f98b07f3d8b7d1d2b4fd39adf70ac19339c73a2118e1b89",
       "origin": "docs/hackathon/DEPLOYMENT_JUDGING.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 5541,
-      "sha256": "b80e6fafd6d4b2c06407581b69b83703ffe2c156a94a14720e2ab84e0c17ef42",
+      "sha256": "8217af603cf0b56d090de9b91aa773be40f1d0e826de369cc8e8fed97069ca65",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -141,7 +141,7 @@
     {
       "path": "EXCLUSIONS.md",
       "bytes": 1725,
-      "sha256": "061b5edbcf059e63938c68f80628b070a0d3648d13322ed0288505fc3d929736",
+      "sha256": "569d9d3c8babb3d90ebd6365dde8782f2bd6602e4958decfce9982d9b7c2fe7c",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -266,8 +266,8 @@
     },
     {
       "path": "lib/diligence/schema.js",
-      "bytes": 17542,
-      "sha256": "ec0d31d74ccb9410c549269fb784ce2acd6ebaa53daffb4e6811e8c73055200e",
+      "bytes": 18163,
+      "sha256": "4e00754750229789a95b61bbc854277baa3a440775fa26e9bbd7cf3827d5da42",
       "origin": "lib/diligence/schema.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -483,8 +483,8 @@
     },
     {
       "path": "scripts/verify-diligence-judging.mjs",
-      "bytes": 7486,
-      "sha256": "6ba221f2115819c18c5929ba96e228caceaecaf0a233c777a5572de99faea9d3",
+      "bytes": 7466,
+      "sha256": "188f9a14fb1d331015ee9935b0101745499e0aae60d10710525975ec6d636429",
       "origin": "scripts/verify-diligence-judging.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },

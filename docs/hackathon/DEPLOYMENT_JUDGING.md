@@ -6,8 +6,10 @@ and capability status respond without a Vercel login. Nebius and AUTH_SECRET
 are production Secrets; the approved $1 ceiling expires after today. The
 isolated Upstash Free Redis is provisioned and connected after owner terms
 acceptance. Hosted status reports live inference and a Redis budget store.
-The first live model response was truncated and rejected; completion tuning
-and the full hosted acceptance rerun are in progress.
+The first live model response was truncated and rejected. After completion
+tuning, all 12 hosted live checks passed, including model validation, exports,
+reopen, guest isolation and refresh. Today's $1 spending approval expires at
+2026-09-21T04:00:00Z; this does not establish December judging availability.
 
 ## Simplest viable architecture
 
