@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#111b1a">
+<title>Site Diligence Agent · Cividian</title>
+<meta name="description" content="Investigate a development site, compare scenarios, and receive an evidence-cited decision brief with a prioritized investigation plan.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23111b1a'/%3E%3Cpath d='M29 11H11v18h18v-5H16v-8h13z' fill='%23f3f0e8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+[hidden]{display:none!important}
+:root{--ink:#111b1a;--forest:#284b3c;--stone:#f3f0e8;--paper:#fffefa;--brass:#af9364;--sky:#86ada9;--muted:#64706b;--line:#dcded4;--warn:#8a5a19;--bad:#98483c;--ok:#2f6b4e;--sans:'DM Sans',system-ui,sans-serif;--display:'Manrope',var(--sans)}
+*{box-sizing:border-box}html{scroll-padding-top:16px}body{margin:0;overflow-x:clip;background:var(--stone);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p{margin:0}h1,h2,h3{font-family:var(--display);letter-spacing:-.3px}button,input,select{font:inherit;color:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
+a{color:var(--forest)}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid #488272;outline-offset:3px}
+.skip{position:fixed;top:-90px;left:16px;background:var(--paper);padding:10px 14px;z-index:100;border:1px solid var(--line)}.skip:focus{top:12px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 max(20px,3vw);height:64px;background:var(--ink);color:var(--stone)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;letter-spacing:2px;font-size:18px;color:var(--stone);text-decoration:none}.brand small{font-family:var(--sans);letter-spacing:.2px;font-weight:500;font-size:11px;color:#c7ceca;border-left:1px solid #ffffff33;padding-left:10px}
+.top .right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:5px 9px;border-radius:3px;border:1px solid #ffffff2e;color:#e6ece6;white-space:nowrap}.badge i{width:7px;height:7px;border-radius:50%;background:#9fb5a3;display:inline-block}.badge.live i{background:#8fd39b}.badge.fixture i{background:#e2b95a}.badge.off i{background:#c98e83}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:8px 14px;border-radius:3px;border:1px solid var(--forest);background:var(--forest);color:var(--paper);font-weight:600;font-size:13px}.btn:hover{background:#396350}.btn.out{background:transparent;color:var(--forest)}.btn.out:hover{background:#e9eee5}.btn.top-btn{background:#eef0e5;color:var(--ink);border-color:#eef0e5;min-height:36px}.btn.sm{min-height:32px;padding:4px 10px;font-size:12px}
+.ws{display:grid;grid-template-columns:minmax(300px,360px) minmax(360px,1fr) minmax(380px,1.1fr);gap:16px;padding:16px max(20px,3vw) 40px;align-items:start}
+.col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:16px 18px;box-shadow:0 12px 30px #152c1c06;min-width:0;max-width:100%}.card h2{font-size:15px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px}.eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:650}
+label{display:block;font-size:12px;font-weight:600;margin:10px 0 4px}input[type=text],input[type=search],input[type=number],select{width:100%;padding:9px 10px;border:1px solid #c9cdc3;border-radius:3px;background:#fff;min-height:40px}input::placeholder{color:#8a938c}.hint{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45}
+.row{display:flex;gap:8px;align-items:end;flex-wrap:wrap}.row>*{flex:1}.row .btn{flex:0 0 auto}
+#map{height:230px;border:1px solid var(--line);border-radius:4px;margin-top:10px;background:#e4e8dc}#map.hidden{display:none}.map-note{font-size:11px;color:var(--muted);margin-top:6px}
+.chip{display:inline-block;font-size:10px;font-weight:650;letter-spacing:.3px;padding:2px 7px;border-radius:3px;background:#e7ede4;color:#2b3f33;vertical-align:middle;white-space:nowrap}.chip.unavailable{background:#f0e6e4;color:#6b2f26}.chip.stale{background:#f6ecd8;color:#6b4a12}.chip.conflicting{background:#f6ddd8;color:#7a2d21}.chip.unverified{background:#ecebe0;color:#5a5a3a}.chip.model{background:#dfe8f0;color:#22405a}.chip.fixture{background:#f3e3c6;color:#5a3d0c}.chip.rules{background:#e5e8e2;color:#3b4a3f}.chip.site{background:#dceadf;color:#1f4a34}.chip.context{background:#e9e9e3;color:#4d5350}.chip.high{background:#f6ddd8;color:#7a2d21}.chip.medium{background:#f6ecd8;color:#6b4a12}.chip.low{background:#e7ede4}.chip.user_assumption{background:#dfe8f0;color:#22405a}.chip.default_assumption{background:#e9e9e3;color:#4d5350}.chip.not_provided{background:#f0e6e4;color:#6b2f26}.chip.source_observed{background:#dceadf;color:#1f4a34}
+.site-card dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:8px 0 0;font-size:12px}.site-card dt{color:var(--muted)}.site-card dd{margin:0}
+.warn{border-left:3px solid var(--warn);background:#fbf4e6;padding:8px 10px;font-size:12px;margin-top:8px;border-radius:0 3px 3px 0}.err{border-left:3px solid var(--bad);background:#fbeceb;padding:8px 10px;font-size:12px;margin-top:8px;border-radius:0 3px 3px 0}.info{border-left:3px solid var(--sky);background:#eaf1f0;padding:8px 10px;font-size:12px;margin-top:8px;border-radius:0 3px 3px 0}
+.cands{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}.cands li{display:flex;justify-content:space-between;gap:8px;align-items:center;border:1px solid var(--line);border-radius:3px;padding:6px 8px;font-size:12px}.cands li.on{border-color:var(--forest);background:#eef3ec}
+.objs{display:grid;gap:8px}.obj{display:flex;gap:10px;align-items:start;border:1px solid var(--line);border-radius:4px;padding:10px;cursor:pointer}.obj input{margin-top:3px}.obj.on{border-color:var(--forest);background:#eef3ec}.obj b{display:block;font-size:13px}.obj span{font-size:11px;color:var(--muted)}
+.afields{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}.afield label{margin:6px 0 3px;font-weight:500;font-size:11px;display:flex;justify-content:space-between;gap:6px}.afield input{min-height:36px;padding:6px 8px}.afield .u{color:var(--muted);font-weight:400}.agroup{margin-top:8px}.agroup h3{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin:10px 0 2px}
+.stages{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:5px;font-size:12px}.stages li{display:flex;justify-content:space-between;gap:8px;padding:6px 8px;border-radius:3px;background:#f2f4ee}.stages li.running{background:#e6efe9}.stages li.ok{background:#e9f1ea}.stages li.failed{background:#f6e3e0}.stages li.skipped{opacity:.6}.stages .ms{color:var(--muted);font-variant-numeric:tabular-nums}
+.status{font-size:12px;color:var(--muted);margin-top:8px;min-height:18px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;vertical-align:top;padding:6px 6px;border-bottom:1px solid var(--line)}th{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.tbl{overflow-x:auto;max-width:100%}table{max-width:100%}
+.evrow{display:grid;grid-template-columns:1fr auto;gap:6px 10px;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer;background:transparent;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;font:inherit;color:inherit}.evrow:hover{background:#f6f7f2}.evrow b{font-size:12px;font-weight:600}.evrow .t{grid-column:1/-1;font-size:12px;color:#3d4a42}.evrow .m{grid-column:1/-1;font-size:10px;color:var(--muted)}.evrow .chips{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.cite{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;padding:1px 5px;border:1px solid #c9d3c7;border-radius:3px;color:var(--forest);background:#f2f6f1;cursor:pointer;margin:1px 2px}.cite:hover{background:#e3ebe0}
+.model{border-left:3px solid #22405a;background:#eef3f7;padding:10px 12px;border-radius:0 4px 4px 0;margin:8px 0}.model.fixture{border-color:#b98b2e;background:#fbf4e3}.model .lab{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:#22405a;margin-bottom:6px}.model.fixture .lab{color:#6b4a12}.model p,.model li{font-size:13px}
+.sec{padding:14px 0;border-top:1px solid var(--line)}.sec:first-of-type{border-top:0;padding-top:0}.sec h3{font-size:14px;margin-bottom:8px;display:flex;align-items:baseline;gap:8px}.sec h3 .n{font-family:var(--display);color:var(--brass);font-size:12px}
+ul.plain{margin:6px 0 0;padding-left:18px}ul.plain li{margin:5px 0;font-size:13px}ol.plan{margin:6px 0 0;padding-left:20px}ol.plan li{margin:9px 0;font-size:13px}ol.plan .m{font-size:12px;color:#3d4a42;margin-top:2px}ol.plan .f{font-size:11px;color:var(--muted);margin-top:2px}
+.fine{font-size:11px;color:var(--muted);line-height:1.5}.meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;font-size:12px;margin:0}.meta dt{color:var(--muted)}.meta dd{margin:0;min-width:0;overflow-wrap:anywhere}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+details.tp{margin-top:10px;border:1px solid var(--line);border-radius:4px;background:#fbfaf5}details.tp summary{cursor:pointer;padding:10px 12px;font-weight:600;font-size:13px;list-style:none;display:flex;justify-content:space-between}details.tp summary::-webkit-details-marker{display:none}details.tp summary::after{content:'+';color:var(--muted)}details.tp[open] summary::after{content:'\2212'}details.tp .body{padding:0 12px 12px}details.tp dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:12px;margin:6px 0 0}details.tp dt{color:var(--muted)}details.tp dd{margin:0;overflow-wrap:anywhere}
+dialog{border:1px solid var(--line);border-radius:6px;padding:0;max-width:min(680px,calc(100vw - 32px));width:100%;background:var(--paper);color:var(--ink)}dialog::backdrop{background:#121712aa}.dhead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}.dhead h2{font-size:16px}.dbody{padding:14px 18px;max-height:70vh;overflow:auto}.dbody dl{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;font-size:12px;margin:0}.dbody dt{color:var(--muted)}.dbody dd{margin:0;overflow-wrap:anywhere}.x{background:transparent;border:0;font-size:22px;line-height:1;padding:4px 8px;color:var(--muted)}
+.saved{list-style:none;margin:0;padding:0}.saved li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.saved small{display:block;color:var(--muted);font-size:11px}
+.empty{padding:22px 10px;text-align:center;color:var(--muted);font-size:13px}.empty b{display:block;font-family:var(--display);font-size:16px;color:var(--ink);margin-bottom:6px}
+.chg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.chg div{border:1px solid var(--line);border-radius:3px;padding:6px 8px;font-size:11px}.chg b{display:block;font-family:var(--display);font-size:16px}
+footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(max-width:1180px){.ws{grid-template-columns:minmax(300px,360px) minmax(0,1fr)}.col.brief{grid-column:1/-1}}
+@media(max-width:820px){.ws{grid-template-columns:1fr;padding:12px 16px 32px}.col.brief{grid-column:auto}.top{height:auto;padding:10px 16px;flex-wrap:wrap}.afields{grid-template-columns:1fr}.chg{grid-template-columns:1fr 1fr}.btn{min-height:44px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media print{.top,.col.inputs,.col.evidence,.actions,details.tp,footer,.no-print{display:none!important}.ws{display:block;padding:0}.card{box-shadow:none;border:0}body{background:#fff}}
+</style>
+</head>
+<body>
+<a class="skip" href="#brief-col">Skip to the brief</a>
+<header class="top">
+  <a class="brand" href="/">CIVIDIAN<small>Site Diligence Agent</small></a>
+  <div class="right">
+    <span class="badge" id="modeBadge"><i></i><span>Checking capabilities</span></span>
+    <span class="badge" id="sessionBadge"><i></i><span>No session</span></span>
+    <button class="btn top-btn" id="savedBtn" type="button">Saved briefs</button>
+    <a class="btn top-btn" href="/app.html">Workspace</a>
+  </div>
+</header>
+
+<main class="ws" id="main">
+  <div class="col inputs">
+    <section class="card site-card" aria-labelledby="h-site">
+      <p class="eyebrow">01 / Site</p>
+      <h2 id="h-site">Identify the site</h2>
+      <form id="siteForm">
+        <label for="q">Street address</label>
+        <div class="row">
+          <input id="q" name="q" type="search" placeholder="300 N High St, Muncie, IN" maxlength="200" autocomplete="street-address">
+          <button class="btn" type="submit" id="resolveBtn">Resolve site</button>
+        </div>
+        <p class="hint">A city name is a centroid, not a site. Enter an address, or click the parcel on the map.</p>
+      </form>
+      <div id="map" aria-label="Map for choosing a site point" role="application"></div>
+      <p class="map-note" id="mapNote">Map click sets a point. City and state come from the last resolved site or the fields below.</p>
+      <form id="pointForm" class="row" hidden>
+        <div><label for="pcity">City</label><input id="pcity" type="text" maxlength="100"></div>
+        <div style="flex:0 0 70px"><label for="pstate">State</label><input id="pstate" type="text" maxlength="2" placeholder="IN"></div>
+        <button class="btn out" type="submit" id="usePointBtn">Use this point</button>
+      </form>
+      <div id="siteOut"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-obj">
+      <p class="eyebrow">02 / Objective</p>
+      <h2 id="h-obj">What are you screening for?</h2>
+      <div class="objs" id="objectives" role="radiogroup" aria-labelledby="h-obj"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-as">
+      <p class="eyebrow">03 / Assumptions</p>
+      <h2 id="h-as">Labeled assumptions</h2>
+      <p class="fine">Defaults are screening conventions, never market figures. Financial fields with no default stay null until you enter them.</p>
+      <div id="assumptions"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-run">
+      <p class="eyebrow">04 / Run</p>
+      <h2 id="h-run">Run the agent</h2>
+      <label style="display:flex;gap:8px;align-items:center;font-weight:500"><input type="checkbox" id="reasonToggle" checked> <span id="reasonToggleLabel">Run model reasoning</span></label>
+      <p class="hint" id="reasonHint"></p>
+      <div class="actions"><button class="btn" id="runBtn" type="button" disabled>Run diligence</button><button class="btn out" id="cancelBtn" type="button" hidden>Cancel</button></div>
+      <ul class="stages" id="stages" aria-label="Run stages"></ul>
+      <p class="status" id="runStatus" role="status" aria-live="polite"></p>
+    </section>
+  </div>
+
+  <div class="col evidence">
+    <section class="card" aria-labelledby="h-ev">
+      <p class="eyebrow">05 / Evidence</p>
+      <h2 id="h-ev">What the sources say <span class="chip" id="evCount"></span></h2>
+      <div id="evidenceOut"><div class="empty"><b>No evidence yet</b>Resolve a site and run the agent. Every source read becomes a row here, whether it answered or not.</div></div>
+    </section>
+    <section class="card" aria-labelledby="h-sc">
+      <p class="eyebrow">06 / Scenarios</p>
+      <h2 id="h-sc">Deterministic comparison</h2>
+      <div id="scenarioOut"><div class="empty"><b>No scenarios yet</b>Capacity and screening arithmetic over your labeled assumptions appear here after a run.</div></div>
+    </section>
+  </div>
+
+  <div class="col brief" id="brief-col">
+    <section class="card" aria-labelledby="h-br">
+      <p class="eyebrow">07 / Decision brief</p>
+      <h2 id="h-br">Diligence brief <span class="chip" id="briefStatus"></span></h2>
+      <div class="actions no-print" id="briefActions" hidden>
+        <a class="btn out sm" id="exportHtml" href="#" target="_blank" rel="noopener">Open printable brief</a>
+        <a class="btn out sm" id="exportJson" href="#">Download JSON</a>
+        <button class="btn out sm" id="refreshBtn" type="button">Refresh evidence</button>
+        <label style="display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:500;margin:0"><input type="checkbox" id="refreshReason"> re-run reasoning</label>
+      </div>
+      <div id="changesOut"></div>
+      <div id="briefOut"><div class="empty"><b>No brief yet</b>The brief assembles ten sections: identity, assessment, supported findings, scenarios, unknowns and conflicts, investigation plan, assumptions and sensitivity, citations, limitations, and run metadata.</div></div>
+      <details class="tp" id="transparency"><summary>Transparency: provider, model, budget, and validation</summary><div class="body" id="tpBody"></div></details>
+    </section>
+  </div>
+</main>
+
+<footer>Decision support. Not a determination of legal entitlement, zoning compliance, investment suitability, engineering feasibility, or financial performance. Every number carries its source; missing values stay null.</footer>
+
+<dialog id="drawer" aria-labelledby="drawerTitle"><div class="dhead"><h2 id="drawerTitle">Evidence record</h2><button class="x" type="button" id="drawerClose" aria-label="Close">×</button></div><div class="dbody" id="drawerBody"></div></dialog>
+<dialog id="savedDlg" aria-labelledby="savedTitle"><div class="dhead"><h2 id="savedTitle">Saved briefs</h2><button class="x" type="button" id="savedClose" aria-label="Close">×</button></div><div class="dbody" id="savedBody"></div></dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  function h(tag, props) {
+    var el = document.createElement(tag);
+    if (props) Object.keys(props).forEach(function (k) {
+      var v = props[k];
+      if (k === 'class') el.className = v;
+      else if (k === 'text') el.textContent = v;
+      else if (k === 'html') el.textContent = v; // never markup; kept as text
+      else if (k.indexOf('on') === 0) el.addEventListener(k.slice(2), v);
+      else if (v === true) el.setAttribute(k, '');
+      else if (v !== false && v != null) el.setAttribute(k, String(v));
+    });
+    for (var i = 2; i < arguments.length; i++) append(el, arguments[i]);
+    return el;
+  }
+  function append(el, c) {
+    if (c == null || c === false) return;
+    if (Array.isArray(c)) { c.forEach(function (x) { append(el, x); }); return; }
+    el.appendChild(typeof c === 'string' || typeof c === 'number' ? document.createTextNode(String(c)) : c);
+  }
+  function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+  function safeHref(v) { if (typeof v !== 'string' || v.length > 2000) return null; try { var u = new URL(v); return (u.protocol === 'https:' || u.protocol === 'http:') && !u.username && !u.password ? u.href : null; } catch (e) { return null; } }
+  var nf = new Intl.NumberFormat('en-US');
+  function num(v, d) { return v == null ? 'null' : nf.format(d ? Math.round(v * Math.pow(10, d)) / Math.pow(10, d) : Math.round(v)); }
+  function money(v) { return v == null ? 'null' : '$' + nf.format(Math.round(v)); }
+  function pct(v) { return v == null ? 'null' : (v * 100).toFixed(2) + '%'; }
+  function when(iso) { if (!iso) return 'not recorded'; try { return new Date(iso).toLocaleString(); } catch (e) { return String(iso); } }
+  function label(s) { return String(s || '').replace(/_/g, ' '); }
+  function chip(text, cls) { return h('span', { class: 'chip ' + (cls || '') }, text); }
+
+  var S = { caps: null, session: null, site: null, objective: 'residential_infill', dirty: {}, brief: null, abort: null, map: null, marker: null, mapReady: false, pendingPoint: null, running: false };
+
+  // ---------------------------------------------------------------- API
+  function api(action, opts) {
+    opts = opts || {};
+    var url = '/api/diligence?action=' + encodeURIComponent(action) + (opts.params ? '&' + new URLSearchParams(opts.params).toString() : '');
+    var init = { method: opts.body ? 'POST' : 'GET', credentials: 'same-origin', headers: {}, signal: opts.signal };
+    if (opts.body) { init.headers['content-type'] = 'application/json'; init.body = JSON.stringify(opts.body); }
+    return fetch(url, init).then(function (r) { return r.json().then(function (j) { j.__status = r.status; return j; }, function () { return { ok: false, error: 'bad_response', note: 'The server answered with something that was not JSON.', __status: r.status }; }); });
+  }
+  function mintGuest() { return fetch('/api/guest', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: '{}' }).then(function (r) { return r.json(); }).catch(function () { return { ok: false }; }); }
+
+  function loadCaps() {
+    return api('status').then(function (c) {
+      if (!c.ok) throw new Error(c.note || 'status unavailable');
+      S.caps = c; S.session = c.session;
+      if (c.session.kind === 'none') return mintGuest().then(function (g) { return g.ok ? api('status') : c; }).then(function (c2) { S.caps = c2; S.session = c2.session; });
+    }).then(function () { renderCaps(); renderObjectives(); renderAssumptions(); });
+  }
+
+  function renderCaps() {
+    var c = S.caps, inf = c.inference, b = $('modeBadge'), sb = $('sessionBadge');
+    b.className = 'badge ' + (inf.mode === 'live' ? 'live' : inf.mode === 'fixture' ? 'fixture' : 'off');
+    b.lastElementChild.textContent = inf.mode === 'live' ? 'Nemotron on Nebius: live (' + inf.model + ')' : inf.mode === 'fixture' ? 'Fixture mode: rules, not a model' : 'Model reasoning unavailable';
+    sb.lastElementChild.textContent = S.session.kind === 'guest' ? 'Guest session: saves last 24 hours' : S.session.kind === 'account' ? (S.session.verified ? 'Signed in, verified' : 'Signed in') : 'No session';
+    var t = $('reasonToggleLabel'), hint = $('reasonHint');
+    if (inf.mode === 'live') { t.textContent = 'Run Nemotron reasoning on Nebius Token Factory'; hint.textContent = 'Structured JSON, validated against the evidence packet. Cost is a list-price estimate, never a billed amount.' + (S.session.kind === 'guest' && !inf.guestAllowed ? ' Guest sessions cannot trigger live inference on this deployment; the rules-based plan still runs.' : ''); }
+    else if (inf.mode === 'fixture') { t.textContent = 'Run fixture reasoning (rules, not a model)'; hint.textContent = 'This host has no live model configured. The fixture is deterministic and clearly labeled; it exercises the same validator a live answer must pass.'; }
+    else { t.textContent = 'Model reasoning unavailable on this deployment'; $('reasonToggle').checked = false; $('reasonToggle').disabled = true; hint.textContent = 'The deterministic stages still run and the plan is rules-based. Reasons are listed in the transparency panel.'; }
+    renderTransparency();
+  }
+
+  // ---------------------------------------------------------------- site
+  function setStatus(msg) { $('runStatus').textContent = msg || ''; }
+  function resolveSite(body) {
+    setSiteMessage(null);
+    $('resolveBtn').disabled = true; $('usePointBtn').disabled = true;
+    return api('site', { body: body }).then(function (r) {
+      if (!r.ok) {
+        if (r.error === 'city_centroid') { $('pointForm').hidden = false; if (r.city) $('pcity').value = r.city; if (r.state) $('pstate').value = r.state; if (r.point && S.map) { S.map.flyTo({ center: [r.point.lon, r.point.lat], zoom: 13 }); } setSiteMessage(r.note || 'That is a city, not a site.', 'warn'); }
+        else if (r.__status === 401) setSiteMessage('No session. Reload the page to start a guest session.', 'err');
+        else if (r.__status === 429) setSiteMessage('Too many requests. Wait a minute and retry.', 'err');
+        else setSiteMessage(r.note || label(r.error) || 'The site could not be resolved.', 'err');
+        return null;
+      }
+      S.site = r.site; S.brief = null;
+      renderSite(r.site, r.stage);
+      $('runBtn').disabled = false;
+      return r.site;
+    }).catch(function (e) { setSiteMessage('The request failed: ' + (e && e.message ? e.message : 'network error'), 'err'); return null; })
+      .finally(function () { $('resolveBtn').disabled = false; $('usePointBtn').disabled = false; });
+  }
+  function setSiteMessage(msg, cls) { var out = $('siteOut'); if (!msg) { if (!S.site) clear(out); return; } clear(out); out.appendChild(h('div', { class: cls || 'info' }, msg)); }
+  function renderSite(site, stage) {
+    var out = $('siteOut'); clear(out);
+    var p = site.parcel || {};
+    var statusText = { verified_containing: 'parcel polygon contains the point', selected_candidate: 'selected from the candidate list', address_matched: 'recorded address matches the query; confirm on the map', nearest_candidate: 'nearest parcel only, not containment', unavailable: 'parcel lookup unavailable', no_coverage: 'no parcel coverage here', no_key: 'no parcel provider configured' }[p.status] || label(p.status);
+    var dl = h('dl', null,
+      h('dt', null, 'Query'), h('dd', null, site.query || 'map point'),
+      h('dt', null, 'Place'), h('dd', null, (site.city || 'city unbound') + (site.state ? ', ' + site.state : '') + (site.county ? ' · ' + site.county.name : '')),
+      h('dt', null, 'Point'), h('dd', null, site.point.lat + ', ' + site.point.lon + ' (' + label(site.point.precision) + ', ' + site.point.source + ')'),
+      h('dt', null, 'Parcel'), h('dd', null, chip(label(p.status), p.status === 'verified_containing' || p.status === 'selected_candidate' ? '' : p.status === 'nearest_candidate' || p.status === 'address_matched' ? 'unverified' : 'unavailable'), ' ', statusText),
+      h('dt', null, 'Address'), h('dd', null, p.address || 'not published'),
+      h('dt', null, 'Lot area'), h('dd', null, p.lotSqft != null ? num(p.lotSqft) + ' sq ft (' + label(p.lotSqftBasis || 'unknown basis') + ')' : 'null'),
+      h('dt', null, 'Record'), h('dd', null, (p.id ? 'id ' + p.id + ' · ' : '') + (p.source || 'no source') + (p.use ? ' · ' + p.use : ''))
+    );
+    out.appendChild(h('div', null, h('p', { class: 'eyebrow', style: 'margin-top:8px' }, 'Resolved site' + (stage ? ' · ' + stage.ms + ' ms' : '')), dl));
+    if (p.note) out.appendChild(h('p', { class: 'fine', style: 'margin-top:6px' }, p.note));
+    (site.warnings || []).forEach(function (w) { out.appendChild(h('div', { class: 'warn' }, w)); });
+    if (site.candidates && site.candidates.length > 1) {
+      var ul = h('ul', { class: 'cands', 'aria-label': 'Parcel candidates' });
+      site.candidates.forEach(function (c) {
+        var on = c.index === p.index;
+        ul.appendChild(h('li', { class: on ? 'on' : '' }, h('span', null, (c.address || 'parcel ' + c.index) + (c.lotSqft != null ? ' · ' + num(c.lotSqft) + ' sq ft' : '') + (c.containsPoint ? ' · contains point' : c.distanceM != null ? ' · ' + c.distanceM + ' m' : '')), on ? chip('in use') : h('button', { class: 'btn out sm', type: 'button', onclick: function () { resolveSite(replayInput(site, c.index)); } }, 'Use this parcel')));
+      });
+      out.appendChild(h('p', { class: 'fine', style: 'margin-top:8px' }, 'Other parcels returned near the point:'));
+      out.appendChild(ul);
+    }
+    if (site.city) $('pcity').value = site.city; if (site.state) $('pstate').value = site.state;
+    $('pointForm').hidden = false;
+    drawSite(site);
+  }
+  function replayInput(site, parcelIndex) {
+    var o = { lat: site.point.lat, lon: site.point.lon, city: site.city || undefined, state: site.state || undefined };
+    if (site.query && site.kind === 'address') o.query = site.query;
+    if (parcelIndex != null) o.parcelIndex = parcelIndex;
+    return o;
+  }
+
+  // ---------------------------------------------------------------- map
+  function initMap() {
+    if (typeof maplibregl === 'undefined') { $('map').classList.add('hidden'); $('mapNote').textContent = 'The map library did not load. Use the address field; everything else works without the map.'; return; }
+    try {
+      S.map = new maplibregl.Map({ container: 'map', style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', center: [-85.3864, 40.1934], zoom: 11, attributionControl: true });
+      S.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+      S.map.on('load', function () {
+        S.mapReady = true;
+        S.map.addSource('parcel', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+        S.map.addLayer({ id: 'parcel-fill', type: 'fill', source: 'parcel', paint: { 'fill-color': '#284b3c', 'fill-opacity': 0.18 } });
+        S.map.addLayer({ id: 'parcel-line', type: 'line', source: 'parcel', paint: { 'line-color': '#284b3c', 'line-width': 2 } });
+        if (S.site) drawSite(S.site);
+      });
+      S.map.on('click', function (e) {
+        var lat = Math.round(e.lngLat.lat * 1e6) / 1e6, lon = Math.round(e.lngLat.lng * 1e6) / 1e6;
+        S.pendingPoint = { lat: lat, lon: lon };
+        placeMarker(lon, lat);
+        $('pointForm').hidden = false; $('mapNote').textContent = 'Point set at ' + lat + ', ' + lon + '. Confirm the city and state, then use this point.';
+        $('usePointBtn').focus();
+      });
+    } catch (e) { $('map').classList.add('hidden'); $('mapNote').textContent = 'The map could not start here. Use the address field.'; }
+  }
+  function placeMarker(lon, lat) { if (!S.map) return; if (!S.marker) S.marker = new maplibregl.Marker({ color: '#284b3c' }).setLngLat([lon, lat]).addTo(S.map); else S.marker.setLngLat([lon, lat]); }
+  function drawSite(site) {
+    if (!S.map) return;
+    placeMarker(site.point.lon, site.point.lat);
+    var geom = site.parcel && site.parcel.geometry;
+    if (S.mapReady) S.map.getSource('parcel').setData({ type: 'FeatureCollection', features: geom ? [{ type: 'Feature', geometry: geom, properties: {} }] : [] });
+    if (geom) {
+      var coords = geom.type === 'Polygon' ? geom.coordinates[0] : geom.coordinates[0][0], b = null;
+      coords.forEach(function (c) { if (!b) b = [[c[0], c[1]], [c[0], c[1]]]; b[0][0] = Math.min(b[0][0], c[0]); b[0][1] = Math.min(b[0][1], c[1]); b[1][0] = Math.max(b[1][0], c[0]); b[1][1] = Math.max(b[1][1], c[1]); });
+      if (b) S.map.fitBounds(b, { padding: 40, maxZoom: 18, duration: 0 });
+    } else S.map.jumpTo({ center: [site.point.lon, site.point.lat], zoom: 17 });
+  }
+
+  // ---------------------------------------------------------------- objective and assumptions
+  function renderObjectives() {
+    var box = $('objectives'); clear(box);
+    S.caps.objectives.forEach(function (o) {
+      var on = o.id === S.objective;
+      var input = h('input', { type: 'radio', name: 'objective', value: o.id, id: 'obj-' + o.id, onchange: function () { S.objective = o.id; S.dirty = {}; renderObjectives(); renderAssumptions(); } });
+      input.checked = on;
+      box.appendChild(h('label', { class: 'obj' + (on ? ' on' : ''), for: 'obj-' + o.id }, input, h('div', null, h('b', null, o.label), h('span', null, o.description))));
+    });
+  }
+  function renderAssumptions() {
+    var box = $('assumptions'); clear(box);
+    var defs = S.caps.assumptionDefaults[S.objective] || [];
+    var basisFor = {}; if (S.brief && S.brief.objective.id === S.objective) S.brief.assumptions.forEach(function (a) { basisFor[a.key] = a.basis; });
+    ['physical', 'financial'].forEach(function (kind) {
+      var g = h('div', { class: 'agroup' }, h('h3', null, kind === 'physical' ? 'Program' : 'Screening economics'));
+      var grid = h('div', { class: 'afields' });
+      defs.filter(function (d) { return d.kind === kind; }).forEach(function (d) {
+        var id = 'as-' + d.key;
+        var input = h('input', { type: 'number', id: id, name: d.key, min: d.min, max: d.max, step: d.integer ? 1 : 'any', placeholder: d.value == null ? 'enter to screen' : String(d.value), 'aria-label': d.label + (d.units ? ', ' + d.units : ''), 'aria-describedby': id + '-h', oninput: function () { S.dirty[d.key] = true; } });
+        if (S.dirty[d.key] && S.dirty['value:' + d.key] != null) input.value = S.dirty['value:' + d.key];
+        var lab = h('label', { for: id }, h('span', null, d.label), h('span', { class: 'u' }, d.units || ''));
+        if (basisFor[d.key]) lab.appendChild(chip(label(basisFor[d.key]), basisFor[d.key]));
+        grid.appendChild(h('div', { class: 'afield' }, lab, input, h('span', { class: 'sr', id: id + '-h' }, 'Range ' + d.min + ' to ' + d.max + (d.value == null ? '. No default; null until entered.' : '. Default ' + d.value + '.'))));
+      });
+      g.appendChild(grid); box.appendChild(g);
+    });
+  }
+  function collectAssumptions() {
+    var out = {}; var defs = S.caps.assumptionDefaults[S.objective] || [];
+    defs.forEach(function (d) { var el = $('as-' + d.key); if (!el) return; var v = el.value.trim(); S.dirty['value:' + d.key] = v; if (v !== '') out[d.key] = Number(v); else if (S.dirty[d.key] && d.value != null) out[d.key] = null; });
+    return out;
+  }
+
+  // ---------------------------------------------------------------- run
+  var STAGES = [['site', 'Confirming site identity'], ['evidence', 'Gathering evidence and computing scenarios'], ['reason', 'Model reasoning'], ['validate', 'Validating citations and schema']];
+  function renderStages(state) {
+    var ul = $('stages'); clear(ul);
+    STAGES.forEach(function (s) { var st = state[s[0]] || { status: 'pending' }; ul.appendChild(h('li', { class: st.status }, h('span', null, s[1] + (st.note ? ' · ' + st.note : '')), h('span', { class: 'ms' }, st.status === 'running' ? 'running' : st.status === 'ok' ? (st.ms != null ? st.ms + ' ms' : 'done') : st.status === 'failed' ? 'failed' : st.status === 'skipped' ? 'skipped' : ''))); });
+  }
+  function run() {
+    if (!S.site || S.running) return;
+    var assumptions = collectAssumptions();
+    var wantReason = $('reasonToggle').checked && !$('reasonToggle').disabled;
+    S.running = true; S.abort = new AbortController();
+    $('runBtn').disabled = true; $('cancelBtn').hidden = false;
+    var state = { site: { status: 'running' } }; renderStages(state); setStatus('Confirming the site with the providers.');
+    var savedId = null;
+    api('evidence', { body: { site: S.site, objective: S.objective, assumptions: assumptions }, signal: S.abort.signal }).then(function (r) {
+      if (!r.ok) { state.site.status = 'failed'; state.evidence = { status: 'failed' }; renderStages(state); setStatus(r.note || label(r.error) || 'The evidence stage failed.'); if (r.errors) setStatus((r.note || '') + ' ' + r.errors.map(function (e) { return e.key + ': ' + label(e.error); }).join('; ')); return null; }
+      var b = r.brief; savedId = b.id; S.brief = b;
+      var st = {}; b.run.stages.forEach(function (x) { st[x.name] = x; });
+      state.site = { status: 'ok', ms: st.site ? st.site.ms : null }; state.evidence = { status: 'ok', ms: (st.evidence ? st.evidence.ms : 0) + (st.scenarios ? st.scenarios.ms : 0) };
+      renderAll(b);
+      if (!wantReason) { state.reason = { status: 'skipped' }; state.validate = { status: 'skipped' }; renderStages(state); setStatus('Deterministic brief saved as ' + b.id + '. Model reasoning was not requested.'); return b; }
+      state.reason = { status: 'running' }; renderStages(state); setStatus(S.caps.inference.mode === 'live' ? 'Sending the bounded evidence packet to ' + S.caps.inference.model + ' on Nebius Token Factory.' : 'Running the labeled fixture reasoning.');
+      return api('reason', { body: { id: b.id }, signal: S.abort.signal }).then(function (r2) {
+        if (!r2.ok) { state.reason = { status: 'failed' }; renderStages(state); setStatus(r2.note || label(r2.error)); return b; }
+        var b2 = r2.brief; S.brief = b2; var inf = b2.run.inference || {};
+        var rs = (b2.run.stages || []).filter(function (x) { return x.name === 'reason'; })[0];
+        if (inf.outcome === 'validated') { state.reason = { status: 'ok', ms: rs ? rs.ms : null }; state.validate = { status: 'ok', note: inf.rejectedCount ? inf.rejectedCount + ' item' + (inf.rejectedCount === 1 ? '' : 's') + ' rejected' : 'all items accepted' }; setStatus((b2.reasoning.basis === 'fixture' ? 'Fixture interpretation' : 'Model interpretation') + ' validated. Brief ' + b2.id + ' saved.'); }
+        else if (inf.outcome === 'output_rejected') { state.reason = { status: 'ok', ms: rs ? rs.ms : null }; state.validate = { status: 'failed', note: 'answer rejected' }; setStatus('The model answer was rejected by the validator (' + (inf.rejected || []).map(function (x) { return x.reason; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join(', ') + '). The deterministic brief stands.'); }
+        else if (inf.outcome === 'unavailable') { state.reason = { status: 'skipped', note: 'unavailable' }; state.validate = { status: 'skipped' }; setStatus('Model reasoning is unavailable here: ' + (inf.reasons || []).join('; ')); }
+        else { state.reason = { status: 'failed', note: label(inf.outcome) }; state.validate = { status: 'skipped' }; setStatus('Reasoning did not complete: ' + label(inf.outcome) + (inf.providerError ? ' (' + label(inf.providerError) + ')' : '') + '. The deterministic brief stands.'); }
+        renderStages(state); renderAll(b2); return b2;
+      });
+    }).catch(function (e) {
+      if (e && e.name === 'AbortError') { if (savedId) { state.reason = { status: 'skipped', note: 'cancelled' }; state.validate = { status: 'skipped' }; setStatus('Cancelled. The evidence stage had already saved brief ' + savedId + '; the model stage did not complete.'); } else { state.site = { status: 'failed', note: 'cancelled' }; setStatus('Cancelled before anything was saved.'); } }
+      else setStatus('The run failed: ' + (e && e.message ? e.message : 'network error'));
+      renderStages(state);
+    }).finally(function () { S.running = false; S.abort = null; $('runBtn').disabled = !S.site; $('cancelBtn').hidden = true; });
+  }
+
+  // ---------------------------------------------------------------- render
+  function renderAll(b) { renderEvidence(b); renderScenarios(b); renderBrief(b); renderTransparency(); renderAssumptions(); renderChanges(b); $('briefActions').hidden = false; $('exportHtml').href = '/api/diligence?action=export&id=' + encodeURIComponent(b.id) + '&format=html'; $('exportJson').href = '/api/diligence?action=export&id=' + encodeURIComponent(b.id) + '&format=json'; $('briefStatus').textContent = label(b.status) + ' · v' + b.version; try { history.replaceState(null, '', '?id=' + encodeURIComponent(b.id)); } catch (e) {} }
+
+  function evRow(r) {
+    var btn = h('button', { class: 'evrow', type: 'button', onclick: function () { openDrawer(r.id); }, 'aria-label': r.fact + ', ' + r.status });
+    btn.appendChild(h('b', null, r.fact));
+    btn.appendChild(h('span', { class: 'chips' }, chip(label(r.status), r.status), chip(r.scope.level + ' · ' + r.applicability, r.applicability)));
+    btn.appendChild(h('span', { class: 't' }, r.text));
+    btn.appendChild(h('span', { class: 'm' }, r.source.name + (r.vintage ? ' · ' + r.vintage : '') + ' · retrieved ' + when(r.retrievedAt) + ' · ' + r.id));
+    return btn;
+  }
+  function renderEvidence(b) {
+    var out = $('evidenceOut'); clear(out);
+    var site = b.evidence.filter(function (r) { return r.applicability === 'site'; }), ctx = b.evidence.filter(function (r) { return r.applicability === 'context'; });
+    var avail = b.evidence.filter(function (r) { return r.status !== 'unavailable'; }).length;
+    $('evCount').textContent = avail + ' of ' + b.evidence.length + ' rows answered';
+    out.appendChild(h('p', { class: 'eyebrow' }, 'Site evidence · parcel and point'));
+    site.forEach(function (r) { out.appendChild(evRow(r)); });
+    out.appendChild(h('p', { class: 'eyebrow', style: 'margin-top:14px' }, 'Context · city and county, never parcel facts'));
+    ctx.forEach(function (r) { out.appendChild(evRow(r)); });
+    if (b.conflicts.length) { out.appendChild(h('p', { class: 'eyebrow', style: 'margin-top:14px' }, 'Conflicting records')); b.conflicts.forEach(function (c) { out.appendChild(h('div', { class: 'warn' }, c.statement, ' ', (c.evidenceIds || []).map(function (id) { return cite(id); }))); }); }
+    out.appendChild(h('p', { class: 'eyebrow', style: 'margin-top:14px' }, 'Unknowns recorded by the evidence step'));
+    var ul = h('ul', { class: 'plain' }); b.unknowns.forEach(function (u) { ul.appendChild(h('li', null, chip(u.impact, u.impact), ' ', chip(u.applicability, u.applicability), ' ', u.statement)); }); out.appendChild(ul);
+  }
+  function cite(id) { return h('button', { class: 'cite', type: 'button', onclick: function () { openDrawer(id); }, 'aria-label': 'Open evidence ' + id }, id); }
+  function renderScenarios(b) {
+    var out = $('scenarioOut'); clear(out);
+    var t = h('table', null, h('thead', null, h('tr', null, h('th', null, 'Output'), b.scenarios.map(function (s) { return h('th', { class: 'num' }, s.label); }))));
+    var rows = [['Readiness', function (s) { return label(s.readiness.category); }], ['Units', function (s) { return num(s.outputs.units); }], ['Gross sq ft', function (s) { return num(s.outputs.grossSqft); }], ['Net sq ft', function (s) { return num(s.outputs.netSqft); }], ['Retail net sq ft', function (s) { return num(s.outputs.retailNetSqft); }], ['Parking spaces', function (s) { return num(s.outputs.parkingSpaces); }], ['Surface parking fits', function (s) { return s.outputs.surfaceParkingFits == null ? 'null' : s.outputs.surfaceParkingFits ? 'yes' : 'no'; }], ['Known cost subtotal', function (s) { return money(s.outputs.knownCostSubtotal); }], ['Total development cost', function (s) { return money(s.outputs.totalDevelopmentCost); }], ['NOI', function (s) { return money(s.outputs.noi); }], ['Yield on cost', function (s) { return pct(s.outputs.yieldOnCost); }], ['Cap rate assumption', function (s) { return pct(s.outputs.capRate); }], ['Spread', function (s) { return pct(s.outputs.spread); }]];
+    var tb = h('tbody'); rows.forEach(function (r) { tb.appendChild(h('tr', null, h('td', null, r[0]), b.scenarios.map(function (s) { return h('td', { class: 'num' }, r[1](s)); }))); }); t.appendChild(tb);
+    out.appendChild(h('div', { class: 'tbl' }, t));
+    var p = b.scenarios[0];
+    out.appendChild(h('p', { class: 'fine', style: 'margin-top:8px' }, 'Readiness: ' + p.readiness.criteria.join(' ') + ' A known cost subtotal is never a total development cost. Formulas: ' + p.formulaVersion + '.'));
+    b.scenarios.forEach(function (s) { if (s.differsBy) out.appendChild(h('p', { class: 'fine' }, s.label + ': ' + s.differsBy)); if (s.uncertainties.length) out.appendChild(h('div', { class: 'warn' }, h('b', null, s.label + ': '), s.uncertainties.join(' '))); });
+    if (p.notes && p.notes.length) out.appendChild(h('details', { class: 'tp' }, h('summary', null, 'Screening engine notes'), h('div', { class: 'body' }, h('p', { class: 'fine' }, p.notes.join(' ')))));
+    out.appendChild(h('p', { class: 'eyebrow', style: 'margin-top:12px' }, 'Inputs to ' + p.label));
+    var it = h('table', null, h('thead', null, h('tr', null, h('th', null, 'Input'), h('th', { class: 'num' }, 'Value'), h('th', null, 'Basis'))));
+    var itb = h('tbody'); p.inputs.forEach(function (i) { itb.appendChild(h('tr', null, h('td', null, i.label || i.key), h('td', { class: 'num' }, i.value == null ? 'null' : num(i.value, 4) + ' ' + (i.units || '')), h('td', null, chip(label(i.basis), i.basis), ' ', i.evidenceId ? cite(i.evidenceId) : i.assumptionId ? h('code', null, i.assumptionId) : ''))); }); it.appendChild(itb); out.appendChild(h('div', { class: 'tbl' }, it));
+    if (p.sensitivity && p.sensitivity.length) {
+      out.appendChild(h('p', { class: 'eyebrow', style: 'margin-top:12px' }, 'Sensitivity of ' + p.label));
+      var st = h('table', null, h('thead', null, h('tr', null, h('th', null, 'Change'), h('th', { class: 'num' }, 'Units'), h('th', { class: 'num' }, 'Gross sq ft'), h('th', null, 'Parking fits'), h('th', { class: 'num' }, 'Known cost'), h('th', { class: 'num' }, 'NOI'), h('th', { class: 'num' }, 'Yield'), h('th', null, 'Readiness changed'))));
+      var stb = h('tbody'); p.sensitivity.forEach(function (r) { stb.appendChild(h('tr', null, h('td', null, r.key + ' ' + r.change), h('td', { class: 'num' }, num(r.outputs.units)), h('td', { class: 'num' }, num(r.outputs.grossSqft)), h('td', null, r.outputs.surfaceParkingFits == null ? 'null' : r.outputs.surfaceParkingFits ? 'yes' : 'no'), h('td', { class: 'num' }, money(r.outputs.knownCostSubtotal)), h('td', { class: 'num' }, money(r.outputs.noi)), h('td', { class: 'num' }, pct(r.outputs.yieldOnCost)), h('td', null, r.readinessChanged ? 'yes' : 'no'))); }); st.appendChild(stb); out.appendChild(h('div', { class: 'tbl' }, st));
+    } else out.appendChild(h('p', { class: 'fine', style: 'margin-top:8px' }, 'Sensitivity rows appear when a cost or rent assumption has a value; nothing is invented to make a row appear.'));
+    out.appendChild(h('p', { class: 'fine', style: 'margin-top:8px' }, 'Coverage: ' + p.coverage.category + ' (' + p.coverage.siteAvailable + '/' + p.coverage.siteRequired + ' site keys, ' + p.coverage.contextAvailable + '/' + p.coverage.contextRequired + ' context keys). ' + p.coverage.criteria));
+  }
+
+  function modelBlock(b, children) {
+    var fx = b.reasoning.basis === 'fixture';
+    return h('div', { class: 'model' + (fx ? ' fixture' : '') }, h('div', { class: 'lab' }, fx ? 'Fixture interpretation · rules, not a model' : 'Model interpretation · ' + b.reasoning.model.requestedModel + ' on Nebius Token Factory'), children);
+  }
+  function qlib(b, id) { for (var i = 0; i < b.questionLibrary.length; i++) if (b.questionLibrary[i].id === id) return b.questionLibrary[i]; return { text: id, source: '', method: '' }; }
+  function renderBrief(b) {
+    var out = $('briefOut'); clear(out);
+    var R = b.reasoning && b.reasoning.output, site = b.site, p = b.scenarios[0], n = 0;
+    function sec(title, body) { n++; var s = h('section', { class: 'sec' }, h('h3', null, h('span', { class: 'n' }, String(n).padStart(2, '0')), title)); append(s, body); out.appendChild(s); }
+    sec('Site identity and objective', [h('p', null, h('b', null, site.parcel && site.parcel.address ? site.parcel.address : site.query || 'Map point'), ' · ', (site.city || 'city unbound') + (site.state ? ', ' + site.state : '') + (site.county ? ' · ' + site.county.name : '')), h('p', { class: 'fine' }, 'Objective: ' + b.objective.label + '. Parcel: ' + label(site.parcel.status) + (site.parcel.id ? ' (id ' + site.parcel.id + ')' : '') + '. Point: ' + site.point.lat + ', ' + site.point.lon + ' (' + label(site.point.precision) + '). Brief ' + b.id + ' v' + b.version + ' · ' + label(b.status) + '.'), site.warnings.map(function (w) { return h('div', { class: 'warn' }, w); })]);
+    sec('Executive assessment', [R && R.executive_assessment ? modelBlock(b, h('p', null, R.executive_assessment)) : null, h('p', null, b.summary), !b.reasoning && b.run.inference ? h('div', { class: 'info' }, 'Model stage: ' + label(b.run.inference.outcome) + (b.run.inference.reasons && b.run.inference.reasons.length ? '. ' + b.run.inference.reasons.join('; ') : '') + '.') : null]);
+    var avail = b.evidence.filter(function (r) { return r.status !== 'unavailable'; });
+    sec('What the evidence supports', [R && R.supported_findings.length ? modelBlock(b, h('ul', { class: 'plain' }, R.supported_findings.map(function (f) { return h('li', null, f.statement, ' ', f.evidence_ids.map(cite), ' ', chip((f.scope || '') + '-level', f.scope === 'city' || f.scope === 'county' ? 'context' : 'site'), f.stale ? [' ', chip('stale vintage', 'stale')] : null); }))) : null, h('p', { class: 'fine' }, 'Available records:'), h('ul', { class: 'plain' }, avail.map(function (r) { return h('li', null, r.text, ' ', cite(r.id), ' ', chip(label(r.status), r.status)); }))]);
+    sec('Scenario comparison', [h('p', null, b.scenarios.map(function (s) { return s.label + ': ' + label(s.readiness.category) + (s.outputs.units != null ? ', ' + num(s.outputs.units) + ' units on ' + num(s.outputs.grossSqft) + ' gross sq ft' : '') + '. '; }).join('')), R && R.scenario_comparison.length ? modelBlock(b, h('ul', { class: 'plain' }, R.scenario_comparison.map(function (s) { return h('li', null, h('b', null, s.scenario_id + ': ' + label(s.fit) + '. '), s.rationale, ' ', s.evidence_ids.map(cite), s.assumption_ids.map(function (a) { return h('code', { class: 'cite' }, a); })); }))) : null, h('p', { class: 'fine' }, 'The full table, inputs, and sensitivity are in the Scenarios panel. A known cost subtotal is never a total development cost.')]);
+    var conflicts = b.conflicts.map(function (c) { return h('li', null, c.statement, ' ', (c.evidenceIds || []).map(cite)); }).concat(R ? R.conflicts.map(function (c) { return h('li', null, c.statement, ' ', c.evidence_ids.map(cite), ' ', chip(b.reasoning.basis === 'fixture' ? 'fixture' : 'model', b.reasoning.basis === 'fixture' ? 'fixture' : 'model')); }) : []);
+    sec('Decisive unknowns and conflicting evidence', [R && R.decisive_unknowns.length ? modelBlock(b, h('ol', { class: 'plan' }, R.decisive_unknowns.map(function (u) { return h('li', null, chip(u.impact, u.impact), ' ', u.statement, h('div', { class: 'f' }, u.why + (u.unknown_id ? ' · ' + u.unknown_id : ''))); }))) : null, h('ul', { class: 'plain' }, b.unknowns.map(function (u) { return h('li', null, chip(u.impact, u.impact), ' ', chip(u.applicability, u.applicability), ' ', u.statement); })), conflicts.length ? h('ul', { class: 'plain' }, conflicts) : h('p', { class: 'fine' }, 'No conflicting records were detected among the sources read.')]);
+    var plan = R && R.investigation_plan.length ? R.investigation_plan.map(function (pl) { var q = qlib(b, pl.question_id); return { text: q.text, impact: pl.impact, method: pl.verification_method, source: q.source, rationale: pl.rationale, id: pl.question_id, by: b.reasoning.basis === 'fixture' ? 'fixture' : 'model' }; }) : b.baselinePlan.map(function (pl) { return { text: pl.question, impact: pl.impact, method: pl.method, source: pl.source, rationale: pl.reason, id: pl.questionId, by: 'rules' }; });
+    sec('Prioritized diligence plan', [h('p', { class: 'fine' }, plan[0] && plan[0].by !== 'rules' ? 'Ranked by decision impact by the ' + plan[0].by + ' stage; the rules-based baseline is in the JSON export.' : 'Ranked by the rules-based baseline (impact tier, then evidence gaps).'), h('ol', { class: 'plan' }, plan.map(function (pl) { return h('li', null, h('b', null, pl.text), ' ', chip(pl.impact, pl.impact), ' ', chip('ranked by ' + pl.by, pl.by), h('div', { class: 'm' }, pl.method), h('div', { class: 'f' }, pl.rationale + (pl.source ? ' · Source: ' + pl.source : '') + ' · ' + pl.id)); }))]);
+    sec('Assumptions and sensitivity', [h('div', { class: 'tbl' }, h('table', null, h('thead', null, h('tr', null, h('th', null, 'Assumption'), h('th', { class: 'num' }, 'Value'), h('th', null, 'Basis'))), h('tbody', null, b.assumptions.map(function (a) { return h('tr', null, h('td', null, a.label), h('td', { class: 'num' }, a.value == null ? 'null' : num(a.value, 4) + ' ' + (a.units || '')), h('td', null, chip(label(a.basis), a.basis))); })))), R && R.assumption_sensitivity.length ? modelBlock(b, h('ul', { class: 'plain' }, R.assumption_sensitivity.map(function (s) { return h('li', null, h('code', { class: 'cite' }, s.assumption_id), ' ', s.effect, ' ', chip(label(s.direction))); }))) : null, p.sensitivity && p.sensitivity.length ? h('p', { class: 'fine' }, 'Deterministic sensitivity rows (hard cost, rent, floors) are in the Scenarios panel. ' + (p.sensitivity.some(function (r) { return r.readinessChanged; }) ? 'At least one variation changes the readiness category.' : 'No tested variation changes the readiness category.')) : null]);
+    sec('Citations and source dates', [h('div', { class: 'tbl' }, h('table', null, h('thead', null, h('tr', null, h('th', null, 'Id'), h('th', null, 'Fact'), h('th', null, 'Status'), h('th', null, 'Source'), h('th', null, 'Vintage · retrieved'))), h('tbody', null, b.evidence.map(function (r) { var href = safeHref(r.source.url); return h('tr', null, h('td', null, cite(r.id)), h('td', null, r.fact), h('td', null, chip(label(r.status), r.status)), h('td', null, href ? h('a', { href: href, target: '_blank', rel: 'noopener noreferrer' }, r.source.name) : r.source.name), h('td', null, (r.vintage || 'n/a') + ' · ' + when(r.retrievedAt))); }))))]);
+    sec('Limitations and scope', h('ul', { class: 'plain' }, b.limitations.map(function (l) { return h('li', null, l); }), R ? R.limitations.map(function (l) { return h('li', null, l, ' ', chip(b.reasoning.basis === 'fixture' ? 'fixture' : 'model', b.reasoning.basis === 'fixture' ? 'fixture' : 'model')); }) : null));
+    var m = b.reasoning ? b.reasoning.model : (b.run.inference && b.run.inference.model);
+    sec('Model, run metadata, and brief version', h('dl', { class: 'meta' }, h('dt', null, 'Brief'), h('dd', null, b.id + ' v' + b.version + ' · ' + b.schema + ' · ' + b.agentVersion), h('dt', null, 'Updated'), h('dd', null, when(b.updatedAt)), h('dt', null, 'Stages'), h('dd', null, b.run.stages.map(function (s) { return s.name + ' ' + s.status + (s.ms != null ? ' ' + s.ms + ' ms' : ''); }).join(' · ')), h('dt', null, 'Inference'), h('dd', null, b.run.inference ? b.run.inference.mode + ' · ' + label(b.run.inference.outcome) : 'not run'), m ? [h('dt', null, 'Model'), h('dd', null, m.provider + ' · requested ' + m.requestedModel + ' · returned ' + (m.returnedModel || 'n/a') + ' · request ' + (m.requestId || 'n/a') + ' · ' + (m.latencyMs != null ? m.latencyMs + ' ms' : '') + ' · attempts ' + m.attempts), h('dt', null, 'Usage'), h('dd', null, m.usage ? num(m.usage.inputTokens) + ' in / ' + num(m.usage.outputTokens) + ' out tokens' : 'not reported'), h('dt', null, 'Cost'), h('dd', null, m.costEstimate && m.costEstimate.usd != null ? '$' + m.costEstimate.usd.toFixed(6) + ' list-price estimate as of ' + m.costEstimate.pricing.asOf + ', not a billed amount' : 'not estimated')] : null, h('dt', null, 'Packet'), h('dd', null, (b.run.packetHash || 'n/a') + (b.run.packetBytes != null ? ' · ' + b.run.packetBytes + ' bytes' : '')), h('dt', null, 'Evidence hash'), h('dd', null, b.run.evidenceHash || 'n/a')));
+  }
+
+  function renderTransparency() {
+    var body = $('tpBody'); clear(body);
+    var c = S.caps; if (!c) return;
+    var inf = c.inference, bg = inf.budget || {};
+    var dl = h('dl', null,
+      h('dt', null, 'Mode'), h('dd', null, inf.mode + (inf.fixtureRefused ? ' (fixture refused on a production-like host)' : '')),
+      h('dt', null, 'Provider'), h('dd', null, inf.provider + ' · ' + inf.endpoint),
+      h('dt', null, 'Model'), h('dd', null, inf.model + (inf.modelKnown ? '' : ' (not in the local price table)') + (inf.configured ? ' · configured' : ' · not configured')),
+      h('dt', null, 'Pricing'), h('dd', null, inf.pricing ? '$' + inf.pricing.inputPer1M + ' in / $' + inf.pricing.outputPer1M + ' out per 1M tokens, list price as of ' + inf.pricing.asOf + (inf.pricing.verified ? ', checked against provider' : ', unverified') : 'unknown'),
+      h('dt', null, 'Budget'), h('dd', null, bg.store === 'none' ? 'no store' : 'store ' + bg.store + ' · daily ' + (bg.dailyUsd != null ? '$' + bg.dailyUsd : 'unset') + ' · spent ' + (bg.spentUsd != null ? '$' + bg.spentUsd.toFixed(4) : 'n/a') + ' · reserved ' + (bg.reservedUsd != null ? '$' + bg.reservedUsd.toFixed(4) : 'n/a') + ' · runs ' + (bg.runs != null ? bg.runs : 'n/a') + ' · in flight ' + (bg.inflight != null ? bg.inflight : 'n/a')),
+      h('dt', null, 'Policy'), h('dd', null, inf.policy ? 'approval ' + (inf.policy.reference || 'none') + ' · approved ' + (inf.policy.approvedUsd != null ? '$' + inf.policy.approvedUsd : 'unset') + ' · per run ' + (inf.policy.perRunUsd != null ? '$' + inf.policy.perRunUsd : 'unset') + ' · concurrent ' + (inf.policy.maxConcurrent != null ? inf.policy.maxConcurrent : 'unset') : 'n/a'),
+      h('dt', null, 'Guests'), h('dd', null, inf.guestAllowed ? 'may trigger live inference' : 'deterministic stages only for live inference'),
+      h('dt', null, 'Approval remaining'), h('dd', null, (bg.totalRemainingUsd != null ? '$' + bg.totalRemainingUsd.toFixed(4) + ' across all dates' : 'unavailable') + (inf.policy && inf.policy.expiresAt ? ' · expires ' + inf.policy.expiresAt : '')),
+      h('dt', null, 'Limits'), h('dd', null, 'packet ' + c.limits.packetMaxBytes + ' bytes · output ' + c.limits.maxOutputTokens + ' tokens · provider timeout ' + c.limits.providerTimeoutMs + ' ms'));
+    body.appendChild(dl);
+    if (inf.reasons && inf.reasons.length) body.appendChild(h('div', { class: 'info' }, 'Live reasoning gate: ' + inf.reasons.join('; ')));
+    var b = S.brief;
+    if (b && b.run.inference) {
+      var i = b.run.inference;
+      body.appendChild(h('p', { class: 'eyebrow', style: 'margin-top:10px' }, 'This brief'));
+      body.appendChild(h('p', { class: 'fine' }, 'Outcome ' + label(i.outcome) + (i.providerError ? ' · provider error ' + label(i.providerError) : '') + (i.detail ? ' · ' + i.detail : '') + ' · packet ' + (b.run.packetBytes || 0) + ' bytes' + (b.run.packetTruncated && b.run.packetTruncated.length ? ' (trimmed: ' + b.run.packetTruncated.join(', ') + ')' : '')));
+      var rej = (b.reasoning && b.reasoning.rejected) || i.rejected || [];
+      if (rej.length) body.appendChild(h('ul', { class: 'plain' }, rej.map(function (r) { return h('li', null, r.path + ': ' + r.reason + (r.detail ? ' (' + r.detail + ')' : '')); })));
+    }
+  }
+  function renderChanges(b) {
+    var out = $('changesOut'); clear(out);
+    if (!b.changes) return;
+    var c = b.changes.counts;
+    out.appendChild(h('div', { class: 'info' }, 'Refreshed to v' + b.version + ' from v' + b.changes.fromVersion + ' at ' + when(b.changes.at) + '. These are evidence pipeline changes, not real-world site changes. Refresh is manual; nothing runs on a schedule.' + (b.changes.interpretationChanged === true ? ' The model interpretation changed.' : b.changes.interpretationChanged === false ? ' The model interpretation did not change.' : '')));
+    out.appendChild(h('div', { class: 'chg' }, ['unchanged', 'source_changed', 'fetch_failed', 'source_disappeared', 'extraction_changed', 'new_record'].map(function (k) { return h('div', null, h('b', null, String(c[k] || 0)), label(k)); })));
+    var material = b.changes.changes.filter(function (x) { return x.class !== 'unchanged'; });
+    if (material.length) out.appendChild(h('ul', { class: 'plain' }, material.map(function (x) { return h('li', null, chip(label(x.class), x.class === 'fetch_failed' || x.class === 'source_disappeared' ? 'unavailable' : 'stale'), ' ', cite(x.evidenceId), ' ', (x.before ? label(x.before.status) + (x.before.value != null ? ' ' + x.before.value : '') : 'absent') + ' to ' + (x.after ? label(x.after.status) + (x.after.value != null ? ' ' + x.after.value : '') : 'absent')); })));
+  }
+
+  // ---------------------------------------------------------------- drawer, saved, refresh
+  var lastFocus = null;
+  function openDrawer(id) {
+    var b = S.brief; if (!b) return;
+    var r = null; for (var i = 0; i < b.evidence.length; i++) if (b.evidence[i].id === id) r = b.evidence[i];
+    var body = $('drawerBody'); clear(body);
+    if (!r) { body.appendChild(h('p', null, 'No evidence record ' + id + ' in this brief.')); }
+    else {
+      $('drawerTitle').textContent = r.fact;
+      var href = safeHref(r.source.url);
+      body.appendChild(h('p', { style: 'margin-bottom:10px' }, chip(label(r.status), r.status), ' ', chip(r.scope.level + ' · ' + r.applicability, r.applicability), ' ', chip(label(r.kind))));
+      body.appendChild(h('p', { style: 'margin-bottom:12px' }, r.text));
+      body.appendChild(h('dl', null,
+        h('dt', null, 'Id'), h('dd', null, r.id), h('dt', null, 'Key'), h('dd', null, r.key),
+        h('dt', null, 'Value'), h('dd', null, r.value == null ? 'null' : (typeof r.value === 'object' ? JSON.stringify(r.value) : String(r.value)) + (r.units ? ' ' + r.units : '')),
+        h('dt', null, 'Source'), h('dd', null, href ? h('a', { href: href, target: '_blank', rel: 'noopener noreferrer' }, r.source.name) : r.source.name, ' · ' + label(r.source.authority) + ' · ' + label(r.source.type)),
+        h('dt', null, 'Scope'), h('dd', null, r.scope.label + (r.scope.geoid ? ' · geoid ' + r.scope.geoid : '') + (r.scope.parcelId ? ' · parcel ' + r.scope.parcelId : '')),
+        h('dt', null, 'Vintage'), h('dd', null, (r.vintage || 'n/a') + ' · freshness ' + label(r.freshness)),
+        h('dt', null, 'Retrieved'), h('dd', null, when(r.retrievedAt) + (r.publishedAt ? ' · published ' + when(r.publishedAt) : '')),
+        h('dt', null, 'Extraction'), h('dd', null, label(r.extraction) + (r.extractionVersion ? ' · ' + r.extractionVersion : '')),
+        h('dt', null, 'Coverage'), h('dd', null, r.coverage || 'n/a'),
+        h('dt', null, 'Hash'), h('dd', null, r.hash || 'none'),
+        h('dt', null, 'Note'), h('dd', null, r.note || 'none')));
+    }
+    lastFocus = document.activeElement; $('drawer').showModal(); $('drawerClose').focus();
+  }
+  function closeDrawer() { $('drawer').close(); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  function openSaved() {
+    var body = $('savedBody'); clear(body); body.appendChild(h('p', { class: 'fine' }, 'Loading saved briefs.'));
+    $('savedDlg').showModal(); $('savedClose').focus();
+    api('list').then(function (r) {
+      clear(body);
+      if (!r.ok) { body.appendChild(h('p', null, r.note || 'Saved briefs are unavailable.')); return; }
+      if (!r.briefs.length) { body.appendChild(h('div', { class: 'empty' }, h('b', null, 'Nothing saved yet'), S.session.kind === 'guest' ? 'Guest saves last 24 hours in this browser session.' : 'Briefs you run are saved to your account.')); return; }
+      body.appendChild(h('ul', { class: 'saved' }, r.briefs.map(function (x) { return h('li', null, h('span', null, (x.site.address || x.site.query || 'map point'), h('small', null, (x.site.city || '') + (x.site.state ? ', ' + x.site.state : '') + ' · ' + label(x.objective) + ' · v' + x.version + ' · ' + label(x.status) + (x.hasReasoning ? ' · reasoned' : '') + ' · ' + when(x.updatedAt))), h('button', { class: 'btn out sm', type: 'button', onclick: function () { $('savedDlg').close(); openBrief(x.id); } }, 'Open')); })));
+    });
+  }
+  function openBrief(id) {
+    setStatus('Opening ' + id + '.');
+    return api('get', { params: { id: id } }).then(function (r) {
+      if (!r.ok) { setStatus(r.note || 'That brief could not be opened.'); return; }
+      S.brief = r.brief; S.site = r.brief.site; S.objective = r.brief.objective.id; S.dirty = {};
+      r.brief.assumptions.forEach(function (a) { if (a.basis === 'user_assumption') { S.dirty[a.key] = true; S.dirty['value:' + a.key] = String(a.value); } });
+      renderObjectives(); renderAssumptions(); renderSite(r.brief.site, null); $('runBtn').disabled = false; renderAll(r.brief); renderStages({}); setStatus('Opened saved brief ' + id + ' v' + r.brief.version + '.');
+    });
+  }
+  function refresh() {
+    if (!S.brief || S.running) return;
+    var id = S.brief.id; S.running = true; $('refreshBtn').disabled = true; setStatus('Re-gathering evidence for ' + id + '.');
+    api('refresh', { body: { id: id, reason: $('refreshReason').checked } }).then(function (r) {
+      if (!r.ok) { setStatus(r.note || 'Refresh failed.'); return; }
+      S.brief = r.brief; renderAll(r.brief); setStatus('Refreshed to v' + r.brief.version + ': ' + r.brief.changes.material + ' record' + (r.brief.changes.material === 1 ? '' : 's') + ' changed by pipeline cause.');
+    }).catch(function (e) { setStatus('Refresh failed: ' + (e && e.message ? e.message : 'network error')); }).finally(function () { S.running = false; $('refreshBtn').disabled = false; });
+  }
+
+  // ---------------------------------------------------------------- wire up
+  $('siteForm').addEventListener('submit', function (e) { e.preventDefault(); var q = $('q').value.trim(); if (q.length < 3) { setSiteMessage('Enter a street address.', 'warn'); return; } resolveSite({ query: q }); });
+  $('pointForm').addEventListener('submit', function (e) { e.preventDefault(); var pt = S.pendingPoint || (S.site && S.site.point); if (!pt) { setSiteMessage('Click the map to set a point first.', 'warn'); return; } resolveSite({ lat: pt.lat, lon: pt.lon, city: $('pcity').value.trim() || undefined, state: $('pstate').value.trim().toUpperCase() || undefined }); });
+  $('runBtn').addEventListener('click', run);
+  $('cancelBtn').addEventListener('click', function () { if (S.abort) S.abort.abort(); });
+  $('drawerClose').addEventListener('click', closeDrawer);
+  $('drawer').addEventListener('cancel', function (e) { e.preventDefault(); closeDrawer(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && $('drawer').open) { e.preventDefault(); closeDrawer(); } });
+  $('drawer').addEventListener('click', function (e) { if (e.target === $('drawer')) closeDrawer(); });
+  $('savedBtn').addEventListener('click', openSaved);
+  $('savedClose').addEventListener('click', function () { $('savedDlg').close(); });
+  $('savedDlg').addEventListener('click', function (e) { if (e.target === $('savedDlg')) $('savedDlg').close(); });
+  $('refreshBtn').addEventListener('click', refresh);
+  renderStages({});
+  initMap();
+  loadCaps().then(function () {
+    var p = new URLSearchParams(location.search);
+    if (p.get('id')) return openBrief(p.get('id'));
+    if (p.get('city')) { $('pcity').value = p.get('city').slice(0, 100); $('pstate').value = (p.get('state') || '').slice(0, 2).toUpperCase(); $('pointForm').hidden = false; }
+    setStatus('Ready. Resolve a site to begin.');
+  }).catch(function (e) { $('modeBadge').lastElementChild.textContent = 'Capabilities unavailable'; setStatus('The agent could not load its capabilities: ' + (e && e.message ? e.message : 'unknown error') + '. Reload to retry.'); });
+})();
+</script>
+</body>
+</html>

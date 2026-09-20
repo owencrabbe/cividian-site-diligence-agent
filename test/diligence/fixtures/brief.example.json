@@ -1,0 +1,2348 @@
+{
+  "schema": "diligence.brief.v1",
+  "agentVersion": "site-diligence-agent/0.1.0",
+  "id": "dlg_54ed2ef90dde43a6a94d6951",
+  "version": 1,
+  "createdAt": "2026-09-19T23:35:56.216Z",
+  "updatedAt": "2026-09-19T23:35:56.222Z",
+  "status": "partial",
+  "site": {
+    "schema": "diligence.site.v1",
+    "query": "300 N High St, Muncie, IN",
+    "kind": "address",
+    "city": "Muncie",
+    "state": "IN",
+    "stateName": "Indiana",
+    "county": {
+      "fips": "18035",
+      "name": "Delaware County",
+      "state": "IN",
+      "source": "FCC Area API",
+      "retrievedAt": "2026-09-19T23:35:55.593Z"
+    },
+    "point": {
+      "lat": 40.19628,
+      "lon": -85.387806,
+      "source": "osm",
+      "precision": "address"
+    },
+    "geocode": {
+      "place": "300, North High Street, Muncie, Delaware County, Indiana, 47305, United States",
+      "source": "osm",
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "cached": true
+    },
+    "parcel": {
+      "status": "address_matched",
+      "index": 0,
+      "id": null,
+      "provider": "indianamap",
+      "source": "Delaware County via IndianaMap",
+      "address": "300 N HIGH ST, MUNCIE",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -85.38654490899995,
+              40.19625256100005
+            ],
+            [
+              -85.38695308299998,
+              40.196259885000075
+            ],
+            [
+              -85.38703560299996,
+              40.19619955400003
+            ],
+            [
+              -85.38744864499995,
+              40.19589757500006
+            ],
+            [
+              -85.38744246299996,
+              40.19585208700005
+            ],
+            [
+              -85.38744144099996,
+              40.19580635900007
+            ],
+            [
+              -85.38744346399994,
+              40.195742116000076
+            ],
+            [
+              -85.38744109599998,
+              40.195708438000054
+            ],
+            [
+              -85.38743153699994,
+              40.19567551800003
+            ],
+            [
+              -85.38741504499995,
+              40.19564425200008
+            ],
+            [
+              -85.38739207099997,
+              40.19561549100007
+            ],
+            [
+              -85.38736324099995,
+              40.195590021000044
+            ],
+            [
+              -85.38732934099994,
+              40.195568534000074
+            ],
+            [
+              -85.38729129299998,
+              40.195551618000025
+            ],
+            [
+              -85.38725013399994,
+              40.195539730000064
+            ],
+            [
+              -85.38720698699996,
+              40.19553319600004
+            ],
+            [
+              -85.38663634399995,
+              40.19548329000003
+            ],
+            [
+              -85.38662619199994,
+              40.19548302000004
+            ],
+            [
+              -85.38661609999997,
+              40.195483919000026
+            ],
+            [
+              -85.38660629899994,
+              40.19548597000005
+            ],
+            [
+              -85.38659701099994,
+              40.19548912400006
+            ],
+            [
+              -85.38658844299994,
+              40.195493310000074
+            ],
+            [
+              -85.38658079099997,
+              40.19549843500005
+            ],
+            [
+              -85.38657422799997,
+              40.195504381000035
+            ],
+            [
+              -85.38656889299995,
+              40.19551102100007
+            ],
+            [
+              -85.38656492199993,
+              40.19551820000004
+            ],
+            [
+              -85.38656239899996,
+              40.19552575600005
+            ],
+            [
+              -85.38656138399995,
+              40.19553351600007
+            ],
+            [
+              -85.38655934199994,
+              40.19561986400004
+            ],
+            [
+              -85.38654490899995,
+              40.19625256100005
+            ]
+          ]
+        ],
+        "crs": null
+      },
+      "lotSqft": 57397,
+      "lotSqftBasis": "provider_geometry_area",
+      "lotSqftFromRecord": null,
+      "use": "Class 640",
+      "zoningCode": null,
+      "bldgSqft": null,
+      "yearBuilt": null,
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "cached": true,
+      "note": "No provider polygon contains the geocoded point; this parcel's recorded address matches the query's house number and street. Confirm it before relying on the boundary."
+    },
+    "candidates": [
+      {
+        "index": 0,
+        "id": null,
+        "address": "300 N HIGH ST, MUNCIE",
+        "use": "Class 640",
+        "zoningCode": null,
+        "acres": null,
+        "bldgSqft": null,
+        "yearBuilt": null,
+        "source": "Delaware County via IndianaMap",
+        "containsPoint": false,
+        "distanceM": 99,
+        "lotSqft": 57397
+      },
+      {
+        "index": 1,
+        "id": null,
+        "address": "300 BLK N HIGH ST, MUNCIE",
+        "use": "Class 400",
+        "zoningCode": null,
+        "acres": null,
+        "bldgSqft": null,
+        "yearBuilt": null,
+        "source": "Delaware County via IndianaMap",
+        "containsPoint": false,
+        "distanceM": 71,
+        "lotSqft": 5578
+      },
+      {
+        "index": 2,
+        "id": null,
+        "address": "ROADWAY N HIGH AND GILBERT ST, MUNCIE",
+        "use": "Class 640",
+        "zoningCode": null,
+        "acres": null,
+        "bldgSqft": null,
+        "yearBuilt": null,
+        "source": "Delaware County via IndianaMap",
+        "containsPoint": false,
+        "distanceM": 78,
+        "lotSqft": 6555
+      },
+      {
+        "index": 3,
+        "id": null,
+        "address": "425 N HIGH ST, MUNCIE",
+        "use": "Class 400",
+        "zoningCode": null,
+        "acres": null,
+        "bldgSqft": null,
+        "yearBuilt": null,
+        "source": "Delaware County via IndianaMap",
+        "containsPoint": false,
+        "distanceM": 43,
+        "lotSqft": 33063
+      },
+      {
+        "index": 4,
+        "id": null,
+        "address": "309 N HIGH ST, MUNCIE",
+        "use": "Class 400",
+        "zoningCode": null,
+        "acres": null,
+        "bldgSqft": null,
+        "yearBuilt": null,
+        "source": "Delaware County via IndianaMap",
+        "containsPoint": false,
+        "distanceM": 58,
+        "lotSqft": 6415
+      },
+      {
+        "index": 5,
+        "id": null,
+        "address": "400 N HIGH ST, MUNCIE",
+        "use": "Class 449",
+        "zoningCode": null,
+        "acres": null,
+        "bldgSqft": null,
+        "yearBuilt": null,
+        "source": "Delaware County via IndianaMap",
+        "containsPoint": false,
+        "distanceM": 75,
+        "lotSqft": 95003
+      },
+      {
+        "index": 6,
+        "id": null,
+        "address": "425 N HIGH ST, MUNCIE",
+        "use": "Class 400",
+        "zoningCode": null,
+        "acres": null,
+        "bldgSqft": null,
+        "yearBuilt": null,
+        "source": "Delaware County via IndianaMap",
+        "containsPoint": false,
+        "distanceM": 36,
+        "lotSqft": 3364
+      },
+      {
+        "index": 7,
+        "id": null,
+        "address": "430 N HIGH ST, MUNCIE",
+        "use": "Class 640",
+        "zoningCode": null,
+        "acres": null,
+        "bldgSqft": null,
+        "yearBuilt": null,
+        "source": "Delaware County via IndianaMap",
+        "containsPoint": false,
+        "distanceM": 43,
+        "lotSqft": 16036
+      },
+      {
+        "index": 8,
+        "id": null,
+        "address": "400 BLK N WALNUT ST, MUNCIE",
+        "use": "Class 640",
+        "zoningCode": null,
+        "acres": null,
+        "bldgSqft": null,
+        "yearBuilt": null,
+        "source": "Delaware County via IndianaMap",
+        "containsPoint": false,
+        "distanceM": 57,
+        "lotSqft": 18348
+      }
+    ],
+    "warnings": [
+      "The geocoded point fell outside every parcel polygon; the parcel was chosen by its recorded address. Confirm it on the map before relying on lot area."
+    ],
+    "resolvedAt": "2026-09-19T23:35:55.593Z"
+  },
+  "objective": {
+    "id": "residential_infill",
+    "label": "Residential infill",
+    "description": "New multifamily or townhome construction on the parcel, with surface parking on the remaining lot area."
+  },
+  "assumptions": [
+    {
+      "id": "as_coveragePct",
+      "key": "coveragePct",
+      "label": "Lot coverage by building footprint",
+      "units": "%",
+      "value": 55,
+      "basis": "default_assumption",
+      "kind": "physical",
+      "min": 5,
+      "max": 100
+    },
+    {
+      "id": "as_floors",
+      "key": "floors",
+      "label": "Floors",
+      "units": "floors",
+      "value": 3,
+      "basis": "default_assumption",
+      "kind": "physical",
+      "min": 1,
+      "max": 12
+    },
+    {
+      "id": "as_efficiencyPct",
+      "key": "efficiencyPct",
+      "label": "Net-to-gross efficiency",
+      "units": "%",
+      "value": 82,
+      "basis": "default_assumption",
+      "kind": "physical",
+      "min": 40,
+      "max": 95
+    },
+    {
+      "id": "as_unitSqft",
+      "key": "unitSqft",
+      "label": "Average unit size",
+      "units": "sq ft",
+      "value": 850,
+      "basis": "default_assumption",
+      "kind": "physical",
+      "min": 300,
+      "max": 3000
+    },
+    {
+      "id": "as_parkingPerUnit",
+      "key": "parkingPerUnit",
+      "label": "Parking spaces per unit",
+      "units": "spaces/unit",
+      "value": 1,
+      "basis": "default_assumption",
+      "kind": "physical",
+      "min": 0,
+      "max": 3
+    },
+    {
+      "id": "as_parkingSqftPerSpace",
+      "key": "parkingSqftPerSpace",
+      "label": "Surface parking area per space, including aisles",
+      "units": "sq ft/space",
+      "value": 325,
+      "basis": "default_assumption",
+      "kind": "physical",
+      "min": 200,
+      "max": 450
+    },
+    {
+      "id": "as_lotSqftOverride",
+      "key": "lotSqftOverride",
+      "label": "Lot area, if no parcel record is available",
+      "units": "sq ft",
+      "value": null,
+      "basis": "not_provided",
+      "kind": "physical",
+      "min": 500,
+      "max": 50000000
+    },
+    {
+      "id": "as_hardCostPerSqft",
+      "key": "hardCostPerSqft",
+      "label": "Hard construction cost",
+      "units": "$/gross sq ft",
+      "value": 210,
+      "basis": "user_assumption",
+      "kind": "financial",
+      "min": 20,
+      "max": 2000
+    },
+    {
+      "id": "as_softPctOfHard",
+      "key": "softPctOfHard",
+      "label": "Soft costs as a share of hard cost",
+      "units": "%",
+      "value": 20,
+      "basis": "default_assumption",
+      "kind": "financial",
+      "min": 0,
+      "max": 60
+    },
+    {
+      "id": "as_landPrice",
+      "key": "landPrice",
+      "label": "Land or acquisition price",
+      "units": "$",
+      "value": null,
+      "basis": "not_provided",
+      "kind": "financial",
+      "min": 0,
+      "max": 1000000000
+    },
+    {
+      "id": "as_rentPerSqftMonth",
+      "key": "rentPerSqftMonth",
+      "label": "Residential rent",
+      "units": "$/sq ft/month",
+      "value": 1.6,
+      "basis": "user_assumption",
+      "kind": "financial",
+      "min": 0.25,
+      "max": 15
+    },
+    {
+      "id": "as_vacancyPct",
+      "key": "vacancyPct",
+      "label": "Vacancy and credit loss",
+      "units": "%",
+      "value": 7,
+      "basis": "default_assumption",
+      "kind": "financial",
+      "min": 0,
+      "max": 30
+    },
+    {
+      "id": "as_otherAnnualIncome",
+      "key": "otherAnnualIncome",
+      "label": "Other annual income (an explicit zero unless entered)",
+      "units": "$/year",
+      "value": 0,
+      "basis": "default_assumption",
+      "kind": "financial",
+      "min": 0,
+      "max": 100000000
+    },
+    {
+      "id": "as_opexPctOfEgi",
+      "key": "opexPctOfEgi",
+      "label": "Operating expenses as a share of effective gross income",
+      "units": "%",
+      "value": 40,
+      "basis": "default_assumption",
+      "kind": "financial",
+      "min": 10,
+      "max": 70
+    },
+    {
+      "id": "as_capRatePct",
+      "key": "capRatePct",
+      "label": "Exit or market cap rate",
+      "units": "%",
+      "value": 7,
+      "basis": "user_assumption",
+      "kind": "financial",
+      "min": 3,
+      "max": 15
+    }
+  ],
+  "evidence": [
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_site_point",
+      "kind": "source_observed",
+      "key": "site_point",
+      "fact": "Site point",
+      "value": null,
+      "units": null,
+      "text": "Site point resolved from \"300 N High St, Muncie, IN\" to 40.19628, -85.387806 (address match via osm).",
+      "source": {
+        "name": "OpenStreetMap Nominatim",
+        "url": "https://nominatim.openstreetmap.org/",
+        "authority": "openstreetmap",
+        "type": "api_json"
+      },
+      "scope": {
+        "level": "point",
+        "geoid": null,
+        "parcelId": null,
+        "label": "300, North High Street, Muncie, Delaware County, Indiana, 47305, United States"
+      },
+      "applicability": "site",
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "current",
+      "extraction": "api_json",
+      "extractionVersion": "geocode.v1",
+      "status": "available",
+      "coverage": null,
+      "excerpt": null,
+      "hash": "255e86724755962ea1354024766fd2f0fb24389ddfa86fef3b86b01615a8d4af",
+      "note": "A geocoded point locates the query. It does not establish a parcel, boundary, or ownership."
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_county",
+      "kind": "source_observed",
+      "key": "county",
+      "fact": "County",
+      "value": "18035",
+      "units": null,
+      "text": "County: Delaware County, IN (FIPS 18035).",
+      "source": {
+        "name": "FCC Area API",
+        "url": "https://geo.fcc.gov/api/census/",
+        "authority": "federal_regulatory",
+        "type": "api_json"
+      },
+      "scope": {
+        "level": "county",
+        "geoid": "18035",
+        "parcelId": null,
+        "label": "Delaware County"
+      },
+      "applicability": "context",
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "current",
+      "extraction": "api_json",
+      "extractionVersion": "fcc-county.v1",
+      "status": "available",
+      "coverage": null,
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_parcel_identity",
+      "kind": "source_observed",
+      "key": "parcel_identity",
+      "fact": "Parcel record",
+      "value": "300 N HIGH ST, MUNCIE",
+      "units": null,
+      "text": "Parcel at 300 N HIGH ST, MUNCIE from Delaware County via IndianaMap, matched by recorded address matching the query, not containment.",
+      "source": {
+        "name": "Delaware County via IndianaMap",
+        "url": "https://gisdata.in.gov/server/rest/services/Hosted/Parcel_Boundaries_of_Indiana_Current/FeatureServer/0",
+        "authority": "state_gis",
+        "type": "gis_query"
+      },
+      "scope": {
+        "level": "parcel",
+        "geoid": null,
+        "parcelId": null,
+        "label": "300 N HIGH ST, MUNCIE"
+      },
+      "applicability": "site",
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "gis_query",
+      "extractionVersion": "parcel.v1",
+      "status": "unverified",
+      "coverage": "Provider geometry and published attributes only; owner, assessed value, and sale history are not carried into this brief.",
+      "excerpt": null,
+      "hash": "c75b62c8d4ecf4cac156c726fba5bfd8c76308f01f4b7535ed2d013880068546",
+      "note": "No provider polygon contains the geocoded point; this parcel's recorded address matches the query's house number and street. Confirm it before relying on the boundary."
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_parcel_lot_area",
+      "kind": "source_observed",
+      "key": "parcel_lot_area",
+      "fact": "Lot area",
+      "value": 57397,
+      "units": "sq ft",
+      "text": "Lot area: 57,397 sq ft (computed from the provider polygon, not a survey).",
+      "source": {
+        "name": "Delaware County via IndianaMap",
+        "url": "https://gisdata.in.gov/server/rest/services/Hosted/Parcel_Boundaries_of_Indiana_Current/FeatureServer/0",
+        "authority": "state_gis",
+        "type": "gis_query"
+      },
+      "scope": {
+        "level": "parcel",
+        "geoid": null,
+        "parcelId": null,
+        "label": "300 N HIGH ST, MUNCIE"
+      },
+      "applicability": "site",
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "formula",
+      "extractionVersion": "parcel.v1",
+      "status": "unverified",
+      "coverage": null,
+      "excerpt": null,
+      "hash": null,
+      "note": "Planimetric area of provider geometry; a boundary survey governs."
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_parcel_use",
+      "kind": "source_observed",
+      "key": "parcel_use",
+      "fact": "Property class or use",
+      "value": "Class 640",
+      "units": null,
+      "text": "Property class or use: Class 640.",
+      "source": {
+        "name": "Delaware County via IndianaMap",
+        "url": "https://gisdata.in.gov/server/rest/services/Hosted/Parcel_Boundaries_of_Indiana_Current/FeatureServer/0",
+        "authority": "state_gis",
+        "type": "gis_query"
+      },
+      "scope": {
+        "level": "parcel",
+        "geoid": null,
+        "parcelId": null,
+        "label": "300 N HIGH ST, MUNCIE"
+      },
+      "applicability": "site",
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "gis_query",
+      "extractionVersion": "parcel.v1",
+      "status": "unverified",
+      "coverage": null,
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_parcel_zoning_code",
+      "kind": "source_observed",
+      "key": "parcel_zoning_code",
+      "fact": "Zoning code on the parcel record",
+      "value": null,
+      "units": null,
+      "text": "Zoning code on the parcel record is not published by this parcel feed.",
+      "source": {
+        "name": "Delaware County via IndianaMap",
+        "url": "https://gisdata.in.gov/server/rest/services/Hosted/Parcel_Boundaries_of_Indiana_Current/FeatureServer/0",
+        "authority": "state_gis",
+        "type": "gis_query"
+      },
+      "scope": {
+        "level": "parcel",
+        "geoid": null,
+        "parcelId": null,
+        "label": "300 N HIGH ST, MUNCIE"
+      },
+      "applicability": "site",
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "gis_query",
+      "extractionVersion": "parcel.v1",
+      "status": "unavailable",
+      "coverage": null,
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_parcel_building_sqft",
+      "kind": "source_observed",
+      "key": "parcel_building_sqft",
+      "fact": "Existing building area",
+      "value": null,
+      "units": "sq ft",
+      "text": "Existing building area is not published by this parcel feed.",
+      "source": {
+        "name": "Delaware County via IndianaMap",
+        "url": "https://gisdata.in.gov/server/rest/services/Hosted/Parcel_Boundaries_of_Indiana_Current/FeatureServer/0",
+        "authority": "state_gis",
+        "type": "gis_query"
+      },
+      "scope": {
+        "level": "parcel",
+        "geoid": null,
+        "parcelId": null,
+        "label": "300 N HIGH ST, MUNCIE"
+      },
+      "applicability": "site",
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "gis_query",
+      "extractionVersion": "parcel.v1",
+      "status": "unavailable",
+      "coverage": null,
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_parcel_year_built",
+      "kind": "source_observed",
+      "key": "parcel_year_built",
+      "fact": "Year built",
+      "value": null,
+      "units": null,
+      "text": "Year built is not published by this parcel feed.",
+      "source": {
+        "name": "Delaware County via IndianaMap",
+        "url": "https://gisdata.in.gov/server/rest/services/Hosted/Parcel_Boundaries_of_Indiana_Current/FeatureServer/0",
+        "authority": "state_gis",
+        "type": "gis_query"
+      },
+      "scope": {
+        "level": "parcel",
+        "geoid": null,
+        "parcelId": null,
+        "label": "300 N HIGH ST, MUNCIE"
+      },
+      "applicability": "site",
+      "retrievedAt": "2026-09-19T23:35:55.593Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "gis_query",
+      "extractionVersion": "parcel.v1",
+      "status": "unavailable",
+      "coverage": null,
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_zoning_envelope",
+      "kind": "source_observed",
+      "key": "zoning_envelope",
+      "fact": "Zoning envelope (district, permitted uses, height, setbacks, density, parking)",
+      "value": null,
+      "units": null,
+      "text": "No zoning envelope is available: no zoning data provider is configured for this deployment (gridics, zoneomics).",
+      "source": {
+        "name": "Zoning provider chain",
+        "url": null,
+        "authority": "none",
+        "type": "api_json"
+      },
+      "scope": {
+        "level": "parcel",
+        "geoid": null,
+        "parcelId": null,
+        "label": "300 N HIGH ST, MUNCIE"
+      },
+      "applicability": "site",
+      "retrievedAt": "2026-09-19T23:35:55.594Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "api_json",
+      "extractionVersion": "zoning.v1",
+      "status": "unavailable",
+      "coverage": null,
+      "excerpt": null,
+      "hash": null,
+      "note": "Permitted use, height, setbacks, density, and parking minimums must come from the adopted ordinance. Nothing in this brief assumes them."
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_city_population",
+      "kind": "source_observed",
+      "key": "city_population",
+      "fact": "Population",
+      "value": null,
+      "units": "people",
+      "text": "Population is unavailable: a Census API key is required and none is configured for this deployment.",
+      "source": {
+        "name": "US Census ACS 5-year",
+        "url": "https://api.census.gov/data/",
+        "authority": "federal_statistical",
+        "type": "api_json"
+      },
+      "scope": {
+        "level": "city",
+        "geoid": null,
+        "parcelId": null,
+        "label": "Muncie, IN (Census place)"
+      },
+      "applicability": "context",
+      "retrievedAt": "2026-09-19T23:35:55.594Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "api_json",
+      "extractionVersion": "acs.v1",
+      "status": "unavailable",
+      "coverage": "City-wide estimate for the Census place. It does not describe the parcel or its block.",
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_city_median_income",
+      "kind": "source_observed",
+      "key": "city_median_income",
+      "fact": "Median household income",
+      "value": null,
+      "units": "USD",
+      "text": "Median household income is unavailable: a Census API key is required and none is configured for this deployment.",
+      "source": {
+        "name": "US Census ACS 5-year",
+        "url": "https://api.census.gov/data/",
+        "authority": "federal_statistical",
+        "type": "api_json"
+      },
+      "scope": {
+        "level": "city",
+        "geoid": null,
+        "parcelId": null,
+        "label": "Muncie, IN (Census place)"
+      },
+      "applicability": "context",
+      "retrievedAt": "2026-09-19T23:35:55.594Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "api_json",
+      "extractionVersion": "acs.v1",
+      "status": "unavailable",
+      "coverage": "City-wide estimate for the Census place. It does not describe the parcel or its block.",
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_city_median_home_value",
+      "kind": "source_observed",
+      "key": "city_median_home_value",
+      "fact": "Median owner-occupied home value",
+      "value": null,
+      "units": "USD",
+      "text": "Median owner-occupied home value is unavailable: a Census API key is required and none is configured for this deployment.",
+      "source": {
+        "name": "US Census ACS 5-year",
+        "url": "https://api.census.gov/data/",
+        "authority": "federal_statistical",
+        "type": "api_json"
+      },
+      "scope": {
+        "level": "city",
+        "geoid": null,
+        "parcelId": null,
+        "label": "Muncie, IN (Census place)"
+      },
+      "applicability": "context",
+      "retrievedAt": "2026-09-19T23:35:55.594Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "api_json",
+      "extractionVersion": "acs.v1",
+      "status": "unavailable",
+      "coverage": "City-wide estimate for the Census place. It does not describe the parcel or its block.",
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_city_vacancy_pct",
+      "kind": "source_observed",
+      "key": "city_vacancy_pct",
+      "fact": "Housing vacancy",
+      "value": null,
+      "units": "%",
+      "text": "Housing vacancy is unavailable: a Census API key is required and none is configured for this deployment.",
+      "source": {
+        "name": "US Census ACS 5-year",
+        "url": "https://api.census.gov/data/",
+        "authority": "federal_statistical",
+        "type": "api_json"
+      },
+      "scope": {
+        "level": "city",
+        "geoid": null,
+        "parcelId": null,
+        "label": "Muncie, IN (Census place)"
+      },
+      "applicability": "context",
+      "retrievedAt": "2026-09-19T23:35:55.594Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "formula",
+      "extractionVersion": "acs.v1",
+      "status": "unavailable",
+      "coverage": "City-wide estimate for the Census place. It does not describe the parcel or its block.",
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_city_score",
+      "kind": "deterministic_calculation",
+      "key": "city_score",
+      "fact": "Cividian Score (heuristic composite)",
+      "value": null,
+      "units": "index 0 to 100",
+      "text": "No Cividian Score resolved for Muncie, IN.",
+      "source": {
+        "name": "Cividian scoring model heuristic",
+        "url": null,
+        "authority": "cividian_calculation",
+        "type": "formula"
+      },
+      "scope": {
+        "level": "city",
+        "geoid": null,
+        "parcelId": null,
+        "label": "Muncie, IN (Census place)"
+      },
+      "applicability": "context",
+      "retrievedAt": "2026-09-19T23:35:55.594Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "formula",
+      "extractionVersion": "cividian-score.v1",
+      "status": "unavailable",
+      "coverage": null,
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    },
+    {
+      "schema": "evidence.record.v1",
+      "id": "ev_county_gaps",
+      "kind": "source_observed",
+      "key": "county_gaps",
+      "fact": "County market gaps (establishments per 10,000 residents by category)",
+      "value": null,
+      "units": null,
+      "text": "County market gap scan is unavailable: the Census API requires a key and none is configured for this deployment.",
+      "source": {
+        "name": "US Census County Business Patterns",
+        "url": "https://www.census.gov/programs-surveys/cbp.html",
+        "authority": "federal_statistical",
+        "type": "api_json"
+      },
+      "scope": {
+        "level": "county",
+        "geoid": "18035",
+        "parcelId": null,
+        "label": "Delaware County"
+      },
+      "applicability": "context",
+      "retrievedAt": "2026-09-19T23:35:55.594Z",
+      "publishedAt": null,
+      "vintage": null,
+      "freshness": "unknown",
+      "extraction": "api_json",
+      "extractionVersion": "cbp-gaps.v1",
+      "status": "unavailable",
+      "coverage": null,
+      "excerpt": null,
+      "hash": null,
+      "note": null
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "unk_parcel_identity",
+      "key": "parcel_identity",
+      "applicability": "site",
+      "statement": "Parcel at 300 N HIGH ST, MUNCIE from Delaware County via IndianaMap, matched by recorded address matching the query, not containment.",
+      "impact": "high",
+      "evidenceIds": [
+        "ev_parcel_identity"
+      ]
+    },
+    {
+      "id": "unk_parcel_lot_area",
+      "key": "parcel_lot_area",
+      "applicability": "site",
+      "statement": "Lot area: 57,397 sq ft (computed from the provider polygon, not a survey).",
+      "impact": "high",
+      "evidenceIds": [
+        "ev_parcel_lot_area"
+      ]
+    },
+    {
+      "id": "unk_zoning_envelope",
+      "key": "zoning_envelope",
+      "applicability": "site",
+      "statement": "No zoning envelope is available: no zoning data provider is configured for this deployment (gridics, zoneomics).",
+      "impact": "high",
+      "evidenceIds": [
+        "ev_zoning_envelope"
+      ]
+    },
+    {
+      "id": "unk_city_population",
+      "key": "city_population",
+      "applicability": "context",
+      "statement": "Population is unavailable: a Census API key is required and none is configured for this deployment.",
+      "impact": "medium",
+      "evidenceIds": [
+        "ev_city_population"
+      ]
+    },
+    {
+      "id": "unk_city_median_income",
+      "key": "city_median_income",
+      "applicability": "context",
+      "statement": "Median household income is unavailable: a Census API key is required and none is configured for this deployment.",
+      "impact": "medium",
+      "evidenceIds": [
+        "ev_city_median_income"
+      ]
+    },
+    {
+      "id": "unk_city_median_home_value",
+      "key": "city_median_home_value",
+      "applicability": "context",
+      "statement": "Median owner-occupied home value is unavailable: a Census API key is required and none is configured for this deployment.",
+      "impact": "medium",
+      "evidenceIds": [
+        "ev_city_median_home_value"
+      ]
+    },
+    {
+      "id": "unk_city_vacancy_pct",
+      "key": "city_vacancy_pct",
+      "applicability": "context",
+      "statement": "Housing vacancy is unavailable: a Census API key is required and none is configured for this deployment.",
+      "impact": "medium",
+      "evidenceIds": [
+        "ev_city_vacancy_pct"
+      ]
+    },
+    {
+      "id": "unk_county_gaps",
+      "key": "county_gaps",
+      "applicability": "context",
+      "statement": "County market gap scan is unavailable: the Census API requires a key and none is configured for this deployment.",
+      "impact": "medium",
+      "evidenceIds": [
+        "ev_county_gaps"
+      ]
+    },
+    {
+      "id": "unk_market_rent",
+      "key": "market_rent",
+      "applicability": "site",
+      "statement": "Achievable rents and absorption are not established by any source in this brief.",
+      "impact": "high",
+      "evidenceIds": []
+    },
+    {
+      "id": "unk_construction_cost",
+      "key": "construction_cost",
+      "applicability": "site",
+      "statement": "Construction cost is not established by any source in this brief.",
+      "impact": "high",
+      "evidenceIds": []
+    },
+    {
+      "id": "unk_utility_capacity",
+      "key": "utility_capacity",
+      "applicability": "site",
+      "statement": "Utility capacity and connection cost are not established by any source in this brief.",
+      "impact": "high",
+      "evidenceIds": []
+    },
+    {
+      "id": "unk_environmental",
+      "key": "environmental",
+      "applicability": "site",
+      "statement": "Environmental condition and floodplain status are not established by any source in this brief.",
+      "impact": "high",
+      "evidenceIds": []
+    },
+    {
+      "id": "unk_title",
+      "key": "title",
+      "applicability": "site",
+      "statement": "Ownership, liens, and easements are not established by any source in this brief.",
+      "impact": "high",
+      "evidenceIds": []
+    }
+  ],
+  "conflicts": [],
+  "sources": {
+    "parcel": "address_matched",
+    "zoning": "no_key",
+    "city": "no_key",
+    "gaps": "no_key"
+  },
+  "scenarios": [
+    {
+      "schema": "scenario.v1",
+      "id": "scn_residential_infill",
+      "objective": "residential_infill",
+      "variant": "primary",
+      "label": "Residential infill",
+      "differsBy": null,
+      "formulaVersion": "diligence-capacity.v1 + studio.screening.v1",
+      "inputs": [
+        {
+          "key": "lotSqft",
+          "value": 57397,
+          "basis": "source_observed",
+          "evidenceId": "ev_parcel_lot_area",
+          "label": "Lot area (unconfirmed parcel match)",
+          "units": "sq ft",
+          "unverified": true
+        },
+        {
+          "key": "efficiencyPct",
+          "value": 82,
+          "basis": "default_assumption",
+          "assumptionId": "as_efficiencyPct",
+          "label": "Net-to-gross efficiency",
+          "units": "%"
+        },
+        {
+          "key": "unitSqft",
+          "value": 850,
+          "basis": "default_assumption",
+          "assumptionId": "as_unitSqft",
+          "label": "Average unit size",
+          "units": "sq ft"
+        },
+        {
+          "key": "parkingPerUnit",
+          "value": 1,
+          "basis": "default_assumption",
+          "assumptionId": "as_parkingPerUnit",
+          "label": "Parking spaces per unit",
+          "units": "spaces/unit"
+        },
+        {
+          "key": "parkingSqftPerSpace",
+          "value": 325,
+          "basis": "default_assumption",
+          "assumptionId": "as_parkingSqftPerSpace",
+          "label": "Surface parking area per space, including aisles",
+          "units": "sq ft/space"
+        },
+        {
+          "key": "coveragePct",
+          "value": 55,
+          "basis": "default_assumption",
+          "assumptionId": "as_coveragePct",
+          "label": "Lot coverage by building footprint",
+          "units": "%"
+        },
+        {
+          "key": "floors",
+          "value": 3,
+          "basis": "default_assumption",
+          "assumptionId": "as_floors",
+          "label": "Floors",
+          "units": "floors"
+        },
+        {
+          "key": "hardCostPerSqft",
+          "value": 210,
+          "basis": "user_assumption",
+          "assumptionId": "as_hardCostPerSqft",
+          "label": "Hard construction cost",
+          "units": "$/gross sq ft"
+        },
+        {
+          "key": "softPctOfHard",
+          "value": 20,
+          "basis": "default_assumption",
+          "assumptionId": "as_softPctOfHard",
+          "label": "Soft costs as a share of hard cost",
+          "units": "%"
+        },
+        {
+          "key": "landPrice",
+          "value": null,
+          "basis": "not_provided",
+          "assumptionId": "as_landPrice",
+          "label": "Land or acquisition price",
+          "units": "$"
+        },
+        {
+          "key": "rentPerSqftMonth",
+          "value": 1.6,
+          "basis": "user_assumption",
+          "assumptionId": "as_rentPerSqftMonth",
+          "label": "Residential rent",
+          "units": "$/sq ft/month"
+        },
+        {
+          "key": "vacancyPct",
+          "value": 7,
+          "basis": "default_assumption",
+          "assumptionId": "as_vacancyPct",
+          "label": "Vacancy and credit loss",
+          "units": "%"
+        },
+        {
+          "key": "opexPctOfEgi",
+          "value": 40,
+          "basis": "default_assumption",
+          "assumptionId": "as_opexPctOfEgi",
+          "label": "Operating expenses as a share of effective gross income",
+          "units": "%"
+        },
+        {
+          "key": "capRatePct",
+          "value": 7,
+          "basis": "user_assumption",
+          "assumptionId": "as_capRatePct",
+          "label": "Exit or market cap rate",
+          "units": "%"
+        },
+        {
+          "key": "otherAnnualIncome",
+          "value": 0,
+          "basis": "default_assumption",
+          "assumptionId": "as_otherAnnualIncome",
+          "label": "Other annual income (an explicit zero unless entered)",
+          "units": "$/year"
+        }
+      ],
+      "outputs": {
+        "footprintSqft": 31568,
+        "grossSqft": 94705,
+        "netSqft": 77658,
+        "units": 91,
+        "retailNetSqft": null,
+        "parkingSpaces": 91,
+        "parkingAreaSqft": 29575,
+        "siteUsedSqft": 61143,
+        "surfaceParkingFits": false,
+        "newFootprint": true,
+        "hardCostSubtotal": 19888050,
+        "softCostSubtotal": 3977610,
+        "knownCostSubtotal": 23865660,
+        "totalDevelopmentCost": null,
+        "potentialGrossIncome": 1485120,
+        "effectiveGrossIncome": 1381162,
+        "noi": 828697,
+        "yieldOnCost": null,
+        "capRate": 0.07,
+        "spread": null,
+        "missingCostCategories": [
+          "acquisition",
+          "closing",
+          "demolition_remediation",
+          "site_utilities",
+          "permits_fees",
+          "contingency",
+          "financing",
+          "carrying",
+          "reserves"
+        ],
+        "missingIncomeInputs": []
+      },
+      "formulas": {
+        "footprintSqft": "lotSqft x coveragePct",
+        "grossSqft": "footprintSqft x floors",
+        "netSqft": "(grossSqft - retailGrossSqft) x efficiency",
+        "units": "floor(netSqft / unitSqft)",
+        "parkingSpaces": "ceil(units x parkingPerUnit) + retailParkingSpaces",
+        "parkingAreaSqft": "parkingSpaces x parkingSqftPerSpace",
+        "surfaceParkingFits": "footprintSqft + parkingAreaSqft <= lotSqft"
+      },
+      "notes": [
+        "Screening assumptions, not verified market data, an appraisal, or financing approval.",
+        "Revenue uses modeled capacity or an explicitly assumed unit count, not fitted units. Commercial net area uses the declared efficiency.",
+        "Vacancy / collection loss applies uniformly to all potential income. Operating expenses exclude debt service. Financing and carrying costs are explicit allowances, not a draw schedule.",
+        "Cost categories must be non-overlapping. Do not put a combined contractor total in hard construction and repeat included scope in other lines.",
+        "User source note: Labeled screening assumptions from the Site Diligence Agent. Not verified figures.",
+        "Total development cost is null because 9 cost categories are unknown (acquisition, closing, demolition_remediation, site_utilities, permits_fees, contingency, financing, carrying, reserves). The known subtotal is not a total."
+      ],
+      "readiness": {
+        "category": "incomplete",
+        "criteria": [
+          "Physical program computed from labeled inputs.",
+          "Financial screen incomplete: cost basis incomplete (acquisition, closing, demolition_remediation, site_utilities, permits_fees, contingency, financing, carrying, reserves)."
+        ]
+      },
+      "uncertainties": [
+        "Surface parking for this program does not fit beside the footprint on the lot; structured parking, shared parking, or a smaller program would be needed.",
+        "Cost categories unknown: acquisition, closing, demolition_remediation, site_utilities, permits_fees, contingency, financing, carrying, reserves."
+      ],
+      "dependencies": [
+        "q_zoning_district",
+        "q_zoning_dimensional",
+        "q_parcel_boundary",
+        "q_parking",
+        "q_utilities",
+        "q_market_rents",
+        "q_construction_cost"
+      ],
+      "financeAvailable": true,
+      "sensitivity": [
+        {
+          "assumptionId": "as_hardCostPerSqft",
+          "key": "hardCostPerSqft",
+          "change": "+20%",
+          "outputs": {
+            "units": 91,
+            "grossSqft": 94705,
+            "parkingSpaces": 91,
+            "surfaceParkingFits": false,
+            "knownCostSubtotal": 28638792,
+            "noi": 828697,
+            "yieldOnCost": null,
+            "spread": null
+          },
+          "deltas": {
+            "units": 0,
+            "yieldOnCost": null
+          },
+          "readinessChanged": false,
+          "parkingFitChanged": false
+        },
+        {
+          "assumptionId": "as_hardCostPerSqft",
+          "key": "hardCostPerSqft",
+          "change": "-20%",
+          "outputs": {
+            "units": 91,
+            "grossSqft": 94705,
+            "parkingSpaces": 91,
+            "surfaceParkingFits": false,
+            "knownCostSubtotal": 19092528,
+            "noi": 828697,
+            "yieldOnCost": null,
+            "spread": null
+          },
+          "deltas": {
+            "units": 0,
+            "yieldOnCost": null
+          },
+          "readinessChanged": false,
+          "parkingFitChanged": false
+        },
+        {
+          "assumptionId": "as_rentPerSqftMonth",
+          "key": "rentPerSqftMonth",
+          "change": "+20%",
+          "outputs": {
+            "units": 91,
+            "grossSqft": 94705,
+            "parkingSpaces": 91,
+            "surfaceParkingFits": false,
+            "knownCostSubtotal": 23865660,
+            "noi": 994436,
+            "yieldOnCost": null,
+            "spread": null
+          },
+          "deltas": {
+            "units": 0,
+            "yieldOnCost": null
+          },
+          "readinessChanged": false,
+          "parkingFitChanged": false
+        },
+        {
+          "assumptionId": "as_rentPerSqftMonth",
+          "key": "rentPerSqftMonth",
+          "change": "-20%",
+          "outputs": {
+            "units": 91,
+            "grossSqft": 94705,
+            "parkingSpaces": 91,
+            "surfaceParkingFits": false,
+            "knownCostSubtotal": 23865660,
+            "noi": 662958,
+            "yieldOnCost": null,
+            "spread": null
+          },
+          "deltas": {
+            "units": 0,
+            "yieldOnCost": null
+          },
+          "readinessChanged": false,
+          "parkingFitChanged": false
+        },
+        {
+          "assumptionId": "as_floors",
+          "key": "floors",
+          "change": "+1 floor",
+          "outputs": {
+            "units": 121,
+            "grossSqft": 126273,
+            "parkingSpaces": 121,
+            "surfaceParkingFits": false,
+            "knownCostSubtotal": 31820796,
+            "noi": 1101894,
+            "yieldOnCost": null,
+            "spread": null
+          },
+          "deltas": {
+            "units": 30,
+            "yieldOnCost": null
+          },
+          "readinessChanged": false,
+          "parkingFitChanged": false
+        },
+        {
+          "assumptionId": "as_floors",
+          "key": "floors",
+          "change": "-1 floor",
+          "outputs": {
+            "units": 60,
+            "grossSqft": 63137,
+            "parkingSpaces": 60,
+            "surfaceParkingFits": true,
+            "knownCostSubtotal": 15910524,
+            "noi": 546394,
+            "yieldOnCost": null,
+            "spread": null
+          },
+          "deltas": {
+            "units": -31,
+            "yieldOnCost": null
+          },
+          "readinessChanged": false,
+          "parkingFitChanged": true
+        }
+      ],
+      "coverage": {
+        "siteAvailable": 1,
+        "siteRequired": 4,
+        "contextAvailable": 0,
+        "contextRequired": 5,
+        "missing": [
+          "parcel_identity",
+          "parcel_lot_area",
+          "zoning_envelope",
+          "city_population",
+          "city_median_income",
+          "city_median_home_value",
+          "city_vacancy_pct",
+          "county_gaps"
+        ],
+        "category": "thin",
+        "criteria": "substantial: 75% or more of required keys available; partial: 40% to 74%; thin: below 40%."
+      }
+    },
+    {
+      "schema": "scenario.v1",
+      "id": "scn_residential_infill_lower_density",
+      "objective": "residential_infill",
+      "variant": "lower_density",
+      "label": "Lower-density comparator",
+      "differsBy": "One fewer floor; everything else held equal.",
+      "formulaVersion": "diligence-capacity.v1 + studio.screening.v1",
+      "inputs": [
+        {
+          "key": "lotSqft",
+          "value": 57397,
+          "basis": "source_observed",
+          "evidenceId": "ev_parcel_lot_area",
+          "label": "Lot area (unconfirmed parcel match)",
+          "units": "sq ft",
+          "unverified": true
+        },
+        {
+          "key": "efficiencyPct",
+          "value": 82,
+          "basis": "default_assumption",
+          "assumptionId": "as_efficiencyPct",
+          "label": "Net-to-gross efficiency",
+          "units": "%"
+        },
+        {
+          "key": "unitSqft",
+          "value": 850,
+          "basis": "default_assumption",
+          "assumptionId": "as_unitSqft",
+          "label": "Average unit size",
+          "units": "sq ft"
+        },
+        {
+          "key": "parkingPerUnit",
+          "value": 1,
+          "basis": "default_assumption",
+          "assumptionId": "as_parkingPerUnit",
+          "label": "Parking spaces per unit",
+          "units": "spaces/unit"
+        },
+        {
+          "key": "parkingSqftPerSpace",
+          "value": 325,
+          "basis": "default_assumption",
+          "assumptionId": "as_parkingSqftPerSpace",
+          "label": "Surface parking area per space, including aisles",
+          "units": "sq ft/space"
+        },
+        {
+          "key": "coveragePct",
+          "value": 55,
+          "basis": "default_assumption",
+          "assumptionId": "as_coveragePct",
+          "label": "Lot coverage by building footprint",
+          "units": "%"
+        },
+        {
+          "key": "floors",
+          "value": 2,
+          "basis": "comparator_variation",
+          "assumptionId": "as_floors",
+          "label": "Floors",
+          "units": "floors"
+        },
+        {
+          "key": "hardCostPerSqft",
+          "value": 210,
+          "basis": "user_assumption",
+          "assumptionId": "as_hardCostPerSqft",
+          "label": "Hard construction cost",
+          "units": "$/gross sq ft"
+        },
+        {
+          "key": "softPctOfHard",
+          "value": 20,
+          "basis": "default_assumption",
+          "assumptionId": "as_softPctOfHard",
+          "label": "Soft costs as a share of hard cost",
+          "units": "%"
+        },
+        {
+          "key": "landPrice",
+          "value": null,
+          "basis": "not_provided",
+          "assumptionId": "as_landPrice",
+          "label": "Land or acquisition price",
+          "units": "$"
+        },
+        {
+          "key": "rentPerSqftMonth",
+          "value": 1.6,
+          "basis": "user_assumption",
+          "assumptionId": "as_rentPerSqftMonth",
+          "label": "Residential rent",
+          "units": "$/sq ft/month"
+        },
+        {
+          "key": "vacancyPct",
+          "value": 7,
+          "basis": "default_assumption",
+          "assumptionId": "as_vacancyPct",
+          "label": "Vacancy and credit loss",
+          "units": "%"
+        },
+        {
+          "key": "opexPctOfEgi",
+          "value": 40,
+          "basis": "default_assumption",
+          "assumptionId": "as_opexPctOfEgi",
+          "label": "Operating expenses as a share of effective gross income",
+          "units": "%"
+        },
+        {
+          "key": "capRatePct",
+          "value": 7,
+          "basis": "user_assumption",
+          "assumptionId": "as_capRatePct",
+          "label": "Exit or market cap rate",
+          "units": "%"
+        },
+        {
+          "key": "otherAnnualIncome",
+          "value": 0,
+          "basis": "default_assumption",
+          "assumptionId": "as_otherAnnualIncome",
+          "label": "Other annual income (an explicit zero unless entered)",
+          "units": "$/year"
+        }
+      ],
+      "outputs": {
+        "footprintSqft": 31568,
+        "grossSqft": 63137,
+        "netSqft": 51772,
+        "units": 60,
+        "retailNetSqft": null,
+        "parkingSpaces": 60,
+        "parkingAreaSqft": 19500,
+        "siteUsedSqft": 51068,
+        "surfaceParkingFits": true,
+        "newFootprint": true,
+        "hardCostSubtotal": 13258770,
+        "softCostSubtotal": 2651754,
+        "knownCostSubtotal": 15910524,
+        "totalDevelopmentCost": null,
+        "potentialGrossIncome": 979200,
+        "effectiveGrossIncome": 910656,
+        "noi": 546394,
+        "yieldOnCost": null,
+        "capRate": 0.07,
+        "spread": null,
+        "missingCostCategories": [
+          "acquisition",
+          "closing",
+          "demolition_remediation",
+          "site_utilities",
+          "permits_fees",
+          "contingency",
+          "financing",
+          "carrying",
+          "reserves"
+        ],
+        "missingIncomeInputs": []
+      },
+      "formulas": {
+        "footprintSqft": "lotSqft x coveragePct",
+        "grossSqft": "footprintSqft x floors",
+        "netSqft": "(grossSqft - retailGrossSqft) x efficiency",
+        "units": "floor(netSqft / unitSqft)",
+        "parkingSpaces": "ceil(units x parkingPerUnit) + retailParkingSpaces",
+        "parkingAreaSqft": "parkingSpaces x parkingSqftPerSpace",
+        "surfaceParkingFits": "footprintSqft + parkingAreaSqft <= lotSqft"
+      },
+      "notes": [
+        "Screening assumptions, not verified market data, an appraisal, or financing approval.",
+        "Revenue uses modeled capacity or an explicitly assumed unit count, not fitted units. Commercial net area uses the declared efficiency.",
+        "Vacancy / collection loss applies uniformly to all potential income. Operating expenses exclude debt service. Financing and carrying costs are explicit allowances, not a draw schedule.",
+        "Cost categories must be non-overlapping. Do not put a combined contractor total in hard construction and repeat included scope in other lines.",
+        "User source note: Labeled screening assumptions from the Site Diligence Agent. Not verified figures.",
+        "Total development cost is null because 9 cost categories are unknown (acquisition, closing, demolition_remediation, site_utilities, permits_fees, contingency, financing, carrying, reserves). The known subtotal is not a total."
+      ],
+      "readiness": {
+        "category": "incomplete",
+        "criteria": [
+          "Physical program computed from labeled inputs.",
+          "Financial screen incomplete: cost basis incomplete (acquisition, closing, demolition_remediation, site_utilities, permits_fees, contingency, financing, carrying, reserves)."
+        ]
+      },
+      "uncertainties": [
+        "Cost categories unknown: acquisition, closing, demolition_remediation, site_utilities, permits_fees, contingency, financing, carrying, reserves."
+      ],
+      "dependencies": [
+        "q_zoning_district",
+        "q_zoning_dimensional",
+        "q_parcel_boundary",
+        "q_parking",
+        "q_utilities",
+        "q_market_rents",
+        "q_construction_cost"
+      ],
+      "financeAvailable": true,
+      "sensitivity": [],
+      "coverage": {
+        "siteAvailable": 1,
+        "siteRequired": 4,
+        "contextAvailable": 0,
+        "contextRequired": 5,
+        "missing": [
+          "parcel_identity",
+          "parcel_lot_area",
+          "zoning_envelope",
+          "city_population",
+          "city_median_income",
+          "city_median_home_value",
+          "city_vacancy_pct",
+          "county_gaps"
+        ],
+        "category": "thin",
+        "criteria": "substantial: 75% or more of required keys available; partial: 40% to 74%; thin: below 40%."
+      }
+    }
+  ],
+  "baselinePlan": [
+    {
+      "questionId": "q_zoning_district",
+      "question": "Which zoning district governs the parcel, and is the proposed use permitted by right, conditionally, or not at all?",
+      "area": "entitlement",
+      "impact": "high",
+      "method": "Read the adopted zoning map and ordinance text for the parcel; confirm with the planning department in writing.",
+      "source": "Municipal planning or zoning office; adopted zoning ordinance.",
+      "reason": "Required evidence is unavailable: zoning_envelope.",
+      "priority": 1,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_zoning_dimensional",
+      "question": "What height, setback, density, lot coverage, and parking minimums apply, and does the scenario massing fit inside them?",
+      "area": "entitlement",
+      "impact": "high",
+      "method": "Compare the ordinance dimensional table against the scenario footprint, floors, and parking count.",
+      "source": "Adopted zoning ordinance; planning staff pre-application meeting.",
+      "reason": "Required evidence is unavailable: zoning_envelope.",
+      "priority": 2,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_parcel_boundary",
+      "question": "Does a survey confirm the parcel boundary and lot area used in the capacity math?",
+      "area": "site",
+      "impact": "high",
+      "method": "Commission an ALTA or boundary survey; compare the surveyed area with the provider polygon.",
+      "source": "Licensed surveyor; recorded plat.",
+      "reason": "Required for any site of this kind; no source in this brief answers it.",
+      "priority": 3,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_ownership_title",
+      "question": "Who holds title, and what liens, easements, or covenants encumber the parcel?",
+      "area": "site",
+      "impact": "high",
+      "method": "Order a title commitment; review recorded easements and restrictions.",
+      "source": "Title company; county recorder.",
+      "reason": "Required for any site of this kind; no source in this brief answers it.",
+      "priority": 4,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_utilities",
+      "question": "Do water, sewer, electric, and gas have capacity for the proposed program, and what are the connection costs?",
+      "area": "infrastructure",
+      "impact": "high",
+      "method": "Request will-serve letters and capacity confirmation from each utility.",
+      "source": "Municipal utilities; electric and gas providers.",
+      "reason": "Required for any site of this kind; no source in this brief answers it.",
+      "priority": 5,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_environmental",
+      "question": "What do a Phase I environmental site assessment, floodplain determination, and soils information show for the parcel?",
+      "area": "site",
+      "impact": "high",
+      "method": "Commission a Phase I ESA; check the FEMA flood map; review soils and any geotechnical borings.",
+      "source": "Environmental consultant; FEMA Flood Map Service Center.",
+      "reason": "Required for any site of this kind; no source in this brief answers it.",
+      "priority": 6,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_market_rents",
+      "question": "What rents, absorption, and concessions are achievable for this program in this submarket today?",
+      "area": "market",
+      "impact": "high",
+      "method": "Collect current rent comparables and lease-up history from local brokers and operators.",
+      "source": "Local brokers; property managers; recent lease comparables.",
+      "reason": "Required evidence is unavailable: market_rent.",
+      "priority": 7,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_construction_cost",
+      "question": "What hard and soft costs does a contractor or estimator support for this program and site?",
+      "area": "cost",
+      "impact": "high",
+      "method": "Obtain a conceptual estimate from a general contractor or cost estimator on the scenario program.",
+      "source": "General contractor; cost estimator.",
+      "reason": "Required evidence is unavailable: construction_cost.",
+      "priority": 8,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_land_price",
+      "question": "What acquisition price and terms does the seller support, and how does that compare with an appraisal?",
+      "area": "cost",
+      "impact": "medium",
+      "method": "Obtain an asking price or letter of intent terms; commission an appraisal if warranted.",
+      "source": "Seller or listing broker; licensed appraiser.",
+      "reason": "Required evidence is unavailable: land_price.",
+      "priority": 9,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_cap_rate",
+      "question": "What exit or market cap rate do recent sales of comparable assets support?",
+      "area": "market",
+      "impact": "medium",
+      "method": "Review recent comparable sales and investor surveys for the asset class and submarket.",
+      "source": "Investment sales brokers; recorded transactions.",
+      "reason": "Required evidence is unavailable: cap_rate.",
+      "priority": 10,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_parking",
+      "question": "Can the required parking fit on the site, or will structured parking, shared parking, or a variance be needed?",
+      "area": "entitlement",
+      "impact": "medium",
+      "method": "Compare the ordinance parking minimum with the scenario surface parking area and the remaining lot.",
+      "source": "Zoning ordinance; site plan test fit.",
+      "reason": "Required for any site of this kind; no source in this brief answers it.",
+      "priority": 11,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_incentives",
+      "question": "Which incentive programs, if any, apply to this parcel, and what would the council or redevelopment commission need to approve?",
+      "area": "finance",
+      "impact": "medium",
+      "method": "Ask the economic development office; read recent council and redevelopment commission minutes. Never assume availability.",
+      "source": "Economic development office; council records.",
+      "reason": "Required for any site of this kind; no source in this brief answers it.",
+      "priority": 12,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_access",
+      "question": "What street access, curb cuts, and transportation constraints apply to the frontage?",
+      "area": "infrastructure",
+      "impact": "medium",
+      "method": "Confirm access permits with the street authority; review any corridor plans.",
+      "source": "Municipal engineering; state DOT if a state route.",
+      "reason": "Required for any site of this kind; no source in this brief answers it.",
+      "priority": 13,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_city_context",
+      "question": "What are the city's fundamentals, since no Census read resolved for this brief?",
+      "area": "market",
+      "impact": "medium",
+      "method": "Obtain the ACS profile for the place directly from the Census, or configure a Census key.",
+      "source": "US Census ACS 5-year.",
+      "reason": "Required evidence is unavailable: city_population, city_median_income, city_median_home_value, city_vacancy_pct.",
+      "priority": 14,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_neighbors",
+      "question": "What are the adjacent uses, and how compatible is the proposed program with them?",
+      "area": "site",
+      "impact": "low",
+      "method": "Site visit; adjacent parcel use records; neighborhood plan review.",
+      "source": "Site visit; county assessor records.",
+      "reason": "Required for any site of this kind; no source in this brief answers it.",
+      "priority": 15,
+      "basis": "rules"
+    },
+    {
+      "questionId": "q_county_scope",
+      "question": "Do county-level business pattern gaps hold for this parcel's actual trade area?",
+      "area": "market",
+      "impact": "low",
+      "method": "Define a trade area and compare it with the county-level ratios before relying on them.",
+      "source": "Trade-area analysis; local business inventory.",
+      "reason": "Required for any site of this kind; no source in this brief answers it.",
+      "priority": 16,
+      "basis": "rules"
+    }
+  ],
+  "questionLibrary": [
+    {
+      "id": "q_zoning_district",
+      "text": "Which zoning district governs the parcel, and is the proposed use permitted by right, conditionally, or not at all?",
+      "area": "entitlement",
+      "impact": "high",
+      "method": "Read the adopted zoning map and ordinance text for the parcel; confirm with the planning department in writing.",
+      "source": "Municipal planning or zoning office; adopted zoning ordinance."
+    },
+    {
+      "id": "q_zoning_dimensional",
+      "text": "What height, setback, density, lot coverage, and parking minimums apply, and does the scenario massing fit inside them?",
+      "area": "entitlement",
+      "impact": "high",
+      "method": "Compare the ordinance dimensional table against the scenario footprint, floors, and parking count.",
+      "source": "Adopted zoning ordinance; planning staff pre-application meeting."
+    },
+    {
+      "id": "q_parcel_boundary",
+      "text": "Does a survey confirm the parcel boundary and lot area used in the capacity math?",
+      "area": "site",
+      "impact": "high",
+      "method": "Commission an ALTA or boundary survey; compare the surveyed area with the provider polygon.",
+      "source": "Licensed surveyor; recorded plat."
+    },
+    {
+      "id": "q_ownership_title",
+      "text": "Who holds title, and what liens, easements, or covenants encumber the parcel?",
+      "area": "site",
+      "impact": "high",
+      "method": "Order a title commitment; review recorded easements and restrictions.",
+      "source": "Title company; county recorder."
+    },
+    {
+      "id": "q_utilities",
+      "text": "Do water, sewer, electric, and gas have capacity for the proposed program, and what are the connection costs?",
+      "area": "infrastructure",
+      "impact": "high",
+      "method": "Request will-serve letters and capacity confirmation from each utility.",
+      "source": "Municipal utilities; electric and gas providers."
+    },
+    {
+      "id": "q_environmental",
+      "text": "What do a Phase I environmental site assessment, floodplain determination, and soils information show for the parcel?",
+      "area": "site",
+      "impact": "high",
+      "method": "Commission a Phase I ESA; check the FEMA flood map; review soils and any geotechnical borings.",
+      "source": "Environmental consultant; FEMA Flood Map Service Center."
+    },
+    {
+      "id": "q_market_rents",
+      "text": "What rents, absorption, and concessions are achievable for this program in this submarket today?",
+      "area": "market",
+      "impact": "high",
+      "method": "Collect current rent comparables and lease-up history from local brokers and operators.",
+      "source": "Local brokers; property managers; recent lease comparables."
+    },
+    {
+      "id": "q_construction_cost",
+      "text": "What hard and soft costs does a contractor or estimator support for this program and site?",
+      "area": "cost",
+      "impact": "high",
+      "method": "Obtain a conceptual estimate from a general contractor or cost estimator on the scenario program.",
+      "source": "General contractor; cost estimator."
+    },
+    {
+      "id": "q_land_price",
+      "text": "What acquisition price and terms does the seller support, and how does that compare with an appraisal?",
+      "area": "cost",
+      "impact": "medium",
+      "method": "Obtain an asking price or letter of intent terms; commission an appraisal if warranted.",
+      "source": "Seller or listing broker; licensed appraiser."
+    },
+    {
+      "id": "q_cap_rate",
+      "text": "What exit or market cap rate do recent sales of comparable assets support?",
+      "area": "market",
+      "impact": "medium",
+      "method": "Review recent comparable sales and investor surveys for the asset class and submarket.",
+      "source": "Investment sales brokers; recorded transactions."
+    },
+    {
+      "id": "q_parking",
+      "text": "Can the required parking fit on the site, or will structured parking, shared parking, or a variance be needed?",
+      "area": "entitlement",
+      "impact": "medium",
+      "method": "Compare the ordinance parking minimum with the scenario surface parking area and the remaining lot.",
+      "source": "Zoning ordinance; site plan test fit."
+    },
+    {
+      "id": "q_incentives",
+      "text": "Which incentive programs, if any, apply to this parcel, and what would the council or redevelopment commission need to approve?",
+      "area": "finance",
+      "impact": "medium",
+      "method": "Ask the economic development office; read recent council and redevelopment commission minutes. Never assume availability.",
+      "source": "Economic development office; council records."
+    },
+    {
+      "id": "q_demand",
+      "text": "What current local evidence, beyond the Census vintage, supports demand for this program?",
+      "area": "market",
+      "impact": "medium",
+      "method": "Review recent permits, absorption, employer announcements, and vacancy reports for the submarket.",
+      "source": "Building department permit logs; local economic development reports."
+    },
+    {
+      "id": "q_access",
+      "text": "What street access, curb cuts, and transportation constraints apply to the frontage?",
+      "area": "infrastructure",
+      "impact": "medium",
+      "method": "Confirm access permits with the street authority; review any corridor plans.",
+      "source": "Municipal engineering; state DOT if a state route."
+    },
+    {
+      "id": "q_neighbors",
+      "text": "What are the adjacent uses, and how compatible is the proposed program with them?",
+      "area": "site",
+      "impact": "low",
+      "method": "Site visit; adjacent parcel use records; neighborhood plan review.",
+      "source": "Site visit; county assessor records."
+    },
+    {
+      "id": "q_county_scope",
+      "text": "Do county-level business pattern gaps hold for this parcel's actual trade area?",
+      "area": "market",
+      "impact": "low",
+      "method": "Define a trade area and compare it with the county-level ratios before relying on them.",
+      "source": "Trade-area analysis; local business inventory."
+    },
+    {
+      "id": "q_census_vintage",
+      "text": "How have population, income, home values, and vacancy moved since the Census vintage in this brief?",
+      "area": "market",
+      "impact": "medium",
+      "method": "Compare the ACS vintage with the newest available estimates and local indicators.",
+      "source": "US Census ACS newer vintage; local sources."
+    },
+    {
+      "id": "q_city_context",
+      "text": "What are the city's fundamentals, since no Census read resolved for this brief?",
+      "area": "market",
+      "impact": "medium",
+      "method": "Obtain the ACS profile for the place directly from the Census, or configure a Census key.",
+      "source": "US Census ACS 5-year."
+    }
+  ],
+  "reasoning": {
+    "basis": "fixture",
+    "schema": "diligence.reasoning.v1",
+    "validated": true,
+    "model": {
+      "provider": "fixture",
+      "requestedModel": "fixture/deterministic-rules-v1",
+      "returnedModel": "fixture/deterministic-rules-v1",
+      "requestId": null,
+      "latencyMs": 0,
+      "attempts": 1,
+      "usage": null,
+      "costEstimate": null,
+      "finishReason": "fixture"
+    },
+    "output": {
+      "schema": "diligence.reasoning.v1",
+      "executive_assessment": "This is a fixture interpretation produced by rules, not by a language model. Site evidence resolved for 1 site-level records and 1 context records; 10 required or expected records are unavailable. The primary scenario is incomplete with 91 units on 94705 gross square feet. The decisive unknowns are entitlement, site condition, and market inputs that no source in this brief establishes. The next step is verification, not commitment.",
+      "supported_findings": [
+        {
+          "statement": "Site point resolved from \"300 N High St, Muncie, IN\" to 40.19628, -85.387806 (address match via osm).",
+          "evidence_ids": [
+            "ev_site_point"
+          ],
+          "scope": "point",
+          "stale": false
+        },
+        {
+          "statement": "County: Delaware County, IN (FIPS 18035).",
+          "evidence_ids": [
+            "ev_county"
+          ],
+          "scope": "county",
+          "stale": false
+        }
+      ],
+      "scenario_comparison": [
+        {
+          "scenario_id": "scn_residential_infill",
+          "fit": "comparable",
+          "rationale": "Primary program as configured; readiness incomplete.",
+          "evidence_ids": [
+            "ev_parcel_lot_area"
+          ],
+          "assumption_ids": [
+            "as_coveragePct",
+            "as_floors",
+            "as_unitSqft"
+          ]
+        },
+        {
+          "scenario_id": "scn_residential_infill_lower_density",
+          "fit": "stronger",
+          "rationale": "One fewer floor; everything else held equal. Readiness incomplete.",
+          "evidence_ids": [
+            "ev_parcel_lot_area"
+          ],
+          "assumption_ids": [
+            "as_coveragePct",
+            "as_floors",
+            "as_unitSqft"
+          ]
+        }
+      ],
+      "decisive_unknowns": [
+        {
+          "unknown_id": "unk_parcel_identity",
+          "statement": "Parcel at 300 N HIGH ST, MUNCIE from Delaware County via IndianaMap, matched by recorded address matching the query, not containment.",
+          "impact": "high",
+          "why": "A site-level fact the scenario depends on is not established by any source in this brief."
+        },
+        {
+          "unknown_id": "unk_parcel_lot_area",
+          "statement": "Lot area: 57,397 sq ft (computed from the provider polygon, not a survey).",
+          "impact": "high",
+          "why": "A site-level fact the scenario depends on is not established by any source in this brief."
+        },
+        {
+          "unknown_id": "unk_zoning_envelope",
+          "statement": "No zoning envelope is available: no zoning data provider is configured for this deployment (gridics, zoneomics).",
+          "impact": "high",
+          "why": "A site-level fact the scenario depends on is not established by any source in this brief."
+        },
+        {
+          "unknown_id": "unk_market_rent",
+          "statement": "Achievable rents and absorption are not established by any source in this brief.",
+          "impact": "high",
+          "why": "A site-level fact the scenario depends on is not established by any source in this brief."
+        },
+        {
+          "unknown_id": "unk_construction_cost",
+          "statement": "Construction cost is not established by any source in this brief.",
+          "impact": "high",
+          "why": "A site-level fact the scenario depends on is not established by any source in this brief."
+        },
+        {
+          "unknown_id": "unk_utility_capacity",
+          "statement": "Utility capacity and connection cost are not established by any source in this brief.",
+          "impact": "high",
+          "why": "A site-level fact the scenario depends on is not established by any source in this brief."
+        }
+      ],
+      "conflicts": [],
+      "investigation_plan": [
+        {
+          "question_id": "q_zoning_district",
+          "priority": 1,
+          "impact": "high",
+          "verification_method": "Read the adopted zoning map and ordinance text for the parcel; confirm with the planning department in writing.",
+          "rationale": "Ranked by the library impact tier; no model judgment was applied."
+        },
+        {
+          "question_id": "q_zoning_dimensional",
+          "priority": 2,
+          "impact": "high",
+          "verification_method": "Compare the ordinance dimensional table against the scenario footprint, floors, and parking count.",
+          "rationale": "Ranked by the library impact tier; no model judgment was applied."
+        },
+        {
+          "question_id": "q_parcel_boundary",
+          "priority": 3,
+          "impact": "high",
+          "verification_method": "Commission an ALTA or boundary survey; compare the surveyed area with the provider polygon.",
+          "rationale": "Ranked by the library impact tier; no model judgment was applied."
+        },
+        {
+          "question_id": "q_ownership_title",
+          "priority": 4,
+          "impact": "high",
+          "verification_method": "Order a title commitment; review recorded easements and restrictions.",
+          "rationale": "Ranked by the library impact tier; no model judgment was applied."
+        },
+        {
+          "question_id": "q_utilities",
+          "priority": 5,
+          "impact": "high",
+          "verification_method": "Request will-serve letters and capacity confirmation from each utility.",
+          "rationale": "Ranked by the library impact tier; no model judgment was applied."
+        },
+        {
+          "question_id": "q_environmental",
+          "priority": 6,
+          "impact": "high",
+          "verification_method": "Commission a Phase I ESA; check the FEMA flood map; review soils and any geotechnical borings.",
+          "rationale": "Ranked by the library impact tier; no model judgment was applied."
+        },
+        {
+          "question_id": "q_market_rents",
+          "priority": 7,
+          "impact": "high",
+          "verification_method": "Collect current rent comparables and lease-up history from local brokers and operators.",
+          "rationale": "Ranked by the library impact tier; no model judgment was applied."
+        },
+        {
+          "question_id": "q_construction_cost",
+          "priority": 8,
+          "impact": "high",
+          "verification_method": "Obtain a conceptual estimate from a general contractor or cost estimator on the scenario program.",
+          "rationale": "Ranked by the library impact tier; no model judgment was applied."
+        }
+      ],
+      "assumption_sensitivity": [
+        {
+          "assumption_id": "as_coveragePct",
+          "effect": "Lot coverage by building footprint drives the screen directly; it is a default assumption.",
+          "direction": "unclear"
+        },
+        {
+          "assumption_id": "as_floors",
+          "effect": "Floors drives the screen directly; it is a default assumption.",
+          "direction": "unclear"
+        },
+        {
+          "assumption_id": "as_hardCostPerSqft",
+          "effect": "Hard construction cost drives the screen directly; it is a user assumption.",
+          "direction": "unclear"
+        },
+        {
+          "assumption_id": "as_rentPerSqftMonth",
+          "effect": "Residential rent drives the screen directly; it is a user assumption.",
+          "direction": "unclear"
+        },
+        {
+          "assumption_id": "as_capRatePct",
+          "effect": "Exit or market cap rate drives the screen directly; it is a user assumption.",
+          "direction": "unclear"
+        }
+      ],
+      "limitations": [
+        "Fixture interpretation: produced by fixed rules for demonstration and testing, not by a model.",
+        "City and county records are context and do not describe the parcel.",
+        "Nothing here determines zoning compliance, entitlement, feasibility, or financial performance."
+      ]
+    },
+    "rejected": [],
+    "accepted": 27,
+    "packetHash": "23b51d9bbb5c0cc41dd66f82c44ad1712c25a80ca169c877fc5fe3180332347e",
+    "createdAt": "2026-09-19T23:35:56.222Z"
+  },
+  "limitations": [
+    "Decision support only. Nothing in this brief determines legal entitlement, zoning compliance, investment suitability, engineering feasibility, or financial performance.",
+    "City and county records are context for the place; they do not describe the parcel or its block.",
+    "A parcel polygon from a provider is not a survey, and a geocoded point is not a boundary. Ownership is not asserted.",
+    "Scenario outputs are arithmetic over labeled assumptions. A known cost subtotal is not a total development cost.",
+    "Unavailable evidence stays null. No value is estimated, defaulted, or filled from a similar place.",
+    "Model interpretation, where present, is labeled and validated against the packet; it adds no facts, numbers, or links of its own."
+  ],
+  "run": {
+    "id": "run_7879922180294f03",
+    "stages": [
+      {
+        "name": "site",
+        "status": "ok",
+        "ms": 1
+      },
+      {
+        "name": "evidence",
+        "status": "ok",
+        "ms": 616
+      },
+      {
+        "name": "scenarios",
+        "status": "ok",
+        "ms": 6
+      },
+      {
+        "name": "reason",
+        "status": "ok",
+        "ms": 3
+      }
+    ],
+    "evidenceHash": "ab54a2ad3af0a5fc050d73a1cad921a8bff6e349590a1b6d9057d8ef54849ca3",
+    "packetHash": "23b51d9bbb5c0cc41dd66f82c44ad1712c25a80ca169c877fc5fe3180332347e",
+    "packetBytes": 13793,
+    "inference": {
+      "mode": "fixture",
+      "provider": "fixture",
+      "outcome": "validated",
+      "reasons": [
+        "NEBIUS_API_KEY is not set",
+        "DILIGENCE_LIVE_INFERENCE is not 1",
+        "AI_BUDGET_APPROVAL_REFERENCE is not set",
+        "AI_APPROVED_BUDGET_USD must be a positive number",
+        "DILIGENCE_DAILY_BUDGET_USD must be positive and at or below AI_APPROVED_BUDGET_USD"
+      ],
+      "model": {
+        "provider": "fixture",
+        "requestedModel": "fixture/deterministic-rules-v1",
+        "returnedModel": "fixture/deterministic-rules-v1",
+        "requestId": null,
+        "latencyMs": 0,
+        "attempts": 1,
+        "usage": null,
+        "costEstimate": null,
+        "finishReason": "fixture"
+      },
+      "rejectedCount": 0,
+      "accepted": 27
+    },
+    "financeAvailable": true,
+    "limits": {
+      "queryMaxChars": 200,
+      "packetMaxBytes": 24000,
+      "maxOutputTokens": 1400,
+      "providerTimeoutMs": 20000,
+      "maxSavedBriefs": 50,
+      "guestTtlSeconds": 86400
+    },
+    "packetTruncated": []
+  },
+  "changes": null,
+  "summary": "Evidence coverage is thin: 1 of 4 site-level keys and 0 of 5 context keys resolved. The primary scenario (Residential infill) is incomplete, sized at 91 units on 94,705 gross square feet. 8 high-impact unknowns remain; 0 conflicting records were detected. The interpretation below is a labeled fixture, not a model.",
+  "sections": [
+    {
+      "id": "identity",
+      "title": "Site identity and objective"
+    },
+    {
+      "id": "executive",
+      "title": "Executive assessment",
+      "model": true
+    },
+    {
+      "id": "supported",
+      "title": "What the evidence supports",
+      "model": true
+    },
+    {
+      "id": "scenarios",
+      "title": "Scenario comparison",
+      "model": true
+    },
+    {
+      "id": "unknowns",
+      "title": "Decisive unknowns and conflicting evidence",
+      "model": true
+    },
+    {
+      "id": "plan",
+      "title": "Prioritized diligence plan",
+      "model": true
+    },
+    {
+      "id": "assumptions",
+      "title": "Assumptions and sensitivity",
+      "model": true
+    },
+    {
+      "id": "citations",
+      "title": "Citations and source dates"
+    },
+    {
+      "id": "limitations",
+      "title": "Limitations and scope"
+    },
+    {
+      "id": "metadata",
+      "title": "Model, run metadata, and brief version"
+    }
+  ],
+  "owner": {
+    "kind": "guest"
+  }
+}

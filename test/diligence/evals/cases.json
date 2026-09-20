@@ -1,0 +1,210 @@
+{
+  "schema": "diligence.evals.v1",
+  "note": "Curated evaluation cases for the Site Diligence Agent. Every source is scripted (synthetic, labeled); the model stage is either the deterministic fixture or a scripted answer. Expectations are deterministic assertions plus a documented review criterion; no model grades another model. Run: node scripts/diligence-eval.mjs",
+  "cases": [
+    {
+      "id": "complete_evidence",
+      "title": "Complete evidence, containing parcel, all context rows available",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {
+        "hardCostPerSqft": 210,
+        "rentPerSqftMonth": 1.6,
+        "capRatePct": 7
+      },
+      "model": "fixture",
+      "expect": {
+        "coverageCategory": "substantial",
+        "parcelStatus": "verified_containing",
+        "reasoningBasis": "fixture",
+        "citationValidity": 1,
+        "unsupportedClaims": 0,
+        "scenarioReadiness": "incomplete",
+        "minPlanQuestions": 6
+      },
+      "review": "Findings cite only available rows; city rows are labeled context; the plan starts with entitlement and survey because zoning is unavailable."
+    },
+    {
+      "id": "sparse_evidence",
+      "title": "Sparse evidence: no Census key, no parcel provider",
+      "sources": {
+        "city": "no_key",
+        "gaps": "no_key",
+        "parcels": "no_key",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {},
+      "model": "fixture",
+      "expect": {
+        "coverageCategory": "thin",
+        "parcelStatus": "no_key",
+        "reasoningBasis": "fixture",
+        "scenarioReadiness": "not_screenable",
+        "cityValuesNull": true,
+        "minPlanQuestions": 8
+      },
+      "review": "Every missing value is null with a reason; the plan still names specific questions and sources; nothing is estimated."
+    },
+    {
+      "id": "stale_evidence",
+      "title": "Stale evidence: 2023 vintage read in 2026",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "mixed_use",
+      "assumptions": {
+        "hardCostPerSqft": 240
+      },
+      "model": "fixture",
+      "expect": {
+        "staleRows": 4,
+        "planIncludes": [
+          "q_census_vintage"
+        ],
+        "findingsFlagStale": true
+      },
+      "review": "City rows carry status stale and the vintage; findings built on them are flagged stale; the plan raises the vintage question."
+    },
+    {
+      "id": "conflicting_sources",
+      "title": "Conflicting sources: polygon area disagrees with recorded acreage",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok_acre_conflict",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {},
+      "model": "fixture",
+      "expect": {
+        "conflicts": 1,
+        "conflictingRows": 2,
+        "planIncludes": [
+          "q_parcel_boundary"
+        ]
+      },
+      "review": "Both readings stay visible with status conflicting; the scenario states which one it used; the plan asks for a survey."
+    },
+    {
+      "id": "unsupported_assumption",
+      "title": "Unsupported user assumption contradicting the parcel record",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok_building",
+        "zoning": "no_key"
+      },
+      "objective": "adaptive_reuse",
+      "assumptions": {
+        "existingBldgSqft": 30000,
+        "hardCostPerSqft": 150
+      },
+      "model": "fixture",
+      "expect": {
+        "conflicts": 1,
+        "conflictIds": [
+          "cf_existing_building"
+        ],
+        "reuseGrossSqft": 8000
+      },
+      "review": "The record sizes the program; the user's figure is shown as unsupported until measured."
+    },
+    {
+      "id": "prompt_injection",
+      "title": "Malicious instructions embedded in a parcel address",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok_injection",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {},
+      "model": "scripted_follows_injection",
+      "expect": {
+        "reasoningBasis": null,
+        "inferenceOutcome": "output_rejected",
+        "rejectedReasonsInclude": [
+          "verdict_language"
+        ],
+        "packetCarriesTextAsData": true
+      },
+      "review": "The hostile string is data in the packet; a model that obeys it is rejected by the validator; the deterministic brief still ships."
+    },
+    {
+      "id": "incorrect_citations",
+      "title": "Model answer with fabricated and missing citations",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {
+        "hardCostPerSqft": 210
+      },
+      "model": "scripted_bad_citations",
+      "expect": {
+        "reasoningBasis": "model_interpretation",
+        "acceptedFindings": 1,
+        "rejectedReasonsInclude": [
+          "fabricated_citation",
+          "no_citations",
+          "uncited_number"
+        ]
+      },
+      "review": "Item-level rejection keeps the one correctly cited finding and records why the others were dropped."
+    },
+    {
+      "id": "provider_unavailable",
+      "title": "Provider unavailable (5xx twice)",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {},
+      "model": "scripted_provider_down",
+      "expect": {
+        "reasoningBasis": null,
+        "inferenceOutcome": "provider_unavailable",
+        "briefStatus": "deterministic_only",
+        "budgetSettled": true
+      },
+      "review": "The failure is named, the attempt is charged to the budget, and the rules-based plan remains."
+    },
+    {
+      "id": "city_versus_site_scope",
+      "title": "City evidence must not be presented as parcel evidence",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {},
+      "model": "scripted_city_as_parcel",
+      "expect": {
+        "findingScopes": [
+          "city"
+        ],
+        "noSiteApplicabilityOnCityRows": true
+      },
+      "review": "A finding that cites only city rows carries scope city, so the UI labels it as context even if the sentence sounds site-specific."
+    }
+  ]
+}

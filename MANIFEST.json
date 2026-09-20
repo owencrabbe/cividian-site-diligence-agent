@@ -1,0 +1,688 @@
+{
+  "schema": "cividian.public-edition-manifest.v1",
+  "generatedAt": "2026-09-20T18:18:37.567Z",
+  "sourceRepository": "owencrabbe/cividian (private)",
+  "sourceCommit": "c498074cadbf2add67bc431ff6924eb7387db744",
+  "branch": "feat/nebius-site-diligence-agent",
+  "sourceWorktreeDirty": false,
+  "licenseApplied": "Apache-2.0",
+  "entries": [
+    "api/diligence.js",
+    "api/guest.js",
+    "lib/diligence/standalone-server.mjs",
+    "lib/diligence/standalone-host.mjs",
+    "scripts/nebius-smoke.mjs",
+    "scripts/diligence-eval.mjs",
+    "scripts/demo-diligence.mjs",
+    "scripts/verify-diligence-judging.mjs",
+    "scripts/setup-diligence-live.mjs"
+  ],
+  "substituted": [
+    "lib/diligence/host.js",
+    "lib/auth.js"
+  ],
+  "packages": [
+    "jose",
+    "redis"
+  ],
+  "files": [
+    {
+      "path": ".env.example",
+      "bytes": 991,
+      "sha256": "57162e881be541d4249ecffe2f25f05300d99ff504dba9e357ef501faf76d262",
+      "origin": "generated",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 53,
+      "sha256": "c9dd39e751c0723d4d974a1a94cae992ad16f9c19242b05c68ebe1c6f11ac5b0",
+      "origin": "generated",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": ".nvmrc",
+      "bytes": 3,
+      "sha256": "68ca3fba3b7e864770cb61aeb306d4bd4354b68ab4dd38450860c5d823e42a53",
+      "origin": "generated",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "api/diligence.js",
+      "bytes": 5751,
+      "sha256": "296d487e43cf4c7717f565dfc80fba57904e0a3bc51bba6a07cd22eb68ce7a32",
+      "origin": "api/diligence.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "api/guest.js",
+      "bytes": 1406,
+      "sha256": "cad8cb1a9c6f021c11f8aad6ac7231262473c4cd7ec5c141beb5799547e7d4cf",
+      "origin": "api/guest.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "data/cities.js",
+      "bytes": 6511,
+      "sha256": "c08e2ea79ced27eeda358bffaad5d284215f691775bfa32b8f2d776e9bf4d412",
+      "origin": "data/cities.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "data/field-intel.js",
+      "bytes": 1864,
+      "sha256": "6076ea970b35ed9d2775a9fcbacfbd06c0a563aa7ca60fd6c8cfd6b60de67068",
+      "origin": "data/field-intel.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "diligence.html",
+      "bytes": 67456,
+      "sha256": "cdd78a2235e62241a3b7b87c40058a7c1ff14e623173fe1965c5b0351b60c308",
+      "origin": "diligence.html",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "docs/hackathon/API.md",
+      "bytes": 4285,
+      "sha256": "a1015431046344afc820b8a78eb4fb84c758c492e89e3b0fe69b3deee6a9ee45",
+      "origin": "docs/hackathon/API.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "docs/hackathon/ARCHITECTURE.md",
+      "bytes": 13146,
+      "sha256": "adfbb5665b8c757a9d56c60626658e8a7054bbfae00704a854cad2bed366dc9f",
+      "origin": "docs/hackathon/ARCHITECTURE.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "docs/hackathon/DEPLOYMENT_JUDGING.md",
+      "bytes": 8721,
+      "sha256": "98fa492deeccea8bc26c6fb8e0e62bf641567aa1ab83b40b3929cef1cdb6428a",
+      "origin": "docs/hackathon/DEPLOYMENT_JUDGING.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "docs/hackathon/EVAL_RESULTS.md",
+      "bytes": 5541,
+      "sha256": "7074f324b382a119469e5481bd70b456050604f8760f5e298411341708748cb3",
+      "origin": "generated during verification",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "docs/hackathon/KEY_SETUP.md",
+      "bytes": 7300,
+      "sha256": "1d18b75822acfb776a99165cfa8d2b0df5de8f63d461390adda6f5ed9caf444c",
+      "origin": "docs/hackathon/KEY_SETUP.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "docs/hackathon/LICENSE_OPTIONS.md",
+      "bytes": 4388,
+      "sha256": "e36298fe00f01041f242396df52e6246b9021cb81e9c5e20eaa6a79e51025da2",
+      "origin": "docs/hackathon/LICENSE_OPTIONS.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "docs/hackathon/PUBLIC_EDITION.md",
+      "bytes": 5436,
+      "sha256": "dd37c139acb2295a10a916ab762b2bca8229e25a451b2ec3efbe8b18d305d10a",
+      "origin": "docs/hackathon/PUBLIC_EDITION.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "docs/hackathon/THIRD_PARTY_NOTICES.md",
+      "bytes": 2157,
+      "sha256": "2105669743514cba2e788a60db3a476a40417f89509de02c0595d37fd417e5ba",
+      "origin": "docs/hackathon/THIRD_PARTY_NOTICES.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "EXCLUSIONS.md",
+      "bytes": 1725,
+      "sha256": "3c49b54518eb72c586a0cbe7849f73eb6f4ee3dd5bf8c34cf42c7a58cbc3b6f1",
+      "origin": "generated",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/auth.js",
+      "bytes": 259,
+      "sha256": "58099bae6cbeb5c78b3fb958b4facdf64327fd52871ab1b07531748a71ec4fad",
+      "origin": "generated substitute for lib/auth.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/cache.js",
+      "bytes": 2238,
+      "sha256": "9fb4acaccb69ff8394d46d27ef892e83ac694761de907b9ac8afe1ddeba823bd",
+      "origin": "lib/cache.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/census.js",
+      "bytes": 3359,
+      "sha256": "e5d053a90f929645ed104dc68a4534eec500389d75152a8849c7fe764cc17ee9",
+      "origin": "lib/census.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/citydata.js",
+      "bytes": 13870,
+      "sha256": "e72fa3494114a0d9644e68c29c643c2455da09bb96bae8ca8b02735de929b06e",
+      "origin": "lib/citydata.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/decision.js",
+      "bytes": 7417,
+      "sha256": "00808218bf5d272826f023a000d395650d1398f3790c65f520082ef56e22b654",
+      "origin": "lib/decision.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/deployment.js",
+      "bytes": 1604,
+      "sha256": "e702caa0dbe114020456d20abdbfb9f61feaafd8c924f8f6d3411884b095edb0",
+      "origin": "lib/deployment.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/brief.js",
+      "bytes": 23435,
+      "sha256": "3a2eb541b35ac4143e8a5480f3720d571b8957c1cbd27f6e50f266eac51f066a",
+      "origin": "lib/diligence/brief.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/budget.js",
+      "bytes": 13510,
+      "sha256": "5c5e02a50e098ec83dcdd62e9274efdae71e45ed92b7acd87318a47d4e11fb8c",
+      "origin": "lib/diligence/budget.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/diff.js",
+      "bytes": 2634,
+      "sha256": "5f34cf83debce7abc0a1cb9d1aed33e81bac8a1836a87bd81a93e6dfdf2eab6f",
+      "origin": "lib/diligence/diff.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/evidence.js",
+      "bytes": 24176,
+      "sha256": "d55f0994d529de9e464aebdbe48dc3c3563f87ef382f430138ab2e2eca1bf29a",
+      "origin": "lib/diligence/evidence.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/fixture.js",
+      "bytes": 4742,
+      "sha256": "320c7a495d4b9e32ee35d80dea28ff515a2291518060eb076b92ed9eed4438e3",
+      "origin": "lib/diligence/fixture.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/host.js",
+      "bytes": 114,
+      "sha256": "47f29662fd7e9598ce9fbf9b5efa5871b23a4845f710f6a78fb05cd30cb25ac4",
+      "origin": "generated substitute for lib/diligence/host.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/nebius.js",
+      "bytes": 13205,
+      "sha256": "ef613594767f5dd8da49c3c0841023baf5a2e3f9b085b4beae2c50aefafc4e70",
+      "origin": "lib/diligence/nebius.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/objectives.js",
+      "bytes": 16818,
+      "sha256": "9463821fc97e10ee2b37f23611b1c705f88887784a3ba422d925540f9d948bfe",
+      "origin": "lib/diligence/objectives.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/packet.js",
+      "bytes": 5185,
+      "sha256": "a02af49f5dff293886f4eb82388366bc3599d2896a805d4581dd6221ca216426",
+      "origin": "lib/diligence/packet.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/render.js",
+      "bytes": 15604,
+      "sha256": "d6655f7d1b5b599ca93232406317a1cdfbcba9e48bf0816396b3d78ad7ce103d",
+      "origin": "lib/diligence/render.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/scenarios.js",
+      "bytes": 20518,
+      "sha256": "a789f3c252faf3618790b6da0e4c38ff8eefc742fbf9e2ca0cad7806655dd961",
+      "origin": "lib/diligence/scenarios.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/schema.js",
+      "bytes": 17542,
+      "sha256": "ec0d31d74ccb9410c549269fb784ce2acd6ebaa53daffb4e6811e8c73055200e",
+      "origin": "lib/diligence/schema.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/site.js",
+      "bytes": 15326,
+      "sha256": "8735fbd4850768634bf9aa7abd28af3e92d40aadce0c0ee89b23d4dcc216dc2b",
+      "origin": "lib/diligence/site.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/standalone-host.mjs",
+      "bytes": 3932,
+      "sha256": "f546120dd4062a6e3a8b47d49fe54f0b7cdcb99efe27880dbf912a1edadc16fa",
+      "origin": "lib/diligence/standalone-host.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/standalone-server.mjs",
+      "bytes": 6927,
+      "sha256": "deed372215c0d698a7cfd8e138147cf695a2bf1dc4b873ac580a5be55993ad7f",
+      "origin": "lib/diligence/standalone-server.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/fips.js",
+      "bytes": 1665,
+      "sha256": "f70faae97592c5274812ee4aa98af2cb069f8d09b480865e1d95d0d556ea3778",
+      "origin": "lib/fips.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/gaps.js",
+      "bytes": 10063,
+      "sha256": "90c5f1e91957184aeb55fb3fc84525d1b8408b9ee6334d21002c016e103a817d",
+      "origin": "lib/gaps.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/geo-uk.js",
+      "bytes": 32947,
+      "sha256": "0e5ea4badec9c83f4e3a0cf49386eeced01e9e9568a269581e2035218b723e69",
+      "origin": "lib/geo-uk.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/geocode.js",
+      "bytes": 6269,
+      "sha256": "65254d88ca4ad11f4206eb314a1ac008ca7416a24a324830ff1e1f6700ae4d3f",
+      "origin": "lib/geocode.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/history.js",
+      "bytes": 4495,
+      "sha256": "84ddd53b0f6a562461934ece994644c0d7bec0a8f7b3bb638ad425b8e5e9f1cb",
+      "origin": "lib/history.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/http.js",
+      "bytes": 4167,
+      "sha256": "85d5bcd89b27b58500e02fd47313d88e4602cb4d1ceba4d2a6f84be4b6c01d82",
+      "origin": "lib/http.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/layers.js",
+      "bytes": 12956,
+      "sha256": "c7ac5739ba404995d7cb22449326a06fa2b7774e80f867cba51dceb08037faf0",
+      "origin": "lib/layers.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/log.js",
+      "bytes": 10927,
+      "sha256": "8ae18a7d0e20bec2e8aafb862f9066a4727561c163462fc97abbb1c790000ff4",
+      "origin": "lib/log.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/memory-store.js",
+      "bytes": 3132,
+      "sha256": "7b7180c64b8e49624a74c0bc6e3b73a94d86e77474775ab71a9680e34e55b352",
+      "origin": "lib/memory-store.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/providers-uk.js",
+      "bytes": 69010,
+      "sha256": "8c7dd1f2e90115a14af664723ca32f1643e571e80b9118b315bc08ad40b5f453",
+      "origin": "lib/providers-uk.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/providers.js",
+      "bytes": 25647,
+      "sha256": "d6a40b43a185795e424fbd7fe3b126699fdc76811146f16438ac7e8b3d97130c",
+      "origin": "lib/providers.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/redis-namespace.js",
+      "bytes": 2481,
+      "sha256": "5aacb33db78967dc43ed50c6908bd4905028678c01cee0038eefef0172c7bfdb",
+      "origin": "lib/redis-namespace.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/redis.js",
+      "bytes": 6634,
+      "sha256": "5c7ed2122ed15c195b308b68327128d437b100dfc6cda804804c8bad3c0d5fa6",
+      "origin": "lib/redis.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/scoring-uk.js",
+      "bytes": 15145,
+      "sha256": "7c82961a2bc9e8a34608dbd6c91c8521be1dea016b148572a3f49b3a24cc0412",
+      "origin": "lib/scoring-uk.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/scoring.js",
+      "bytes": 12140,
+      "sha256": "d0e17417b1b1c184adb8e320dfb20ec0a5cc26614c0c92e437b916e4c6ed34db",
+      "origin": "lib/scoring.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/security.js",
+      "bytes": 4791,
+      "sha256": "1be3a63c947b2a43746dfe3e8944242341f66ac28e2cdbd9696a9408ba28f057",
+      "origin": "lib/security.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/storage-policy.js",
+      "bytes": 1201,
+      "sha256": "bdfa0e9f2c965fa1f42025cb552f2d49b26e21b3a03868007c826059841db1a2",
+      "origin": "lib/storage-policy.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/store.js",
+      "bytes": 11569,
+      "sha256": "430302b56b6440b920d9290b482be714023b7bc2c0ff8f6482d21a403c42f67e",
+      "origin": "lib/store.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "origin": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "license": "Apache-2.0 license text"
+    },
+    {
+      "path": "NOTICE",
+      "bytes": 2302,
+      "sha256": "0ef1d7b762210af15f09ebda97a5ba869db6a64a09bb9ba420d19ab674873943",
+      "origin": "generated from THIRD_PARTY_NOTICES.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 4585,
+      "sha256": "9692618d279301260fef4d84455d9a9ab5e27c1ee096caf19c2599b6cf245635",
+      "origin": "generated during verification",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "package.json",
+      "bytes": 848,
+      "sha256": "f97d5609d28dcc59b7cab08c49150747d462fdc44df91b418615ea4e70f936f7",
+      "origin": "generated",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6342,
+      "sha256": "effc8261f9ad8e61b9b0292c54c407d470d03884dc48abb27441cead411a9329",
+      "origin": "docs/hackathon/PUBLIC_EDITION_README.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "scripts/demo-diligence.mjs",
+      "bytes": 4851,
+      "sha256": "88ff57f8a68c3f5a4905b82468bf06a9d8556c71caf0d75c6875438ad9fbe9c2",
+      "origin": "scripts/demo-diligence.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "scripts/diligence-eval.mjs",
+      "bytes": 11257,
+      "sha256": "b71ea4b2376fc7a596d6d57d71afb512013cac85540af74e7180d85f22b268d2",
+      "origin": "scripts/diligence-eval.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "scripts/nebius-smoke.mjs",
+      "bytes": 3516,
+      "sha256": "449c51bbb16c19c8359c184a99db0245d95dbd4d224c99bb2564be7ffe81da43",
+      "origin": "scripts/nebius-smoke.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "scripts/setup-diligence-live.mjs",
+      "bytes": 6762,
+      "sha256": "e88d72f6e77477795560a049840287be525fa5bd01f2b81d3ba2591eaa9d21eb",
+      "origin": "scripts/setup-diligence-live.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "scripts/verify-diligence-judging.mjs",
+      "bytes": 7358,
+      "sha256": "7d60677d9a1f2c4f69f9644c0c374059cd328dfa37e17d203d571ad776a1386a",
+      "origin": "scripts/verify-diligence-judging.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "server.mjs",
+      "bytes": 253,
+      "sha256": "29acc71e158195a70edfe3316369ae09846f3b5def00ed8fbf263a00964c8666",
+      "origin": "generated Vercel Node server entrypoint",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio-runtime/studio/architecture.js",
+      "bytes": 3666,
+      "sha256": "948d4e34f1635376afc2e5af7ccecd5964abf4ddf61c6690250a7cebeb4e5662",
+      "origin": "compiled from studio/*.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio-runtime/studio/contracts.js",
+      "bytes": 1681,
+      "sha256": "3ee5cc95826259c5471183798dc6089852cca71b3a7f6f5cd4d0dd551408e57c",
+      "origin": "compiled from studio/*.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio-runtime/studio/finance.js",
+      "bytes": 10588,
+      "sha256": "88dfa8a64722d8b814b5dfdd7ccc640d1b7ab4bab747a7903e5b5fcc41ad32c2",
+      "origin": "compiled from studio/*.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio-runtime/studio/geometry.js",
+      "bytes": 15930,
+      "sha256": "d46ab7f7d45b7fcd7fc3eddf580e0f2f9bd8dea84e3b6687ffe56aaae6e3815f",
+      "origin": "compiled from studio/*.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio-runtime/studio/types.js",
+      "bytes": 11,
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "origin": "compiled from studio/*.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio/architecture.ts",
+      "bytes": 4294,
+      "sha256": "67c6f59e8bb5ad6407a37bd2214cae9f8ab25494c6f1b34182510e8e8672df88",
+      "origin": "studio/architecture.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio/contracts.ts",
+      "bytes": 2401,
+      "sha256": "61f61050a4c2f53db0e5d81fe7663af8826e5d15e8445ecbfdb14b1beb4d4cba",
+      "origin": "studio/contracts.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio/finance.ts",
+      "bytes": 13262,
+      "sha256": "a8cf6cf33d74c535721b00245202a7c7e29ebd0a9e366f271c98b0d41fd70fc6",
+      "origin": "studio/finance.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio/geometry.ts",
+      "bytes": 17172,
+      "sha256": "ca3e1283e81609292eed30807eda059e166b60c2008bc689a135a5db871d6170",
+      "origin": "studio/geometry.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "studio/types.ts",
+      "bytes": 6560,
+      "sha256": "91cc6052ff8a09246432fe3d374ca750ed7183e8a5838f2516e525821ac17582",
+      "origin": "studio/types.ts",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/budget-redis.test.mjs",
+      "bytes": 5001,
+      "sha256": "32b83cd3c6fde4c903e6eb0eab4e51506ded3f0f4a3fe8d36a8d01733ff96609",
+      "origin": "test/diligence/budget-redis.test.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/diligence.test.mjs",
+      "bytes": 53471,
+      "sha256": "9f2f8c20c2f6582a4454a8db62bbb437064ac4af19b3e8c155e676babbb9f98f",
+      "origin": "test/diligence/diligence.test.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/evals/cases.json",
+      "bytes": 6704,
+      "sha256": "a274502be762a972e45c812b508ec3b22e73a1c87765489d7db24e0ceb3192c2",
+      "origin": "test/diligence/evals/cases.json",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/fixtures/brief.example.json",
+      "bytes": 80228,
+      "sha256": "3888d2589e2bcb481832cefb872f99027e6dac276e38436c0855cbfffeea69fb",
+      "origin": "test/diligence/fixtures/brief.example.json",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/helpers.mjs",
+      "bytes": 5987,
+      "sha256": "b137772bf074bfe6c78799ab5b5b90d1a22c97176832645cdb441282014311e6",
+      "origin": "test/diligence/helpers.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "vercel.json",
+      "bytes": 203,
+      "sha256": "d250970ab63ff456d81f384bb01727d89c533e2dc4358c03260f4058906d14a5",
+      "origin": "generated judging configuration",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    }
+  ],
+  "verification": [
+    {
+      "name": "closure computed",
+      "ok": true,
+      "detail": "50 files, packages jose,redis"
+    },
+    {
+      "name": "runtime packages are the two allowed",
+      "ok": true,
+      "detail": "jose,redis"
+    },
+    {
+      "name": "studio finance engine compiled",
+      "ok": true,
+      "detail": "studio-runtime/studio/finance.js"
+    },
+    {
+      "name": "secret, name, email, and path scan",
+      "ok": true,
+      "detail": "clean"
+    },
+    {
+      "name": "lockfile generated",
+      "ok": true,
+      "detail": "package-lock.json"
+    },
+    {
+      "name": "npm ci",
+      "ok": true,
+      "detail": "installed"
+    },
+    {
+      "name": "npm test in the export",
+      "ok": true,
+      "detail": "pass 40 fail 0"
+    },
+    {
+      "name": "evaluation set in the export",
+      "ok": true,
+      "detail": "all checks passed"
+    },
+    {
+      "name": "standalone /healthz",
+      "ok": true,
+      "detail": "{\"ok\":true,\"ready\":true,\"runtime\":\"standalone\",\"agent\":\"site-diligence-agent\"}"
+    },
+    {
+      "name": "standalone serves diligence.html",
+      "ok": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "standalone GET /api/diligence",
+      "ok": true,
+      "detail": "mode fixture"
+    },
+    {
+      "name": "standalone POST /api/guest mints a session",
+      "ok": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "standalone refuses cross-origin session minting",
+      "ok": true,
+      "detail": "HTTP 403"
+    },
+    {
+      "name": "standalone refuses anonymous reads",
+      "ok": true,
+      "detail": "HTTP 401"
+    },
+    {
+      "name": "standalone guest list",
+      "ok": true,
+      "detail": "{\"ok\":true,\"briefs\":[]}"
+    }
+  ]
+}
