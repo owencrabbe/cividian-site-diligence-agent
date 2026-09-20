@@ -4,9 +4,10 @@ Status on 2026-09-20: the owner-authorized dedicated deployment exists at
 https://cividian-site-diligence-agent.vercel.app . Its public page, health,
 and capability status respond without a Vercel login. Nebius and AUTH_SECRET
 are production Secrets; the approved $1 ceiling expires after today. The
-isolated Redis connection is pending new-provider terms acceptance, so the
-API correctly reports inference unavailable. This is partial hosted
-verification, not a completed live judging acceptance run.
+isolated Upstash Free Redis is provisioned and connected after owner terms
+acceptance. Hosted status reports live inference and a Redis budget store.
+The first live model response was truncated and rejected; completion tuning
+and the full hosted acceptance rerun are in progress.
 
 ## Simplest viable architecture
 
@@ -72,10 +73,10 @@ Two deployment shapes, both prepared:
 
 | Item | Assumption | Estimate |
 | --- | --- | --- |
-| One live run | packet about 24 KB (about 8,000 tokens in), 1,400 tokens out, Nemotron 3 Super list price $0.30 in and $0.90 out per million (verified in the signed-in Nebius model card and price table on 2026-09-20; excluding taxes) | about $0.004 |
-| Judging period | 60 live runs per day for 15 days | about $3.60 |
-| Guardrail | `DILIGENCE_DAILY_BUDGET_USD=1` allows roughly 250 runs per day at list price; `DILIGENCE_PER_RUN_BUDGET_USD=0.25` blocks any single oversized run | |
-| Vercel and isolated Redis | dedicated project; plan and capacity must be confirmed by Owen before provisioning | incremental cost unknown |
+| One live run | packet about 24 KB (about 8,000 tokens in), up to 3,000 tokens out, Nemotron 3 Super list price $0.30 in and $0.90 out per million (verified in the signed-in Nebius model card and price table on 2026-09-20; excluding taxes) | about $0.0051 |
+| Judging period | 60 live runs per day for 15 days | about $4.59 |
+| Guardrail | `DILIGENCE_DAILY_BUDGET_USD=1` is a ceiling, with conservative reservations reducing usable capacity; `DILIGENCE_PER_RUN_BUDGET_USD=0.25` blocks any single oversized run | |
+| Vercel and isolated Redis | dedicated Vercel project on existing hosting; isolated Upstash Free with autoUpgrade=false and prodPack=false | no new paid database plan |
 
 Estimates are not billed amounts. The Token Factory console is the source of
 truth for spend.

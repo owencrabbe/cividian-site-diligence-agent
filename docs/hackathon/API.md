@@ -28,7 +28,7 @@ Capabilities and configuration as booleans and labels. Never key material.
     "budget": { "dailyUsd": 5, "perRunUsd": 0.25, "spentTodayUsd": 0.0, "remainingRunsEstimate": 20, "store": "redis | memory" },
     "pricing": { "model": "…", "inputPer1M": 0.3, "outputPer1M": 0.9, "asOf": "2026-09-20", "source": "Nebius signed-in model card and price table", "verified": true }
   },
-  "limits": { "queryMaxChars": 200, "packetMaxBytes": 24000, "maxOutputTokens": 1400, "providerTimeoutMs": 20000 },
+  "limits": { "queryMaxChars": 200, "packetMaxBytes": 24000, "maxOutputTokens": 3000, "providerTimeoutMs": 20000 },
   "session": { "kind": "guest | account | none", "verified": false }
 }
 ```

@@ -6,6 +6,11 @@ settings. Never paste them into chat, a source file, a shell command, or a
 screenshot. No OpenAI, NVIDIA API, Supabase, or GitHub token is needed for this
 standalone entry. GitHub and Vercel CLI access already works on this machine.
 
+Current setup: the Nebius key and AUTH_SECRET are installed on the dedicated
+Vercel project. Upstash Free is connected and supplies REDIS_URL; no local
+credential file was created. No additional required key is missing. The
+steps below are for reproduction or rotation. Census remains optional.
+
 ## 1. Nebius Token Factory: required
 
 1. Open https://tokenfactory.nebius.com/ and sign in.

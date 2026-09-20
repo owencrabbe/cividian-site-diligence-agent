@@ -20,6 +20,7 @@ export function inferenceReceipt(brief) {
   return { briefId: brief.id, version: brief.version, mode: inference.mode, outcome: inference.outcome,
     provider: model.provider, requestedModel: model.requestedModel, returnedModel: model.returnedModel,
     requestId: model.requestId, latencyMs: model.latencyMs, usage: model.usage,
+    providerError: inference.providerError || null, finishReason: model.finishReason || null, attempts: model.attempts ?? null,
     costEstimate: model.costEstimate, validator: brief.reasoning?.validated === true ? "PASS" : "FAIL",
     accepted: inference.accepted ?? null,
     rejected: (inference.rejected || brief.reasoning?.rejected || []).map(({ section, index, reason }) => ({ section, index, reason })),

@@ -392,6 +392,7 @@ test("nebius: one fixed endpoint, bearer auth, json_schema response format, mode
   assert.equal(seen.init.headers.authorization, "Bearer test-key-not-real"); assert.equal(seen.init.redirect, "error");
   const body = JSON.parse(seen.init.body);
   assert.equal(body.model, ENV.NEBIUS_MODEL); assert.equal(body.response_format.type, "json_schema"); assert.equal(body.max_tokens, 1400); assert.equal(body.stream, false); assert.equal(body.tools, undefined);
+  assert.deepEqual(body.chat_template_kwargs, { enable_thinking: false }, "Super must reserve the bounded completion for final JSON");
   assert.equal(r.requestId, "chatcmpl-test"); assert.deepEqual(r.usage, { inputTokens: 100, outputTokens: 20 }); assert.deepEqual(r.output, { a: 1 });
   const cost = nebius.estimateCost(ENV.NEBIUS_MODEL, 100, 20);
   assert.equal(cost.usd, Math.round(((100 * 0.3 + 20 * 0.9) / 1e6) * 1e6) / 1e6); assert.equal(cost.pricing.verified, true); assert.equal(cost.pricing.asOf, "2026-09-20");

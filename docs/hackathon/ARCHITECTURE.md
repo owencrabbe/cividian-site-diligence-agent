@@ -208,10 +208,23 @@ host is production-like.
 - Session required (guest or account). Anonymous callers get 401.
 - POST requires same origin. Rate limits per IP and per action.
 - Input caps: query 200 chars, assumptions bounded and validated, packet 24 KB,
-  model output 24 KB, 700 to 1400 output tokens, 20 s provider timeout, one
+  model output 24 KB, up to 3000 output tokens, 20 s provider timeout, one
   bounded retry on 429 or 5xx honoring Retry-After within the deadline.
 - Concurrency cap on live runs, daily and per-run dollar caps.
 - Logs redact credentials (`lib/log.js`) and never carry the packet body.
 - Third-party text (parcel addresses, provider notes, source excerpts) is data
   inside the packet, never instructions. The validator rejects outputs that
   add facts, ids, numbers, links, or verdicts.
+
+### Live completion tuning, 2026-09-20
+
+The first actual Super request reached the 1,400-token ceiling and returned
+`finish_reason: length`; it was rejected without accepting partial JSON.
+The bounded task now requests concise final JSON with a 3,000-token ceiling
+and uses `chat_template_kwargs: {enable_thinking: false}` for Super only.
+The evidence validator, 20-second deadline, two-attempt reservation, and
+spending limits are unchanged. NVIDIA documents this generation control at
+https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8 .
+Nebius accepts extra request properties in its chat-completion API schema:
+https://docs.tokenfactory.nebius.com/api-reference/inference/create-chat-completion .
+The next live acceptance determines whether these settings work on Nebius.
