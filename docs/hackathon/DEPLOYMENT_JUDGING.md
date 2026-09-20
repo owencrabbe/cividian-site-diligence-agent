@@ -1,8 +1,12 @@
 # Deployment and judging plan
 
-Status: plan and release candidate. No judging deployment has been performed by this
-session. Existing Git-linked branch previews are CI artifacts, not verified
-judging deployments.
+Status on 2026-09-20: the owner-authorized dedicated deployment exists at
+https://cividian-site-diligence-agent.vercel.app . Its public page, health,
+and capability status respond without a Vercel login. Nebius and AUTH_SECRET
+are production Secrets; the approved $1 ceiling expires after today. The
+isolated Redis connection is pending new-provider terms acceptance, so the
+API correctly reports inference unavailable. This is partial hosted
+verification, not a completed live judging acceptance run.
 
 ## Simplest viable architecture
 
@@ -25,8 +29,10 @@ Two deployment shapes, both prepared:
    the owner is comfortable exposing a preview URL.
 2. A dedicated Vercel project from the public edition (`build/public-edition`
    pushed to the public repository) with generated `server.mjs`
-   starting `lib/diligence/standalone-server.mjs`. `vercel.json` includes the
-   HTML workspace and finance runtime; the export pins Node 24. Isolated from production data by construction; Redis is
+   exporting the server from `lib/diligence/standalone-server.mjs`. `vercel.json`
+   declares one Node service with an explicit entrypoint and catch-all route,
+   and includes the HTML workspace, data modules, and finance runtime; the export pins Node 24.
+   Isolated from production data by construction; Redis is
    required for the budget store.
 
 ## Environment variable checklist (names only)
@@ -146,9 +152,16 @@ Fixture refusal is proven in the automated production-like environment test;
 the checker verifies the real deployment is live, not a fixture. Do not turn
 on fixture mode in the live judging deployment to manufacture a hosted test.
 
-The native Node server entrypoint follows the Vercel Node.js runtime docs
-read 2026-09-20: https://vercel.com/docs/functions/runtimes/node-js . Hosted
-packaging, environment names, and access remain unverified until deployment.
+The native Node server entrypoint follows the current Vercel Services
+configuration, checked 2026-09-20:
+https://vercel.com/kb/guide/real-time-presence-hono-react . A bare root
+`functions.server.mjs` configuration was rejected by the first hosted build
+because this package has no backend framework to trigger auto-detection.
+The export now declares the Node service and exports its unbound HTTP server.
+The first successful build also exposed a missing `data/cities.js` runtime
+dependency; `data/**` is now explicitly included. The status API and page
+were verified on the corrected deployment. The export checker also verifies
+fixture refusal and fail-closed workflow access without hosted Redis.
 
 The daily cap resets in UTC. The cumulative approval ledger has no expiry and
 survives dates, process restarts, and approval-reference edits. Reuse the same

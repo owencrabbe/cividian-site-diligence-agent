@@ -50,6 +50,18 @@ https://nebiusglobalaihackathon.devpost.com/resources .
 
 Official instructions: https://redis.io/docs/latest/operate/rc/rc-quickstart/ .
 
+Redis Cloud permits only one free database per account. If that slot is
+already used, do not attach the judging project to an existing production
+database. An alternative is Upstash for Redis through Vercel Marketplace:
+select the Free plan, disable automatic paid upgrades, disable eviction to
+preserve the spending ledger, and keep the production pack off. Review its
+separate provider terms before installation. Use the Redis TCP/TLS URL, not
+the REST URL. With CLI provisioning, pass `--no-env-pull` so credentials are
+installed on the project without creating a local environment file.
+
+Sources: https://redis.io/docs/latest/operate/rc/databases/create-database/create-free-database/
+and https://upstash.com/docs/redis/howto/vercelintegration .
+
 ## 3. Census: optional
 
 Request a free key at https://api.census.gov/data/key_signup.html . Use the
@@ -102,10 +114,12 @@ which is included in the reservation.
 
 ## 5. Hosted variables after release approval
 
-The proposed Vercel project is `cividian-site-diligence-agent` under
-`owencrabbes-projects`. It has not been created. After it exists, open the
-project at https://vercel.com/dashboard and choose **Settings > Environment
-Variables**, scoped to the dedicated project's Production environment.
+The approved Vercel project is `cividian-site-diligence-agent` under
+`owencrabbes-projects`. Open
+https://vercel.com/owencrabbes-projects/cividian-site-diligence-agent/settings/environment-variables
+and use the dedicated project's Production environment. Nebius and session
+signing credentials have been configured as Secret values. A successful
+build is not proof of Redis readiness or qualifying live inference.
 
 Set `NEBIUS_API_KEY`, the same isolated `REDIS_URL`, and optional
 `CENSUS_API_KEY` as sensitive values. For `AUTH_SECRET`, generate a new value

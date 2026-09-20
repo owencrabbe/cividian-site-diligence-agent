@@ -1,8 +1,8 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-20T18:18:37.567Z",
+  "generatedAt": "2026-09-20T18:44:34.548Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "c498074cadbf2add67bc431ff6924eb7387db744",
+  "sourceCommit": "fec7a0d160f3dcd4f63c7c6b8a30cf95c64d9a41",
   "branch": "feat/nebius-site-diligence-agent",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
@@ -35,8 +35,8 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 53,
-      "sha256": "c9dd39e751c0723d4d974a1a94cae992ad16f9c19242b05c68ebe1c6f11ac5b0",
+      "bytes": 62,
+      "sha256": "1757ecf66110dae4a7aceb3231a581eb21a0b61b08fd2ad6c30b20923ce0fbd0",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -49,8 +49,8 @@
     },
     {
       "path": "api/diligence.js",
-      "bytes": 5751,
-      "sha256": "296d487e43cf4c7717f565dfc80fba57904e0a3bc51bba6a07cd22eb68ce7a32",
+      "bytes": 5915,
+      "sha256": "d294728a2af2db70f82f25e61f7b01e133362b067849923a7d8feeb59217f6d3",
       "origin": "api/diligence.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -98,22 +98,22 @@
     },
     {
       "path": "docs/hackathon/DEPLOYMENT_JUDGING.md",
-      "bytes": 8721,
-      "sha256": "98fa492deeccea8bc26c6fb8e0e62bf641567aa1ab83b40b3929cef1cdb6428a",
+      "bytes": 9629,
+      "sha256": "d7600c30ecdfc446ca56edf805f0bfbc0bf146a8337633ee2cb310ba1acf7ce6",
       "origin": "docs/hackathon/DEPLOYMENT_JUDGING.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 5541,
-      "sha256": "7074f324b382a119469e5481bd70b456050604f8760f5e298411341708748cb3",
+      "sha256": "0472c6ee53b81b478a86d46d3caf31e5da60979cfc162b059f250bbdf44e0c3c",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "docs/hackathon/KEY_SETUP.md",
-      "bytes": 7300,
-      "sha256": "1d18b75822acfb776a99165cfa8d2b0df5de8f63d461390adda6f5ed9caf444c",
+      "bytes": 8174,
+      "sha256": "7d1ac9193d1b405b7978a3436a9549a4184b4706ac951504a72c8d8ad6a9c18f",
       "origin": "docs/hackathon/KEY_SETUP.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -141,7 +141,7 @@
     {
       "path": "EXCLUSIONS.md",
       "bytes": 1725,
-      "sha256": "3c49b54518eb72c586a0cbe7849f73eb6f4ee3dd5bf8c34cf42c7a58cbc3b6f1",
+      "sha256": "4248b4ea6a9bb1ae93bb797e34cc21bfdd25394226ce1ba939564868c5f08540",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -287,8 +287,8 @@
     },
     {
       "path": "lib/diligence/standalone-server.mjs",
-      "bytes": 6927,
-      "sha256": "deed372215c0d698a7cfd8e138147cf695a2bf1dc4b873ac580a5be55993ad7f",
+      "bytes": 7728,
+      "sha256": "595edbaac5c1de70348d472c7560f8b00c9a89f0f397bb80c2a24df1080ebe34",
       "origin": "lib/diligence/standalone-server.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -448,8 +448,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6342,
-      "sha256": "effc8261f9ad8e61b9b0292c54c407d470d03884dc48abb27441cead411a9329",
+      "bytes": 6406,
+      "sha256": "146c36d82ccd5b806b26e2ed71b5101f82fd7a6cc47d87e14f9e288aca89c4c1",
       "origin": "docs/hackathon/PUBLIC_EDITION_README.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -490,8 +490,8 @@
     },
     {
       "path": "server.mjs",
-      "bytes": 253,
-      "sha256": "29acc71e158195a70edfe3316369ae09846f3b5def00ed8fbf263a00964c8666",
+      "bytes": 300,
+      "sha256": "78604cfbc189986a06df8a00b792abfaf56022cef962db853a0ae7ed6ecccff2",
       "origin": "generated Vercel Node server entrypoint",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -602,8 +602,8 @@
     },
     {
       "path": "vercel.json",
-      "bytes": 203,
-      "sha256": "d250970ab63ff456d81f384bb01727d89c533e2dc4358c03260f4058906d14a5",
+      "bytes": 468,
+      "sha256": "1a369779502617d26ef34589d0bcccd60a07b44f707ba65b26da41d3a07b4091",
       "origin": "generated judging configuration",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     }
@@ -638,6 +638,11 @@
       "name": "npm ci",
       "ok": true,
       "detail": "installed"
+    },
+    {
+      "name": "hosted entry and missing-storage refusal",
+      "ok": true,
+      "detail": "unbound server, status available, fixture refused, workflow 503"
     },
     {
       "name": "npm test in the export",

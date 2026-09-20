@@ -1,9 +1,24 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    "server.mjs": {
-      "maxDuration": 60,
-      "includeFiles": "{diligence.html,studio-runtime/**,api/**,lib/**}"
+  "services": {
+    "web": {
+      "root": ".",
+      "framework": "node",
+      "entrypoint": "server.mjs",
+      "functions": {
+        "server.mjs": {
+          "maxDuration": 60,
+          "includeFiles": "{diligence.html,studio-runtime/**,api/**,lib/**,data/**}"
+        }
+      }
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "web"
+      }
+    }
+  ]
 }

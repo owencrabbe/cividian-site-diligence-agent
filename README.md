@@ -110,9 +110,10 @@ inference gate) and `docs/hackathon/API.md` (the HTTP surface). Modules live in
 
 ## Judging verification
 
-The generated `server.mjs` starts the same standalone server locally and is
-the Node HTTP server entrypoint for a dedicated Vercel project. `vercel.json`
-includes the workspace and compiled finance runtime. Set `SITE_URL` to the
+The generated `server.mjs` starts the standalone server locally and exports
+an unbound Node HTTP server on Vercel. `vercel.json` declares a single Node
+service with this explicit entrypoint, routes requests to it, and includes
+the workspace and compiled finance runtime. Set `SITE_URL` to the
 exact origin, `AUTH_SECRET`, and an isolated `REDIS_URL` on the deployment.
 Do not copy credentials or project links from the private product.
 

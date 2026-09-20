@@ -29,8 +29,10 @@ async function handler(req, res) {
   if (req.method === "POST" && !["site", "evidence", "reason", "refresh"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use GET for " + action + "." });
   if (req.method === "GET" && ["site", "evidence", "reason", "refresh"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use POST for " + action + "." });
   if (req.method === "POST" && !sameOrigin(req)) return forbidden(res);
-  const rl = await rateLimit(req, "diligence-" + action, RATES[action][0], RATES[action][1]);
-  if (!rl.ok) return tooMany(res);
+  // Read-only capabilities must explain a storage outage; all workflow
+  // actions retain the shared, fail-closed limiter.
+  const rl = await rateLimit(req, "diligence-" + action, RATES[action][0], RATES[action][1], { failOpen: action === "status" });
+  if (!rl.ok) return tooMany(res, rl);
 
   const session = await getSession(req);
   const owner = ownerKey(session);
