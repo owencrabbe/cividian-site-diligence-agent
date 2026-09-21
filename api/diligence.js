@@ -6,13 +6,13 @@
 // lib/diligence/brief.js; this file is the skin.
 
 import { readBody, methodGuard, query, rateLimit, sameOrigin, tooMany, forbidden, getSession, withStorageBoundary } from "../lib/diligence/host.js";
-import { capabilities, startRun, reasonRun, refreshRun, loadBrief, listBriefs, ownerKey } from "../lib/diligence/brief.js";
+import { capabilities, startRun, reasonRun, refreshRun, loadBrief, listBriefs, removeBrief, ownerKey } from "../lib/diligence/brief.js";
 import { resolveSite } from "../lib/diligence/site.js";
 import { renderBriefHtml } from "../lib/diligence/render.js";
 
 export const config = { maxDuration: 30 };
 const MAX_BODY_BYTES = 65536;
-const RATES = { status: [60, 60], site: [30, 60], evidence: [12, 60], reason: [6, 60], refresh: [6, 60], get: [60, 60], list: [30, 60], export: [30, 60] };
+const RATES = { status: [60, 60], site: [30, 60], evidence: [12, 60], reason: [6, 60], refresh: [6, 60], remove: [12, 60], get: [60, 60], list: [30, 60], export: [30, 60] };
 
 function publicBrief(b) {
   if (!b) return b;
@@ -25,9 +25,9 @@ async function handler(req, res) {
   if (!methodGuard(req, res, ["GET", "POST"])) return;
   const q = query(req);
   const action = String(q.action || (req.method === "GET" ? "status" : "")).toLowerCase();
-  if (!RATES[action]) return res.status(200).json({ ok: false, error: "unknown_action", note: "Actions: status, site, evidence, reason, refresh, get, list, export." });
-  if (req.method === "POST" && !["site", "evidence", "reason", "refresh"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use GET for " + action + "." });
-  if (req.method === "GET" && ["site", "evidence", "reason", "refresh"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use POST for " + action + "." });
+  if (!RATES[action]) return res.status(200).json({ ok: false, error: "unknown_action", note: "Actions: status, site, evidence, reason, refresh, remove, get, list, export." });
+  if (req.method === "POST" && !["site", "evidence", "reason", "refresh", "remove"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use GET for " + action + "." });
+  if (req.method === "GET" && ["site", "evidence", "reason", "refresh", "remove"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use POST for " + action + "." });
   if (req.method === "POST" && !sameOrigin(req)) return forbidden(res);
   // Read-only capabilities must explain a storage outage; all workflow
   // actions retain the shared, fail-closed limiter.
@@ -38,7 +38,7 @@ async function handler(req, res) {
   const owner = ownerKey(session);
   if (action === "status") {
     const caps = await capabilities(process.env);
-    return res.status(200).json({ ok: true, ...caps, session: { kind: owner ? owner.kind : "none", verified: !!(session && session.verified === true) } });
+    return res.status(200).json({ ok: true, ...caps, session: { kind: owner ? owner.kind : "none", verified: !!(session && session.verified === true), expiresAt: owner?.expiresAt || null } });
   }
   if (!owner) return res.status(401).json({ ok: false, error: "auth_required", note: "Start a guest session or sign in to use the Site Diligence Agent." });
 
@@ -81,6 +81,10 @@ async function handler(req, res) {
       return res.status(200).json({ ok: true, id: out.brief.id, brief: publicBrief(out.brief), changes: out.brief.changes, stage: { name: "refresh", ms: Date.now() - t } });
     }
     if (action === "list") return res.status(200).json({ ok: true, briefs: await listBriefs(owner) });
+    if (action === "remove") {
+      const removed = await removeBrief(owner, String(body.id || ""));
+      return res.status(200).json(removed ? { ok: true, removed: true } : { ok: false, error: "not_found", note: "No saved brief with that id belongs to this session." });
+    }
     const brief = await loadBrief(owner, String(q.id || ""));
     if (!brief) return res.status(200).json({ ok: false, error: "not_found", note: "No saved brief with that id belongs to this session." });
     if (action === "get") return res.status(200).json({ ok: true, brief: publicBrief(brief) });
@@ -93,6 +97,10 @@ async function handler(req, res) {
     }
     res.setHeader("Content-Disposition", "attachment; filename=\"" + brief.id + ".json\"");
     return res.status(200).json(publicBrief(brief));
+  } catch (error) {
+    if (error.code === "brief_removed") return res.status(200).json({ ok: false, error: "brief_removed", note: "This brief was removed while the request was running. Start a new brief to continue." });
+    if (error.code === "session_expired") return res.status(401).json({ ok: false, error: "session_expired", note: "Your guest session has expired. Start a new session to continue." });
+    throw error;
   } finally { req.off?.("aborted", abort); res.off?.("close", close); }
 }
 

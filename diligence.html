@@ -54,10 +54,12 @@ dialog{border:1px solid var(--line);border-radius:6px;padding:0;max-width:min(68
 .chg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.chg div{border:1px solid var(--line);border-radius:3px;padding:6px 8px;font-size:11px}.chg b{display:block;font-family:var(--display);font-size:16px}
 footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.intro{margin:20px max(20px,3vw) 0;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,1fr);gap:24px}.intro h1{font-size:clamp(24px,3vw,36px);line-height:1.2;margin:6px 0 10px}.intro p{max-width:70ch}.intro ol{padding-left:20px;margin:8px 0}.intro li{margin:6px 0}.beta-nav{display:flex;gap:8px;flex-wrap:wrap;margin:12px max(20px,3vw)}.beta-nav a{padding:6px 12px;border:1px solid var(--line);border-radius:3px;text-decoration:none;background:var(--paper)}.service{margin:12px max(20px,3vw)}.service .actions{margin-top:6px}.retention{margin:8px 0;font-size:12px;color:var(--muted)}textarea{font:inherit;width:100%;min-height:110px;padding:10px;border:1px solid var(--line);border-radius:3px;resize:vertical}.saved .actions{flex:0 0 auto;margin:0}.badge{white-space:normal;overflow-wrap:anywhere;max-width:100%}.top .right{min-width:0}.help-list li{margin:10px 0}.intro .fine{margin-top:10px}
+@media(max-width:820px){.intro{grid-template-columns:1fr;margin:16px}.beta-nav,.service{margin-left:16px;margin-right:16px}.saved li{align-items:start;flex-direction:column}.brand small{max-width:160px}.top .right{justify-content:flex-start}.dbody dl{grid-template-columns:1fr}.dbody dd{margin-bottom:8px}}
 @media(max-width:1180px){.ws{grid-template-columns:minmax(300px,360px) minmax(0,1fr)}.col.brief{grid-column:1/-1}}
 @media(max-width:820px){.ws{grid-template-columns:1fr;padding:12px 16px 32px}.col.brief{grid-column:auto}.top{height:auto;padding:10px 16px;flex-wrap:wrap}.afields{grid-template-columns:1fr}.chg{grid-template-columns:1fr 1fr}.btn{min-height:44px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
-@media print{.top,.col.inputs,.col.evidence,.actions,details.tp,footer,.no-print{display:none!important}.ws{display:block;padding:0}.card{box-shadow:none;border:0}body{background:#fff}}
+@media print{.top,.intro,.beta-nav,.service,.col.inputs,.col.evidence,.actions,details.tp,footer,.no-print{display:none!important}.ws{display:block;padding:0}.card{box-shadow:none;border:0}body{background:#fff}}
 </style>
 </head>
 <body>
@@ -68,9 +70,17 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
     <span class="badge" id="modeBadge"><i></i><span>Checking capabilities</span></span>
     <span class="badge" id="sessionBadge"><i></i><span>No session</span></span>
     <button class="btn top-btn" id="savedBtn" type="button">Saved briefs</button>
-    <a class="btn top-btn" href="/app.html">Workspace</a>
+    <button class="btn top-btn" id="newSiteBtn" type="button">New site</button>
+    <button class="btn top-btn" id="helpBtn" type="button">Help &amp; privacy</button>
   </div>
 </header>
+
+<section class="intro" aria-labelledby="welcomeTitle">
+  <div><p class="eyebrow">Early access / Site diligence</p><h1 id="welcomeTitle">Give your next site a clearer first look.</h1><p>Bring an address and your development assumptions. Compare scenarios, inspect the source records, and leave with a brief of what to investigate next.</p><div class="actions"><a class="btn" href="#h-site">Start with your site</a><button class="btn out" id="exampleBtn" type="button">Try a Muncie address</button></div><p class="fine">Best starting coverage: Indiana parcel records. Other US sites may need a lot-area input. Zoning and some city data are unavailable; gaps stay visible.</p></div>
+  <div class="card"><h2>Your first brief</h2><ol><li>Resolve a street address and check the parcel match.</li><li>Choose your objective and enter the assumptions you know.</li><li>Run diligence, inspect the gaps, and download your brief.</li></ol><p class="retention" id="sessionNote">Checking your session. Guest saves are temporary and tied to this browser. Download a copy to keep your work.</p></div>
+</section>
+<div class="service info" id="serviceNotice" role="status" aria-live="polite"><span id="serviceText">Connecting to the workspace.</span><div class="actions"><button class="btn out sm" id="retrySessionBtn" type="button" hidden>Reconnect session</button><button class="btn out sm" id="retryCapsBtn" type="button" hidden>Check availability</button></div></div>
+<nav class="beta-nav" aria-label="Workflow"><a href="#h-site">1. Site &amp; inputs</a><a href="#h-run">2. Run diligence</a><a href="#h-ev">3. Evidence</a><a href="#brief-col">4. Your brief</a><button class="btn out sm" id="feedbackBtn" type="button">Report an issue</button></nav>
 
 <main class="ws" id="main">
   <div class="col inputs">
@@ -136,6 +146,7 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
     <section class="card" aria-labelledby="h-br">
       <p class="eyebrow">07 / Decision brief</p>
       <h2 id="h-br">Diligence brief <span class="chip" id="briefStatus"></span></h2>
+      <p class="retention" id="briefRetention" hidden></p>
       <div class="actions no-print" id="briefActions" hidden>
         <a class="btn out sm" id="exportHtml" href="#" target="_blank" rel="noopener">Open printable brief</a>
         <a class="btn out sm" id="exportJson" href="#">Download JSON</a>
@@ -153,6 +164,8 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
 
 <dialog id="drawer" aria-labelledby="drawerTitle"><div class="dhead"><h2 id="drawerTitle">Evidence record</h2><button class="x" type="button" id="drawerClose" aria-label="Close">×</button></div><div class="dbody" id="drawerBody"></div></dialog>
 <dialog id="savedDlg" aria-labelledby="savedTitle"><div class="dhead"><h2 id="savedTitle">Saved briefs</h2><button class="x" type="button" id="savedClose" aria-label="Close">×</button></div><div class="dbody" id="savedBody"></div></dialog>
+<dialog id="helpDlg" aria-labelledby="helpTitle"><div class="dhead"><h2 id="helpTitle">Using the early-access workspace</h2><button class="x" type="button" id="helpClose" aria-label="Close help">×</button></div><div class="dbody"><ul class="help-list"><li><b>Check the parcel.</b> An address match or nearby polygon is a candidate, not a survey or a claim of ownership.</li><li><b>Use your own assumptions.</b> Defaults are labeled screening conventions. Blank financial fields remain unknown. A missing value is different from zero.</li><li><b>Expect gaps.</b> Parcel coverage is strongest in Indiana. Zoning and unconfigured city sources stay unavailable. Calculations and AI interpretation do not establish feasibility.</li><li><b>Keep a copy.</b> Guest access lasts up to 24 hours in this browser. Clearing cookies or using another browser loses access. Download JSON or print the HTML before the session ends. Saved-brief URLs are not sharing links.</li><li><b>What is processed.</b> Site searches go to the configured public-data providers. Briefs and inputs are stored on this deployment. If AI is enabled, a bounded packet of evidence and assumptions goes to Nebius for NVIDIA model reasoning. Avoid confidential or personal information.</li><li><b>Remove your work.</b> Saved briefs has a Remove control. It removes that brief's content from the app; downloads and any provider-side processing are separate.</li><li><b>Tell the team what happened.</b> Report an issue downloads a small diagnostic file for you to review and send to the person who invited you. It sends nothing automatically.</li></ul></div></dialog>
+<dialog id="feedbackDlg" aria-labelledby="feedbackTitle"><div class="dhead"><h2 id="feedbackTitle">Report an issue</h2><button class="x" type="button" id="feedbackClose" aria-label="Close issue report">×</button></div><form class="dbody" id="feedbackForm"><label for="feedbackText">What were you trying to do, and what happened?</label><textarea id="feedbackText" maxlength="2000" required placeholder="Describe the steps and what you expected. Leave out confidential information."></textarea><p class="hint">The report adds the app version, AI availability and brief status. It excludes addresses, financial inputs, cookies and credentials. Your description is included exactly as entered.</p><div class="actions"><button class="btn" type="submit">Download report</button></div><p class="status" id="feedbackStatus" role="status"></p></form></dialog>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
@@ -188,7 +201,36 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
   function label(s) { return String(s || '').replace(/_/g, ' '); }
   function chip(text, cls) { return h('span', { class: 'chip ' + (cls || '') }, text); }
 
-  var S = { caps: null, session: null, site: null, objective: 'residential_infill', dirty: {}, brief: null, abort: null, map: null, marker: null, mapReady: false, pendingPoint: null, running: false };
+  var S = { caps: null, session: null, site: null, objective: 'residential_infill', dirty: {}, brief: null, abort: null, map: null, marker: null, mapReady: false, pendingPoint: null, running: false, resolving: false };
+
+  function reasonAllowed() { var i = S.caps && S.caps.inference; return !!(i && (i.mode === 'fixture' || (i.mode === 'live' && (S.session.kind !== 'guest' || i.guestAllowed)))); }
+  function updateControls() {
+    var busy = S.running || S.resolving, connected = S.session && S.session.kind !== 'none';
+    document.querySelectorAll('.inputs input,.inputs button,#newSiteBtn,#exampleBtn,#savedBtn,#refreshBtn').forEach(function (el) { if (el.id !== 'cancelBtn') el.disabled = !!busy || !connected; });
+    $('runBtn').disabled = !!busy || !connected || !S.site;
+    $('refreshBtn').disabled = !!busy || !connected || !S.brief;
+    $('reasonToggle').disabled = !!busy || !connected || !reasonAllowed();
+    $('refreshReason').disabled = !!busy || !connected || !reasonAllowed();
+    if (S.caps && !reasonAllowed()) { $('reasonToggle').checked = false; $('refreshReason').checked = false; }
+  }
+  function clearResults() {
+    S.brief = null;
+    [['evidenceOut','No evidence yet','Resolve a site and run diligence.'],['scenarioOut','No scenarios yet','Your comparisons will appear after a run.'],['briefOut','No brief yet','Your saved briefs are still available from Saved briefs.']].forEach(function (x) { clear($(x[0])); $(x[0]).appendChild(h('div', { class: 'empty' }, h('b', null, x[1]), x[2])); });
+    clear($('changesOut')); $('briefActions').hidden = true; $('briefRetention').hidden = true; $('briefStatus').textContent = ''; $('evCount').textContent = ''; renderStages({});
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+    if (S.caps) renderTransparency();
+  }
+  function resetSite() {
+    if (S.running || S.resolving) return;
+    S.site = null; S.pendingPoint = null; S.dirty = {}; $('q').value = ''; $('pcity').value = ''; $('pstate').value = ''; $('pointForm').hidden = true; clear($('siteOut')); clearResults();
+    if (S.marker) { S.marker.remove(); S.marker = null; }
+    if (S.mapReady) S.map.getSource('parcel').setData({ type: 'FeatureCollection', features: [] });
+    if (S.caps) renderAssumptions(); updateControls(); $('q').focus(); setStatus('Ready for a new site. Previous briefs remain in Saved briefs until they expire or you remove them.');
+  }
+  function sessionLost() {
+    S.session = { kind: 'none' }; updateControls();
+    $('serviceNotice').hidden = false; $('serviceText').textContent = 'Your session ended. Download any brief still on screen before reconnecting. A new guest session cannot reopen the previous session\'s saves.'; $('retrySessionBtn').hidden = false; $('retryCapsBtn').hidden = true;
+  }
 
   // ---------------------------------------------------------------- API
   function api(action, opts) {
@@ -196,35 +238,42 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
     var url = '/api/diligence?action=' + encodeURIComponent(action) + (opts.params ? '&' + new URLSearchParams(opts.params).toString() : '');
     var init = { method: opts.body ? 'POST' : 'GET', credentials: 'same-origin', headers: {}, signal: opts.signal };
     if (opts.body) { init.headers['content-type'] = 'application/json'; init.body = JSON.stringify(opts.body); }
-    return fetch(url, init).then(function (r) { return r.json().then(function (j) { j.__status = r.status; return j; }, function () { return { ok: false, error: 'bad_response', note: 'The server answered with something that was not JSON.', __status: r.status }; }); });
+    return fetch(url, init).then(function (r) { if (r.status === 401) sessionLost(); return r.json().then(function (j) { j.__status = r.status; return j; }, function () { return { ok: false, error: 'bad_response', note: 'The server did not complete the request. Try again shortly.', __status: r.status }; }); });
   }
   function mintGuest() { return fetch('/api/guest', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: '{}' }).then(function (r) { return r.json(); }).catch(function () { return { ok: false }; }); }
 
   function loadCaps() {
+    var hadSession = S.session && S.session.kind !== 'none';
     return api('status').then(function (c) {
       if (!c.ok) throw new Error(c.note || 'status unavailable');
       S.caps = c; S.session = c.session;
-      if (c.session.kind === 'none') return mintGuest().then(function (g) { return g.ok ? api('status') : c; }).then(function (c2) { S.caps = c2; S.session = c2.session; });
-    }).then(function () { renderCaps(); renderObjectives(); renderAssumptions(); });
+      if (c.session.kind === 'none' && hadSession) { sessionLost(); throw new Error('Your session ended. Reconnect to begin a new guest workspace.'); }
+      if (c.session.kind === 'none') return mintGuest().then(function (g) { if (!g.ok) throw new Error('A guest session could not be started. Check availability and try again.'); return api('status'); }).then(function (c2) { if (!c2.ok || !c2.session || c2.session.kind === 'none') throw new Error('A browser session could not be established. Check that cookies are enabled.'); S.caps = c2; S.session = c2.session; });
+    }).then(function () { renderCaps(); renderObjectives(); renderAssumptions(); updateControls(); });
   }
 
   function renderCaps() {
     var c = S.caps, inf = c.inference, b = $('modeBadge'), sb = $('sessionBadge');
     b.className = 'badge ' + (inf.mode === 'live' ? 'live' : inf.mode === 'fixture' ? 'fixture' : 'off');
-    b.lastElementChild.textContent = inf.mode === 'live' ? 'Nemotron on Nebius: live (' + inf.model + ')' : inf.mode === 'fixture' ? 'Fixture mode: rules, not a model' : 'Model reasoning unavailable';
-    sb.lastElementChild.textContent = S.session.kind === 'guest' ? 'Guest session: saves last 24 hours' : S.session.kind === 'account' ? (S.session.verified ? 'Signed in, verified' : 'Signed in') : 'No session';
+    b.lastElementChild.textContent = inf.mode === 'live' ? 'AI reasoning available' : inf.mode === 'fixture' ? 'Fixture mode: rules, not a model' : 'Evidence-only mode';
+    sb.lastElementChild.textContent = S.session.kind === 'guest' ? 'Guest workspace' : S.session.kind === 'account' ? (S.session.verified ? 'Signed in, verified' : 'Signed in') : 'No session';
+    $('sessionNote').textContent = S.session.kind === 'guest' ? 'Guest access ends ' + (S.session.expiresAt ? when(S.session.expiresAt) : 'within 24 hours') + '. Saved briefs stay in this browser session. Download a copy to keep your work.' : 'Briefs are saved to your account. Download a copy for your own records.';
+    $('retrySessionBtn').hidden = S.session.kind !== 'none'; $('retryCapsBtn').hidden = inf.mode !== 'unavailable';
+    $('serviceNotice').hidden = false;
+    $('serviceText').textContent = inf.mode === 'live' ? 'Ready. You can gather evidence, compare scenarios and request AI interpretation.' : inf.mode === 'fixture' ? 'Local rehearsal: model interpretation is a labeled fixture, not a live AI response.' : 'AI interpretation is temporarily paused. You can still gather source records, compare scenarios and save or export an evidence-only brief.';
     var t = $('reasonToggleLabel'), hint = $('reasonHint');
     if (inf.mode === 'live') { t.textContent = 'Run Nemotron reasoning on Nebius Token Factory'; hint.textContent = 'Structured JSON, validated against the evidence packet. Cost is a list-price estimate, never a billed amount.' + (S.session.kind === 'guest' && !inf.guestAllowed ? ' Guest sessions cannot trigger live inference on this deployment; the rules-based plan still runs.' : ''); }
     else if (inf.mode === 'fixture') { t.textContent = 'Run fixture reasoning (rules, not a model)'; hint.textContent = 'This host has no live model configured. The fixture is deterministic and clearly labeled; it exercises the same validator a live answer must pass.'; }
     else { t.textContent = 'Model reasoning unavailable on this deployment'; $('reasonToggle').checked = false; $('reasonToggle').disabled = true; hint.textContent = 'The deterministic stages still run and the plan is rules-based. Reasons are listed in the transparency panel.'; }
-    renderTransparency();
+    updateControls(); renderTransparency();
   }
 
   // ---------------------------------------------------------------- site
   function setStatus(msg) { $('runStatus').textContent = msg || ''; }
   function resolveSite(body) {
-    setSiteMessage(null);
-    $('resolveBtn').disabled = true; $('usePointBtn').disabled = true;
+    if (S.running || S.resolving || !S.session || S.session.kind === 'none') return Promise.resolve(null);
+    S.site = null; clearResults(); setSiteMessage('Looking up this site.', 'info');
+    S.resolving = true; updateControls();
     return api('site', { body: body }).then(function (r) {
       if (!r.ok) {
         if (r.error === 'city_centroid') { $('pointForm').hidden = false; if (r.city) $('pcity').value = r.city; if (r.state) $('pstate').value = r.state; if (r.point && S.map) { S.map.flyTo({ center: [r.point.lon, r.point.lat], zoom: 13 }); } setSiteMessage(r.note || 'That is a city, not a site.', 'warn'); }
@@ -238,7 +287,7 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
       $('runBtn').disabled = false;
       return r.site;
     }).catch(function (e) { setSiteMessage('The request failed: ' + (e && e.message ? e.message : 'network error'), 'err'); return null; })
-      .finally(function () { $('resolveBtn').disabled = false; $('usePointBtn').disabled = false; });
+      .finally(function () { S.resolving = false; updateControls(); });
   }
   function setSiteMessage(msg, cls) { var out = $('siteOut'); if (!msg) { if (!S.site) clear(out); return; } clear(out); out.appendChild(h('div', { class: cls || 'info' }, msg)); }
   function renderSite(site, stage) {
@@ -291,6 +340,8 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
         if (S.site) drawSite(S.site);
       });
       S.map.on('click', function (e) {
+        if (S.running || S.resolving) return;
+        S.site = null; clearResults(); setSiteMessage('Confirm the city and state below to use this point.', 'info'); updateControls();
         var lat = Math.round(e.lngLat.lat * 1e6) / 1e6, lon = Math.round(e.lngLat.lng * 1e6) / 1e6;
         S.pendingPoint = { lat: lat, lon: lon };
         placeMarker(lon, lat);
@@ -331,7 +382,7 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
       var grid = h('div', { class: 'afields' });
       defs.filter(function (d) { return d.kind === kind; }).forEach(function (d) {
         var id = 'as-' + d.key;
-        var input = h('input', { type: 'number', id: id, name: d.key, min: d.min, max: d.max, step: d.integer ? 1 : 'any', placeholder: d.value == null ? 'enter to screen' : String(d.value), 'aria-label': d.label + (d.units ? ', ' + d.units : ''), 'aria-describedby': id + '-h', oninput: function () { S.dirty[d.key] = true; } });
+        var input = h('input', { type: 'number', id: id, name: d.key, min: d.min, max: d.max, step: d.integer ? 1 : 'any', placeholder: d.value == null ? 'enter to screen' : String(d.value), 'aria-label': d.label + (d.units ? ', ' + d.units : ''), 'aria-describedby': id + '-h', oninput: function () { S.dirty[d.key] = true; S.dirty['value:' + d.key] = this.value; } });
         if (S.dirty[d.key] && S.dirty['value:' + d.key] != null) input.value = S.dirty['value:' + d.key];
         var lab = h('label', { for: id }, h('span', null, d.label), h('span', { class: 'u' }, d.units || ''));
         if (basisFor[d.key]) lab.appendChild(chip(label(basisFor[d.key]), basisFor[d.key]));
@@ -353,11 +404,13 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
     STAGES.forEach(function (s) { var st = state[s[0]] || { status: 'pending' }; ul.appendChild(h('li', { class: st.status }, h('span', null, s[1] + (st.note ? ' · ' + st.note : '')), h('span', { class: 'ms' }, st.status === 'running' ? 'running' : st.status === 'ok' ? (st.ms != null ? st.ms + ' ms' : 'done') : st.status === 'failed' ? 'failed' : st.status === 'skipped' ? 'skipped' : ''))); });
   }
   function run() {
-    if (!S.site || S.running) return;
+    if (!S.site || S.running || S.resolving) return;
+    var invalid = Array.from(document.querySelectorAll('#assumptions input')).find(function (el) { return !el.checkValidity(); });
+    if (invalid) { invalid.reportValidity(); setStatus('Check the highlighted assumption before running diligence.'); return; }
     var assumptions = collectAssumptions();
     var wantReason = $('reasonToggle').checked && !$('reasonToggle').disabled;
     S.running = true; S.abort = new AbortController();
-    $('runBtn').disabled = true; $('cancelBtn').hidden = false;
+    updateControls(); $('cancelBtn').hidden = false;
     var state = { site: { status: 'running' } }; renderStages(state); setStatus('Confirming the site with the providers.');
     var savedId = null;
     api('evidence', { body: { site: S.site, objective: S.objective, assumptions: assumptions }, signal: S.abort.signal }).then(function (r) {
@@ -379,14 +432,14 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
         renderStages(state); renderAll(b2); return b2;
       });
     }).catch(function (e) {
-      if (e && e.name === 'AbortError') { if (savedId) { state.reason = { status: 'skipped', note: 'cancelled' }; state.validate = { status: 'skipped' }; setStatus('Cancelled. The evidence stage had already saved brief ' + savedId + '; the model stage did not complete.'); } else { state.site = { status: 'failed', note: 'cancelled' }; setStatus('Cancelled before anything was saved.'); } }
+      if (e && e.name === 'AbortError') { if (savedId) { state.reason = { status: 'skipped', note: 'cancelled' }; state.validate = { status: 'skipped' }; setStatus('Stopped waiting. The evidence stage saved this brief. Check Saved briefs for the final state of any request already accepted by the server.'); } else { state.site = { status: 'failed', note: 'cancelled' }; setStatus('Stopped waiting. A request already accepted by the server may still finish. Check Saved briefs before running again.'); } }
       else setStatus('The run failed: ' + (e && e.message ? e.message : 'network error'));
       renderStages(state);
-    }).finally(function () { S.running = false; S.abort = null; $('runBtn').disabled = !S.site; $('cancelBtn').hidden = true; });
+    }).finally(function () { S.running = false; S.abort = null; updateControls(); $('cancelBtn').hidden = true; });
   }
 
   // ---------------------------------------------------------------- render
-  function renderAll(b) { renderEvidence(b); renderScenarios(b); renderBrief(b); renderTransparency(); renderAssumptions(); renderChanges(b); $('briefActions').hidden = false; $('exportHtml').href = '/api/diligence?action=export&id=' + encodeURIComponent(b.id) + '&format=html'; $('exportJson').href = '/api/diligence?action=export&id=' + encodeURIComponent(b.id) + '&format=json'; $('briefStatus').textContent = label(b.status) + ' · v' + b.version; try { history.replaceState(null, '', '?id=' + encodeURIComponent(b.id)); } catch (e) {} }
+  function renderAll(b) { renderEvidence(b); renderScenarios(b); renderBrief(b); renderTransparency(); renderAssumptions(); renderChanges(b); updateControls(); $('briefActions').hidden = false; $('briefRetention').hidden = false; $('briefRetention').textContent = (b.owner && b.owner.kind === 'guest') ? 'Download to keep this brief. Guest access ends ' + when(b.expiresAt || S.session.expiresAt) + '. This URL is private to your browser session.' : 'Saved to your account. Export a copy for your records.'; $('exportHtml').href = '/api/diligence?action=export&id=' + encodeURIComponent(b.id) + '&format=html'; $('exportJson').href = '/api/diligence?action=export&id=' + encodeURIComponent(b.id) + '&format=json'; $('briefStatus').textContent = (b.status === 'deterministic_only' ? 'Evidence-only' : label(b.status)) + ' · v' + b.version; try { history.replaceState(null, '', '?id=' + encodeURIComponent(b.id)); } catch (e) {} }
 
   function evRow(r) {
     var btn = h('button', { class: 'evrow', type: 'button', onclick: function () { openDrawer(r.id); }, 'aria-label': r.fact + ', ' + r.status });
@@ -519,37 +572,78 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
   }
   function closeDrawer() { $('drawer').close(); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
   function openSaved() {
+    if (S.running || S.resolving) return;
     var body = $('savedBody'); clear(body); body.appendChild(h('p', { class: 'fine' }, 'Loading saved briefs.'));
-    $('savedDlg').showModal(); $('savedClose').focus();
+    if (!$('savedDlg').open) $('savedDlg').showModal(); $('savedClose').focus();
     api('list').then(function (r) {
       clear(body);
       if (!r.ok) { body.appendChild(h('p', null, r.note || 'Saved briefs are unavailable.')); return; }
       if (!r.briefs.length) { body.appendChild(h('div', { class: 'empty' }, h('b', null, 'Nothing saved yet'), S.session.kind === 'guest' ? 'Guest saves last 24 hours in this browser session.' : 'Briefs you run are saved to your account.')); return; }
-      body.appendChild(h('ul', { class: 'saved' }, r.briefs.map(function (x) { return h('li', null, h('span', null, (x.site.address || x.site.query || 'map point'), h('small', null, (x.site.city || '') + (x.site.state ? ', ' + x.site.state : '') + ' · ' + label(x.objective) + ' · v' + x.version + ' · ' + label(x.status) + (x.hasReasoning ? ' · reasoned' : '') + ' · ' + when(x.updatedAt))), h('button', { class: 'btn out sm', type: 'button', onclick: function () { $('savedDlg').close(); openBrief(x.id); } }, 'Open')); })));
-    });
+      body.appendChild(h('p', { class: 'retention' }, S.session.kind === 'guest' ? 'Temporary guest saves. Download important work before your session ends. Links cannot be opened by another browser or shared with a teammate.' : 'These briefs belong to your account.'));
+      body.appendChild(h('ul', { class: 'saved' }, r.briefs.map(function (x) { return h('li', null, h('span', null, (x.site.address || x.site.query || 'map point'), h('small', null, (x.site.city || '') + (x.site.state ? ', ' + x.site.state : '') + ' · ' + label(x.objective) + ' · v' + x.version + ' · ' + label(x.status) + (x.hasReasoning ? ' · reasoned' : '') + ' · ' + when(x.updatedAt)), x.expiresAt ? h('small', null, 'Access ends ' + when(x.expiresAt)) : null), h('div', { class: 'actions' }, h('button', { class: 'btn out sm', type: 'button', onclick: function () { $('savedDlg').close(); openBrief(x.id); } }, 'Open'), h('button', { class: 'btn out sm', type: 'button', 'aria-label': 'Remove brief for ' + (x.site.address || x.site.query || 'map point'), onclick: function () { removeSaved(x.id, this); } }, 'Remove'))); })));
+    }).catch(function () { clear(body); body.appendChild(h('p', { class: 'err' }, 'Saved briefs could not be loaded. Close this panel and try again. Your saved work has not been changed.')); });
+  }
+  function removeSaved(id, button) {
+    if (!confirm('Remove this saved brief from the app? Download a copy first if you need to keep it. This cannot be undone.')) return;
+    button.disabled = true;
+    api('remove', { body: { id: id } }).then(function (r) {
+      if (!r.ok) { setStatus(r.note || 'The brief could not be removed.'); $('savedBody').prepend(h('p', { class: 'err' }, r.note || 'The brief could not be removed.')); return; }
+      if (S.brief && S.brief.id === id) clearResults();
+      setStatus('Brief removed. Downloaded copies are unchanged.'); openSaved();
+    }).catch(function () { $('savedBody').prepend(h('p', { class: 'err' }, 'Removal could not be confirmed. Reload Saved briefs before retrying.')); }).finally(function () { button.disabled = false; });
   }
   function openBrief(id) {
+    if (S.running || S.resolving) return Promise.resolve();
+    S.resolving = true; updateControls();
     setStatus('Opening ' + id + '.');
     return api('get', { params: { id: id } }).then(function (r) {
       if (!r.ok) { setStatus(r.note || 'That brief could not be opened.'); return; }
-      S.brief = r.brief; S.site = r.brief.site; S.objective = r.brief.objective.id; S.dirty = {};
+      S.brief = r.brief; S.site = r.brief.site; S.objective = r.brief.objective.id; S.dirty = {}; $('q').value = S.site.query || ''; S.pendingPoint = null;
       r.brief.assumptions.forEach(function (a) { if (a.basis === 'user_assumption') { S.dirty[a.key] = true; S.dirty['value:' + a.key] = String(a.value); } });
       renderObjectives(); renderAssumptions(); renderSite(r.brief.site, null); $('runBtn').disabled = false; renderAll(r.brief); renderStages({}); setStatus('Opened saved brief ' + id + ' v' + r.brief.version + '.');
-    });
+    }).catch(function () { setStatus('The saved brief could not be loaded. Try Saved briefs again when your connection returns.'); }).finally(function () { S.resolving = false; updateControls(); });
   }
   function refresh() {
-    if (!S.brief || S.running) return;
-    var id = S.brief.id; S.running = true; $('refreshBtn').disabled = true; setStatus('Re-gathering evidence for ' + id + '.');
-    api('refresh', { body: { id: id, reason: $('refreshReason').checked } }).then(function (r) {
+    if (!S.brief || S.running || S.resolving) return;
+    var id = S.brief.id; S.running = true; updateControls(); setStatus('Re-gathering evidence for ' + id + '.');
+    api('refresh', { body: { id: id, reason: $('refreshReason').checked && reasonAllowed() } }).then(function (r) {
       if (!r.ok) { setStatus(r.note || 'Refresh failed.'); return; }
       S.brief = r.brief; renderAll(r.brief); setStatus('Refreshed to v' + r.brief.version + ': ' + r.brief.changes.material + ' record' + (r.brief.changes.material === 1 ? '' : 's') + ' changed by pipeline cause.');
-    }).catch(function (e) { setStatus('Refresh failed: ' + (e && e.message ? e.message : 'network error')); }).finally(function () { S.running = false; $('refreshBtn').disabled = false; });
+    }).catch(function (e) { setStatus('Refresh failed: ' + (e && e.message ? e.message : 'network error')); }).finally(function () { S.running = false; updateControls(); });
+  }
+
+  function downloadJSON(value, name) {
+    var url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2) + '\n'], { type: 'application/json' }));
+    var link = h('a', { href: url, download: name }); document.body.appendChild(link); link.click(); link.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+  function connectionFailed(e) {
+    if (!$('retrySessionBtn').hidden) { setStatus(e && e.message ? e.message : 'Reconnect your session to continue.'); return; }
+    $('modeBadge').lastElementChild.textContent = 'Connection unavailable'; $('serviceNotice').hidden = false; $('serviceText').textContent = 'The workspace could not connect. Check your connection and retry. Existing saved work has not been changed.'; $('retryCapsBtn').hidden = false; updateControls(); setStatus(e && e.message ? e.message : 'Connection unavailable.');
   }
 
   // ---------------------------------------------------------------- wire up
   $('siteForm').addEventListener('submit', function (e) { e.preventDefault(); var q = $('q').value.trim(); if (q.length < 3) { setSiteMessage('Enter a street address.', 'warn'); return; } resolveSite({ query: q }); });
   $('pointForm').addEventListener('submit', function (e) { e.preventDefault(); var pt = S.pendingPoint || (S.site && S.site.point); if (!pt) { setSiteMessage('Click the map to set a point first.', 'warn'); return; } resolveSite({ lat: pt.lat, lon: pt.lon, city: $('pcity').value.trim() || undefined, state: $('pstate').value.trim().toUpperCase() || undefined }); });
   $('runBtn').addEventListener('click', run);
+  $('q').addEventListener('input', function () { if (S.site && !S.running && !S.resolving) { S.site = null; S.pendingPoint = null; clear($('siteOut')); clearResults(); updateControls(); setStatus('Resolve the new address before running diligence.'); } });
+  $('newSiteBtn').addEventListener('click', resetSite);
+  $('exampleBtn').addEventListener('click', function () { resetSite(); $('q').value = '300 N High St, Muncie, IN'; setStatus('Example address filled. Resolve it to retrieve the available source records. No financial assumptions have been supplied.'); $('q').focus(); });
+  $('helpBtn').addEventListener('click', function () { $('helpDlg').showModal(); });
+  $('helpClose').addEventListener('click', function () { $('helpDlg').close(); });
+  $('feedbackBtn').addEventListener('click', function () { $('feedbackStatus').textContent = ''; $('feedbackDlg').showModal(); $('feedbackText').focus(); });
+  $('feedbackClose').addEventListener('click', function () { $('feedbackDlg').close(); });
+  $('feedbackForm').addEventListener('submit', function (e) {
+    e.preventDefault(); var text = $('feedbackText').value.trim(); if (!text) return;
+    downloadJSON({ schema: 'diligence.feedback.v1', createdAt: new Date().toISOString(), description: text, appVersion: S.caps && S.caps.agentVersion, mode: S.caps && S.caps.inference.mode, sessionKind: S.session && S.session.kind, brief: S.brief ? { status: S.brief.status, version: S.brief.version, inferenceOutcome: S.brief.run.inference && S.brief.run.inference.outcome } : null }, 'cividian-feedback.json');
+    $('feedbackStatus').textContent = 'Report downloaded. Review it, then send it to the person who invited you. Nothing was sent automatically.';
+  });
+  $('exportJson').addEventListener('click', function (e) { if (S.brief) { e.preventDefault(); downloadJSON(S.brief, S.brief.id + '.json'); } });
+  $('retryCapsBtn').addEventListener('click', function () { this.disabled = true; loadCaps().catch(connectionFailed).finally(function () { $('retryCapsBtn').disabled = false; }); });
+  $('retrySessionBtn').addEventListener('click', function () {
+    if (!confirm('Start a new guest session? Previous-session saves will not be accessible. Download any brief on screen first.')) return;
+    this.disabled = true;
+    mintGuest().then(function (g) { if (!g.ok) throw new Error('Could not reconnect. Try again shortly.'); return loadCaps(); }).then(function () { resetSite(); }).catch(connectionFailed).finally(function () { $('retrySessionBtn').disabled = false; });
+  });
   $('cancelBtn').addEventListener('click', function () { if (S.abort) S.abort.abort(); });
   $('drawerClose').addEventListener('click', closeDrawer);
   $('drawer').addEventListener('cancel', function (e) { e.preventDefault(); closeDrawer(); });
@@ -560,13 +654,14 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
   $('savedDlg').addEventListener('click', function (e) { if (e.target === $('savedDlg')) $('savedDlg').close(); });
   $('refreshBtn').addEventListener('click', refresh);
   renderStages({});
+  updateControls();
   initMap();
   loadCaps().then(function () {
     var p = new URLSearchParams(location.search);
     if (p.get('id')) return openBrief(p.get('id'));
     if (p.get('city')) { $('pcity').value = p.get('city').slice(0, 100); $('pstate').value = (p.get('state') || '').slice(0, 2).toUpperCase(); $('pointForm').hidden = false; }
     setStatus('Ready. Resolve a site to begin.');
-  }).catch(function (e) { $('modeBadge').lastElementChild.textContent = 'Capabilities unavailable'; setStatus('The agent could not load its capabilities: ' + (e && e.message ? e.message : 'unknown error') + '. Reload to retry.'); });
+  }).catch(connectionFailed);
 })();
 </script>
 </body>

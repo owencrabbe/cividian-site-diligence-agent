@@ -46,6 +46,13 @@ answer must pass. It is refused on any production-like host.
 
 ## The demo in five steps
 
+For a first visit, see the [early-access user guide](docs/hackathon/BETA_GUIDE.md).
+
+The early-access workspace includes a quickstart, an example-address button,
+Help & privacy, and an issue-report download. The example fills an address;
+it does not supply invented evidence or financial inputs. If AI is paused,
+evidence gathering, scenario calculations, saves, and exports still work.
+
 1. Enter `300 N High St, Muncie, IN` and resolve the site. Indiana parcels
    come from the State of Indiana's public IndianaMap layer, so no parcel
    provider key is needed there. Elsewhere the parcel row says `no_key` or
@@ -58,7 +65,15 @@ answer must pass. It is refused on any production-like host.
    comparison, and the brief. Click any `[ev_…]` chip to inspect the record.
 5. Open the printable brief or download the JSON. Refresh evidence to see
    per-record change classes. Everything you saved is listed under Saved
-   briefs for the guest session's 24 hours.
+   briefs until the guest session expires (the exact time is displayed).
+   Download important work before then. Clearing cookies or switching browsers
+   loses access; brief URLs are not sharing links. Remove a saved brief from
+   that panel when you no longer want its content stored in the app.
+
+Issue reports are downloaded for the user to review and send to their inviter.
+No report is sent automatically. Automatic report fields omit addresses,
+financial assumptions, cookies, and credentials; the user's description is
+included as entered. No account system or cross-device sync is implied.
 
 ## Live Nemotron on Nebius Token Factory
 

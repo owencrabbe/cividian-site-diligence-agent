@@ -1,6 +1,6 @@
 # Exclusions from the public edition
 
-Generated 2026-09-20T19:10:10.882Z. The public edition is a reproducible export of one subsystem of the private Cividian repository. The following were deliberately left out.
+Generated 2026-09-21T14:49:49.179Z. The public edition is a reproducible export of one subsystem of the private Cividian repository. The following were deliberately left out.
 
 | Excluded | Why |
 | --- | --- |
@@ -12,4 +12,4 @@ Generated 2026-09-20T19:10:10.882Z. The public edition is a reproducible export 
 | Sentry, Prometheus, observability handlers | Deployment tooling of the private product. |
 | Recorded screenshots and marketing imagery | Not required to run; some are illustrative assets with their own provenance. |
 
-Files exported from the private repository (50) are listed in MANIFEST.json with sha256 hashes. License status: Apache-2.0 authorized by the owner; third-party terms retained in NOTICE. The two generated substitutes are lib/diligence/host.js and lib/auth.js.
+Files exported from the private repository (51) are listed in MANIFEST.json with sha256 hashes. License status: Apache-2.0 authorized by the owner; third-party terms retained in NOTICE. The two generated substitutes are lib/diligence/host.js and lib/auth.js.

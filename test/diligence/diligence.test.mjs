@@ -29,6 +29,35 @@ const fixture = await import("../../lib/diligence/fixture.js");
 const { runSmoke } = await import("../../scripts/nebius-smoke.mjs");
 const { setupStatus } = await import("../../scripts/setup-diligence-live.mjs");
 const { demoTarget, assertInference } = await import("../../scripts/verify-diligence-judging.mjs");
+const { saveStoredBrief } = await import("../../lib/diligence/storage.js");
+
+test("beta storage: concurrent saves preserve the index; removal is owner-scoped and cannot be undone by a late write", async () => {
+  const owner = { kind: "guest", key: "guest:beta-concurrency", ttl: 86400 };
+  const d = deps();
+  const resolved = await siteFor(SITE_INPUT, d);
+  const runs = await Promise.all(Array.from({ length: 8 }, () => brief.startRun({ site: resolved, objective: "residential_infill", assumptions: {} }, owner, d)));
+  assert.equal((await brief.listBriefs(owner)).length, 8);
+  const saved = runs[0].brief;
+  assert.equal(await brief.removeBrief(OTHER_OWNER, saved.id), false);
+  assert.ok(await brief.loadBrief(owner, saved.id));
+  assert.equal(await brief.removeBrief(owner, saved.id), true);
+  assert.equal(await brief.loadBrief(owner, saved.id), null);
+  assert.equal((await brief.listBriefs(owner)).length, 7);
+  assert.equal(await brief.removeBrief(owner, saved.id), false);
+  await assert.rejects(saveStoredBrief(owner, saved, 50), { code: "brief_removed" });
+  assert.equal(await brief.loadBrief(owner, saved.id), null);
+});
+
+test("beta retention: guest access and writes stop at the signed session expiry", async () => {
+  assert.equal(brief.ownerKey({ guest: true, jti: "expired-test", exp: 1 }), null);
+  const exp = Math.floor(Date.now() / 1000) + 60;
+  const owner = brief.ownerKey({ guest: true, jti: "beta-expiry", exp });
+  assert.equal(owner.expiresAt, new Date(exp * 1000).toISOString());
+  const d = deps();
+  const out = await brief.startRun({ site: await siteFor(SITE_INPUT, d), objective: "residential_infill", assumptions: {} }, owner, d);
+  assert.equal(out.brief.expiresAt, owner.expiresAt);
+  await assert.rejects(saveStoredBrief({ ...owner, expiresAt: new Date(1).toISOString() }, out.brief, 50), { code: "session_expired" });
+});
 
 test("live setup: requires shared Redis and expiry; reports presence without credential values", () => {
   const now = new Date("2026-09-20T00:00:00Z");

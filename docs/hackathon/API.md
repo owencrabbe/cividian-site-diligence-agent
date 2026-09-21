@@ -29,7 +29,7 @@ Capabilities and configuration as booleans and labels. Never key material.
     "pricing": { "model": "…", "inputPer1M": 0.3, "outputPer1M": 0.9, "asOf": "2026-09-20", "source": "Nebius signed-in model card and price table", "verified": true }
   },
   "limits": { "queryMaxChars": 200, "packetMaxBytes": 24000, "maxOutputTokens": 3000, "providerTimeoutMs": 20000 },
-  "session": { "kind": "guest | account | none", "verified": false }
+  "session": { "kind": "guest | account | none", "verified": false, "expiresAt": "ISO guest expiry or null" }
 }
 ```
 
@@ -70,7 +70,21 @@ The saved brief, owner-scoped.
 
 ## GET /api/diligence?action=list
 
-`{ ok: true, briefs: [ { id, createdAt, updatedAt, status, site: { city, state, query }, objective } ] }`
+`{ ok: true, briefs: [ { id, createdAt, updatedAt, expiresAt, status, site: { city, state, query }, objective } ] }`
+
+## POST /api/diligence?action=remove
+
+Body: `{ "id": "dlg_…" }`. Owner-scoped, same-origin, rate-limited removal.
+Returns `{ ok: true, removed: true }` after removing the brief's content and
+index entry. A missing or another owner's id returns `not_found`. GET cannot
+remove anything. A content-free marker prevents an already running write
+from recreating the removed brief (`brief_removed`). Guest markers expire
+with the signed session. A session that expires during a write returns 401.
+
+Brief and index updates are atomic in Redis. Guest records carry `expiresAt`
+and their TTL never extends beyond the signed session's expiry. The public
+edition has no account recovery or cross-device sharing. Downloaded files
+and provider-side processing are not removed by this API.
 
 ## GET /api/diligence?action=export&id=dlg_…&format=json|html
 

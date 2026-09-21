@@ -1,8 +1,8 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-20T19:10:10.514Z",
+  "generatedAt": "2026-09-21T14:49:48.689Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "3e1ddb656060dd8543a29a2296e2487c03ca1b3f",
+  "sourceCommit": "8e75df528c158b1633c7aaae4ccd536aa25db013",
   "branch": "feat/nebius-site-diligence-agent",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
@@ -49,8 +49,8 @@
     },
     {
       "path": "api/diligence.js",
-      "bytes": 5915,
-      "sha256": "d294728a2af2db70f82f25e61f7b01e133362b067849923a7d8feeb59217f6d3",
+      "bytes": 6716,
+      "sha256": "81f0178f1ef356b8e7879758f4ed677e1e6912ceda9ae9fe9ba9484ddb240e20",
       "origin": "api/diligence.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -77,15 +77,15 @@
     },
     {
       "path": "diligence.html",
-      "bytes": 67581,
-      "sha256": "e78f056542c76a0160ff7be10bde62d561e00806d42c272d0beb20345b5cecbe",
+      "bytes": 83421,
+      "sha256": "2afec94066795ac80e800f0f2cea2842ac39d80b068ee51788e658d7b3411c2a",
       "origin": "diligence.html",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "docs/hackathon/API.md",
-      "bytes": 4285,
-      "sha256": "5fab95f876ed11c53321cadbe621849bc394772a1435d16a9aafc0a8e9d3b3bd",
+      "bytes": 5116,
+      "sha256": "aa5540181d26da024736b7ef450a8fb61ec49257638a3b6502f2d3711128db22",
       "origin": "docs/hackathon/API.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -97,16 +97,23 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "docs/hackathon/BETA_GUIDE.md",
+      "bytes": 3310,
+      "sha256": "d2c1d159749f1598052d1e304f4bfdf35e01ee4764ff97bd681bd3709d59251f",
+      "origin": "docs/hackathon/BETA_GUIDE.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "docs/hackathon/DEPLOYMENT_JUDGING.md",
-      "bytes": 9944,
-      "sha256": "3ad89830b158d7bb1f98b07f3d8b7d1d2b4fd39adf70ac19339c73a2118e1b89",
+      "bytes": 10249,
+      "sha256": "4337bd86e89a753c1fce30092b19b45ecd004b2aaad13fd49534423d5d4a0352",
       "origin": "docs/hackathon/DEPLOYMENT_JUDGING.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 5541,
-      "sha256": "8217af603cf0b56d090de9b91aa773be40f1d0e826de369cc8e8fed97069ca65",
+      "sha256": "7f2dbfa13015573bdf9c84eeba881012f8d3930d6269de7414657e4f992e219a",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -141,7 +148,7 @@
     {
       "path": "EXCLUSIONS.md",
       "bytes": 1725,
-      "sha256": "569d9d3c8babb3d90ebd6365dde8782f2bd6602e4958decfce9982d9b7c2fe7c",
+      "sha256": "1d485b48edb4c44538c15e9873b6ba440a1750056eef1de5f2a621c69ce4a685",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -189,8 +196,8 @@
     },
     {
       "path": "lib/diligence/brief.js",
-      "bytes": 23828,
-      "sha256": "367c61da2293560a41f8260f012a5b7af3fd4c74af2f6ba1e5c573c6a5ed3164",
+      "bytes": 24182,
+      "sha256": "9a7c13e39a6b0836edc46bdd8534b38b5625ca246289d562983bcd6426b089b2",
       "origin": "lib/diligence/brief.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -290,6 +297,13 @@
       "bytes": 7728,
       "sha256": "595edbaac5c1de70348d472c7560f8b00c9a89f0f397bb80c2a24df1080ebe34",
       "origin": "lib/diligence/standalone-server.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/storage.js",
+      "bytes": 3210,
+      "sha256": "1bf91212c66d4217fe1d39d8d6a0e92ad815951013a12b409c199933b80b63e9",
+      "origin": "lib/diligence/storage.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
@@ -441,15 +455,15 @@
     },
     {
       "path": "package.json",
-      "bytes": 848,
-      "sha256": "f97d5609d28dcc59b7cab08c49150747d462fdc44df91b418615ea4e70f936f7",
+      "bytes": 886,
+      "sha256": "8cb5ea20710cd13ad7444cc4742d049f0cbdd022f6b94d9ef3b1204df3b56a68",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "README.md",
-      "bytes": 6406,
-      "sha256": "146c36d82ccd5b806b26e2ed71b5101f82fd7a6cc47d87e14f9e288aca89c4c1",
+      "bytes": 7348,
+      "sha256": "c7f97b91b7a2f84227a74c7658eb47a68f64f1a36308e95a0295fb5b13f0b1c2",
       "origin": "docs/hackathon/PUBLIC_EDITION_README.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -574,8 +588,8 @@
     },
     {
       "path": "test/diligence/diligence.test.mjs",
-      "bytes": 53606,
-      "sha256": "4283d9349f44e60b2943c9b051d0a0e9c938841f4561b37a03aca2022e39bcf1",
+      "bytes": 55468,
+      "sha256": "a0d6cbc9517d854e072b90f591126521acb4ee5b71c62f224028964fe4349e29",
       "origin": "test/diligence/diligence.test.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -601,6 +615,13 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "test/diligence/storage-redis.test.mjs",
+      "bytes": 3695,
+      "sha256": "e13ba07cea2b87965b59f643d0d3b0af8d2fa859630136e65a7e80ae734f1774",
+      "origin": "test/diligence/storage-redis.test.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "vercel.json",
       "bytes": 468,
       "sha256": "1a369779502617d26ef34589d0bcccd60a07b44f707ba65b26da41d3a07b4091",
@@ -612,7 +633,7 @@
     {
       "name": "closure computed",
       "ok": true,
-      "detail": "50 files, packages jose,redis"
+      "detail": "51 files, packages jose,redis"
     },
     {
       "name": "runtime packages are the two allowed",
@@ -647,7 +668,7 @@
     {
       "name": "npm test in the export",
       "ok": true,
-      "detail": "pass 40 fail 0"
+      "detail": "pass 42 fail 0"
     },
     {
       "name": "evaluation set in the export",

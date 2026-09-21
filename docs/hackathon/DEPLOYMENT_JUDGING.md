@@ -1,5 +1,10 @@
 # Deployment and judging plan
 
+September 21 continuation: the original approval has expired and current
+hosted status correctly reports `inference.mode: unavailable`. The first-user
+beta explicitly supports evidence-only operation. A new allowance is pending;
+do not treat the historical live receipt below as current AI availability.
+
 Status on 2026-09-20: the owner-authorized dedicated deployment exists at
 https://cividian-site-diligence-agent.vercel.app . Its public page, health,
 and capability status respond without a Vercel login. Nebius and AUTH_SECRET
