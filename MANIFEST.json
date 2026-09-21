@@ -1,8 +1,8 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-21T14:49:48.689Z",
+  "generatedAt": "2026-09-21T15:24:36.956Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "8e75df528c158b1633c7aaae4ccd536aa25db013",
+  "sourceCommit": "5e3396fbfb7bf8cb6cbeba5d02104f12ccab1240",
   "branch": "feat/nebius-site-diligence-agent",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
@@ -77,8 +77,8 @@
     },
     {
       "path": "diligence.html",
-      "bytes": 83421,
-      "sha256": "2afec94066795ac80e800f0f2cea2842ac39d80b068ee51788e658d7b3411c2a",
+      "bytes": 101008,
+      "sha256": "dc4b5a36ac734cc47d143c446224070b1d2561f7048d6495515750a91f562038",
       "origin": "diligence.html",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -98,8 +98,8 @@
     },
     {
       "path": "docs/hackathon/BETA_GUIDE.md",
-      "bytes": 3310,
-      "sha256": "d2c1d159749f1598052d1e304f4bfdf35e01ee4764ff97bd681bd3709d59251f",
+      "bytes": 4085,
+      "sha256": "b34c39964ab491da6c6b9d1cc2af39b99eb1caac79999ecae733c41a1ce05643",
       "origin": "docs/hackathon/BETA_GUIDE.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -113,7 +113,7 @@
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 5541,
-      "sha256": "7f2dbfa13015573bdf9c84eeba881012f8d3930d6269de7414657e4f992e219a",
+      "sha256": "d5c144f1e1b1fb9e7b33ba46e6b63b959d2cd223941314d9e05bf6a54a657012",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -148,7 +148,7 @@
     {
       "path": "EXCLUSIONS.md",
       "bytes": 1725,
-      "sha256": "1d485b48edb4c44538c15e9873b6ba440a1750056eef1de5f2a621c69ce4a685",
+      "sha256": "599e2d8953fd24fd7796ff8ff038b0bb13e06ce736facaec33211aad504151a5",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -197,7 +197,7 @@
     {
       "path": "lib/diligence/brief.js",
       "bytes": 24182,
-      "sha256": "9a7c13e39a6b0836edc46bdd8534b38b5625ca246289d562983bcd6426b089b2",
+      "sha256": "624a00ac829c2765560ea1205777f1c3522eb89f581f8462b66839ff21c28ef5",
       "origin": "lib/diligence/brief.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
