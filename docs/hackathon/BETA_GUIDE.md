@@ -1,6 +1,6 @@
 # Your first Cividian site brief
 
-Open https://cividian-site-diligence-agent.vercel.app/diligence . No signup
+Open https://cividian-site-diligence-agent.vercel.app/app . No signup
 is required for the guest workspace. Start with one Indiana property you
 know, or use **Try a Muncie address** to fill a public example address.
 
@@ -8,16 +8,17 @@ know, or use **Try a Muncie address** to fill a public example address.
    and parcel warnings. An address
    match or nearby parcel remains unverified. A polygon is not a survey.
 2. **Choose an objective.** Residential infill, mixed-use or adaptive reuse.
-   The common cost, acquisition, rent and cap-rate inputs are optional.
-   Open **Building & parking assumptions** or **More financial assumptions**
+   Open **Adjust assumptions** when you have inputs to add. Cost, acquisition,
+   rent and cap-rate inputs are optional. Open **Building & parking assumptions**
+   or **More financial assumptions**
    to review the labeled defaults and enter only assumptions you know.
    Leave unknown costs and rents blank; zero means a known zero.
 3. **Create site brief.** The report opens when the run finishes. Missing data
    remains visible. Open **Run details** for progress. When
    the header says evidence-only mode, you still get source records, scenario
    calculations and a rules-based investigation plan without AI interpretation.
-4. **Review the brief.** Start with **Overview & next steps** for the screening
-   result and three investigation priorities. Use **Scenarios** to compare
+4. **Review the brief.** Start with the overview for the screening
+   result and three investigation priorities. Expand **Scenarios** to compare
    calculations and **Sources** to inspect records. The full ten-section
    brief expands below the overview. Scenario arithmetic is not a feasibility
    finding, valuation or investment recommendation.
@@ -26,22 +27,23 @@ know, or use **Try a Muncie address** to fill a public example address.
 
 ## Return, refresh, or remove
 
-Use **Saved briefs** in the same browser before your session expires. Guest
+Use **Menu > Saved briefs** in the same browser before your session expires. Guest
 sessions last up to 24 hours. Refresh updates evidence and labels changes by
-cause; it does not run automatically. **New site** starts another investigation.
+cause; it does not run automatically. **New brief** starts another investigation.
 Editing the address clears the displayed results so they cannot be mistaken
 for evidence about the next site. Previous saved briefs remain in the list.
 
 **Edit inputs** returns to setup. Changing an assumption preserves your last
 saved brief and labels it as using previous inputs. Create a new brief to use
 your edits. Evidence refresh is disabled while those edits are pending so it
-cannot overwrite them. Switching report tabs keeps your work. Blank values
+cannot overwrite them. Opening and closing report details keeps your work. Blank values
 display as **Unknown**; the JSON still records them as null, never zero.
 
-Saved URLs require the original browser session. They are not share links.
-There is no account recovery or cross-device sync in this beta. Clearing
-cookies, switching browsers or waiting past expiry loses access. Export a
-copy for a teammate or for longer-term records.
+Guest saved URLs require the original browser session. They are not share links.
+Clearing cookies, switching browsers or waiting past expiry loses guest access.
+When managed sign-in is enabled, account briefs can be reopened after signing
+in on another device. Guest briefs do not move into your account; export them
+before signing in. Export a copy for a teammate or for longer-term records.
 
 **Remove** in Saved briefs deletes that brief's content from the app after
 confirmation. It cannot delete copies you downloaded or processing already
@@ -69,3 +71,16 @@ inputs, cookies and credentials. Your description is included as entered.
 Helpful early feedback: Did the site match? Which source gap stopped your
 work? Were the assumptions understandable? Could you export and reopen the
 brief? What decision did the investigation plan help you prepare for?
+
+## Install and connect
+
+Use **Menu > Install app** for device instructions. This is an installable web
+app, with the same features as the browser version. It needs a connection to
+retrieve sites and sources. The website's **What's new** section lists updates.
+
+**Menu > Account & connections** opens sign-in and API key settings. If sign-in
+is still being connected, use the guest workspace. Once enabled, create a key
+for your own script or MCP client. Keep it secret and revoke it when you stop
+using the connection. See `/developers` for endpoint and client instructions.
+API/MCP connections use source records and rules-based priorities; no paid AI
+calls are made through those connections.

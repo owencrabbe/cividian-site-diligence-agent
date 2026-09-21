@@ -1,6 +1,6 @@
 # Site Diligence Agent evaluation results
 
-Generated 2026-09-21T15:24:40.979Z by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic; the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.
+Generated 2026-09-21T16:21:52.548Z by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic; the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.
 
 | Case | Coverage | Readiness | Inference | Checks | Result |
 | --- | --- | --- | --- | --- | --- |

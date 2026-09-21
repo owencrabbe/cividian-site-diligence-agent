@@ -29,8 +29,10 @@ and publishing the export remain owner approvals.
 platform. In the private product it re-exports Cividian's session, origin,
 rate-limit, body, storage-boundary, storage, and logging helpers. In the
 export it re-exports `lib/diligence/standalone-host.mjs`, which reuses the
-same generic helpers and replaces only the account system with a guest-only
-session implementation (same cookie name, claims, and lifetime). `lib/auth.js`
+same generic helpers and replaces the private identity system with isolated
+guest sessions and optional Supabase managed accounts. Guest cookies retain
+the same name, claims and lifetime; managed accounts use separate cookies and
+stable provider IDs. The standalone server injects this resolver locally too. `lib/auth.js`
 becomes a one-line shim so `api/guest.js` runs unchanged. No other file
 differs from the private repository; the manifest records both substitutes.
 

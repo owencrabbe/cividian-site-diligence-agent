@@ -20,7 +20,7 @@ function publicBrief(b) {
   return { ...rest, owner: owner ? { kind: owner.kind } : null };
 }
 
-async function handler(req, res) {
+async function handler(req, res, resolveSession = getSession) {
   res.setHeader("Cache-Control", "private, no-store");
   if (!methodGuard(req, res, ["GET", "POST"])) return;
   const q = query(req);
@@ -34,11 +34,11 @@ async function handler(req, res) {
   const rl = await rateLimit(req, "diligence-" + action, RATES[action][0], RATES[action][1], { failOpen: action === "status" });
   if (!rl.ok) return tooMany(res, rl);
 
-  const session = await getSession(req);
+  const session = await resolveSession(req);
   const owner = ownerKey(session);
   if (action === "status") {
     const caps = await capabilities(process.env);
-    return res.status(200).json({ ok: true, ...caps, session: { kind: owner ? owner.kind : "none", verified: !!(session && session.verified === true), expiresAt: owner?.expiresAt || null } });
+    return res.status(200).json({ ok: true, ...caps, session: { kind: owner ? owner.kind : "none", verified: !!(session && session.verified === true), expiresAt: owner?.expiresAt || null, signInRequired: !!session?.signInRequired } });
   }
   if (!owner) return res.status(401).json({ ok: false, error: "auth_required", note: "Start a guest session or sign in to use the Site Diligence Agent." });
 
@@ -104,4 +104,7 @@ async function handler(req, res) {
   } finally { req.off?.("aborted", abort); res.off?.("close", close); }
 }
 
-export default withStorageBoundary(handler);
+export function createDiligenceHandler(resolveSession = getSession) {
+  return withStorageBoundary((req, res) => handler(req, res, resolveSession));
+}
+export default createDiligenceHandler();

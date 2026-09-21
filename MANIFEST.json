@@ -1,14 +1,17 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-21T15:24:36.956Z",
+  "generatedAt": "2026-09-21T16:21:49.070Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "5e3396fbfb7bf8cb6cbeba5d02104f12ccab1240",
+  "sourceCommit": "eb4c8c6e09ecdbe10de8423cca14bebd33a1236a",
   "branch": "feat/nebius-site-diligence-agent",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
   "entries": [
     "api/diligence.js",
     "api/guest.js",
+    "api/diligence-account.js",
+    "api/diligence-public.js",
+    "api/diligence-mcp.js",
     "lib/diligence/standalone-server.mjs",
     "lib/diligence/standalone-host.mjs",
     "scripts/nebius-smoke.mjs",
@@ -28,8 +31,8 @@
   "files": [
     {
       "path": ".env.example",
-      "bytes": 991,
-      "sha256": "57162e881be541d4249ecffe2f25f05300d99ff504dba9e357ef501faf76d262",
+      "bytes": 1244,
+      "sha256": "f20a05bbf744546803bda09ac8f6c2549619a452ce41a5e1ef8d26fd76e6cf59",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -48,16 +51,37 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "api/diligence-account.js",
+      "bytes": 4320,
+      "sha256": "0d1fdf5660b3fe1f8fee94be4d06bd327003fa8c41d40111cbbf0bbe2c5556f5",
+      "origin": "api/diligence-account.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "api/diligence-mcp.js",
+      "bytes": 6643,
+      "sha256": "fff7f864a79fc26414f66bc22c7e600e020a0a2f7e74a59fc9e56a8215160bff",
+      "origin": "api/diligence-mcp.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "api/diligence-public.js",
+      "bytes": 2246,
+      "sha256": "e1f5259c386c564f50c1374c4aa22f276456737e3900ffbc9788e97b6b2ae63c",
+      "origin": "api/diligence-public.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "api/diligence.js",
-      "bytes": 6716,
-      "sha256": "81f0178f1ef356b8e7879758f4ed677e1e6912ceda9ae9fe9ba9484ddb240e20",
+      "bytes": 6939,
+      "sha256": "000670f8caaf7c317a2ef375aecca97f0c4fa26a780dbb36df6813b400d1c007",
       "origin": "api/diligence.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "api/guest.js",
-      "bytes": 1406,
-      "sha256": "cad8cb1a9c6f021c11f8aad6ac7231262473c4cd7ec5c141beb5799547e7d4cf",
+      "bytes": 1563,
+      "sha256": "7bb9029d73f055efbbf5735e46a1d65c6cc4f4d2f6860a45152b60583d4b9a50",
       "origin": "api/guest.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -76,16 +100,72 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "diligence-account.html",
+      "bytes": 12297,
+      "sha256": "cd7c95879f41cdd58db77ddcad701a8e191b7e8c26553426e41cfaa18c4ad033",
+      "origin": "diligence-account.html",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "diligence-app-icon.svg",
+      "bytes": 189,
+      "sha256": "b9f041a8953cf0d33921ae4bea184c60fa8e8dbb3c28b4a5082a6eabc1231071",
+      "origin": "diligence-app-icon.svg",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "diligence-developers.html",
+      "bytes": 6243,
+      "sha256": "ae5c66a391e025c136f8594c4e9eb315331f3e1ff79da9d4c733d5123bf45095",
+      "origin": "diligence-developers.html",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "diligence-manifest.webmanifest",
+      "bytes": 330,
+      "sha256": "1601d8286aae676d3169b8060a58d245d50c5b039e245c973478ed08f042dcaa",
+      "origin": "diligence-manifest.webmanifest",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "diligence-shared.css",
+      "bytes": 6996,
+      "sha256": "e8ccb6539652253f8960f31d23d18f63471771e699786f46216ce6a9cab36d4d",
+      "origin": "diligence-shared.css",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "diligence-site.html",
+      "bytes": 5316,
+      "sha256": "2056ae6a472dccc59480361f8f45ca1beee1500a6596c1c20a10cbce6d0abb84",
+      "origin": "diligence-site.html",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "diligence-sw.js",
+      "bytes": 927,
+      "sha256": "9d0aeba98a67dc21fdad4a532fb7f711f7c26a27168af28666a2b6603758abd9",
+      "origin": "diligence-sw.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "diligence.html",
-      "bytes": 101008,
-      "sha256": "dc4b5a36ac734cc47d143c446224070b1d2561f7048d6495515750a91f562038",
+      "bytes": 104177,
+      "sha256": "624650e3ae3ae6a669a63e447cf44cdb5d86094d1ec67ab5ef991a27081b8216",
       "origin": "diligence.html",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "docs/hackathon/ACCOUNT_SETUP.md",
+      "bytes": 7184,
+      "sha256": "e5dbe1c2b939c0b773f63630fbafd9af68f716abcc423793d89470d67e4c089d",
+      "origin": "docs/hackathon/ACCOUNT_SETUP.md",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "docs/hackathon/API.md",
-      "bytes": 5116,
-      "sha256": "aa5540181d26da024736b7ef450a8fb61ec49257638a3b6502f2d3711128db22",
+      "bytes": 7125,
+      "sha256": "4c25e690353568152a5db12d3c5694effe251cc9e414c1a7920b27b1b84cd8b3",
       "origin": "docs/hackathon/API.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -98,8 +178,8 @@
     },
     {
       "path": "docs/hackathon/BETA_GUIDE.md",
-      "bytes": 4085,
-      "sha256": "b34c39964ab491da6c6b9d1cc2af39b99eb1caac79999ecae733c41a1ce05643",
+      "bytes": 4958,
+      "sha256": "48f718531c14102a65f7f531300ceda92c122b5706a8357a3bacf8c7f2d64db8",
       "origin": "docs/hackathon/BETA_GUIDE.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -113,7 +193,7 @@
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 5541,
-      "sha256": "d5c144f1e1b1fb9e7b33ba46e6b63b959d2cd223941314d9e05bf6a54a657012",
+      "sha256": "5c0f6f4fc59002006470254575ce867b7359f2313380413d7330c1a55904a6a5",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -133,8 +213,8 @@
     },
     {
       "path": "docs/hackathon/PUBLIC_EDITION.md",
-      "bytes": 5436,
-      "sha256": "dd37c139acb2295a10a916ab762b2bca8229e25a451b2ec3efbe8b18d305d10a",
+      "bytes": 5603,
+      "sha256": "6b93b984ac3b0c542c05a08aca70d144b68fe90a4fd0d4e948a531b1f5179592",
       "origin": "docs/hackathon/PUBLIC_EDITION.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -147,8 +227,8 @@
     },
     {
       "path": "EXCLUSIONS.md",
-      "bytes": 1725,
-      "sha256": "599e2d8953fd24fd7796ff8ff038b0bb13e06ce736facaec33211aad504151a5",
+      "bytes": 1743,
+      "sha256": "ef4753b6519b72d22f3ca7bb465d49c9a9cf43314268bc1424c3b8a182383f76",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -195,9 +275,23 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "lib/diligence/access-keys.js",
+      "bytes": 4887,
+      "sha256": "4df646b6af4211a07505903c1f2b79faa77b6475f4c13486f0aaee730670a69a",
+      "origin": "lib/diligence/access-keys.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/account-auth.js",
+      "bytes": 10174,
+      "sha256": "27e61aa3580d1fdae2ec323853f5cf3996c7fda207698d55860f0164954fc713",
+      "origin": "lib/diligence/account-auth.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "lib/diligence/brief.js",
-      "bytes": 24182,
-      "sha256": "624a00ac829c2765560ea1205777f1c3522eb89f581f8462b66839ff21c28ef5",
+      "bytes": 24405,
+      "sha256": "5ed9dd778dfaf791b121c9e023bba585454a9ca3b8957264e02432406f3bfec5",
       "origin": "lib/diligence/brief.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -231,9 +325,16 @@
     },
     {
       "path": "lib/diligence/host.js",
-      "bytes": 114,
-      "sha256": "47f29662fd7e9598ce9fbf9b5efa5871b23a4845f710f6a78fb05cd30cb25ac4",
+      "bytes": 117,
+      "sha256": "c9a69c63d2b5acdaea861ae58aaa459afca6a4bee9b86029f21bc1ce3ab5333b",
       "origin": "generated substitute for lib/diligence/host.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/integrations.js",
+      "bytes": 6979,
+      "sha256": "a9d4ad613d683baa2faf75a1b3794adc273feb30fbd85ca8f5a41facc7969f98",
+      "origin": "lib/diligence/integrations.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
@@ -287,15 +388,15 @@
     },
     {
       "path": "lib/diligence/standalone-host.mjs",
-      "bytes": 3932,
-      "sha256": "f546120dd4062a6e3a8b47d49fe54f0b7cdcb99efe27880dbf912a1edadc16fa",
+      "bytes": 3597,
+      "sha256": "3279706bbb10502d18e1400df8aa621da9fabc16a6de7a25c5c98fec435841a3",
       "origin": "lib/diligence/standalone-host.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "lib/diligence/standalone-server.mjs",
-      "bytes": 7728,
-      "sha256": "595edbaac5c1de70348d472c7560f8b00c9a89f0f397bb80c2a24df1080ebe34",
+      "bytes": 9022,
+      "sha256": "d296a0f7bfa951d0b90ce48294f6de32f0912e8544fa55e2bbd16c2005a1e67b",
       "origin": "lib/diligence/standalone-server.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -449,21 +550,21 @@
     {
       "path": "package-lock.json",
       "bytes": 4585,
-      "sha256": "9692618d279301260fef4d84455d9a9ab5e27c1ee096caf19c2599b6cf245635",
+      "sha256": "c3282092cac2d25def8e5a9ef397bedd8f114914dfddc16f13df7bfc2efb04ab",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "package.json",
-      "bytes": 886,
-      "sha256": "8cb5ea20710cd13ad7444cc4742d049f0cbdd022f6b94d9ef3b1204df3b56a68",
+      "bytes": 919,
+      "sha256": "c7b9aa3b555e8fda8560291123a0ebc79e2207e0469904995a26c2b73041f884",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "README.md",
-      "bytes": 7348,
-      "sha256": "c7f97b91b7a2f84227a74c7658eb47a68f64f1a36308e95a0295fb5b13f0b1c2",
+      "bytes": 8300,
+      "sha256": "51897a546243b940bd28099ed532fb74c9658e52f0c75afe8d4f9195e44958d1",
       "origin": "docs/hackathon/PUBLIC_EDITION_README.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -580,6 +681,13 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "test/diligence/accounts.test.mjs",
+      "bytes": 19672,
+      "sha256": "01acd680b17892eb022a03b576fbb943cdba23507cd8fe820058e39cffd0808b",
+      "origin": "test/diligence/accounts.test.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "test/diligence/budget-redis.test.mjs",
       "bytes": 5001,
       "sha256": "32b83cd3c6fde4c903e6eb0eab4e51506ded3f0f4a3fe8d36a8d01733ff96609",
@@ -623,8 +731,8 @@
     },
     {
       "path": "vercel.json",
-      "bytes": 468,
-      "sha256": "1a369779502617d26ef34589d0bcccd60a07b44f707ba65b26da41d3a07b4091",
+      "bytes": 538,
+      "sha256": "756935502fbb8c961ae6e0b09eafb1843c9747890baf8f0f299eeb5a42223e4a",
       "origin": "generated judging configuration",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     }
@@ -633,7 +741,7 @@
     {
       "name": "closure computed",
       "ok": true,
-      "detail": "51 files, packages jose,redis"
+      "detail": "57 files, packages jose,redis"
     },
     {
       "name": "runtime packages are the two allowed",
@@ -668,7 +776,7 @@
     {
       "name": "npm test in the export",
       "ok": true,
-      "detail": "pass 42 fail 0"
+      "detail": "pass 55 fail 0"
     },
     {
       "name": "evaluation set in the export",

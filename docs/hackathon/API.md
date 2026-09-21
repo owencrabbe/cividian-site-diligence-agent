@@ -100,3 +100,39 @@ site and objective, writes a new version of the brief, and returns
 `extraction_changed`, `new_record`. With `reason: true` the model stage runs
 again and `interpretation_changed` is reported separately. None of these is
 labeled a real-world site change.
+
+## Standalone account and integration APIs (agent 0.4.0)
+
+`/api/account` is a cookie-authenticated, same-origin account surface. GET
+`action=status` returns provider availability and the signed-in display identity;
+GET `action=keys` lists key metadata. POST actions are `send-code`, `verify-code`,
+`oauth`, `logout`, `create-key` and `revoke-key`. OAuth completes at GET
+`action=callback` with PKCE and browser-bound state. Provider sessions are
+HttpOnly cookies; expired accounts do not downgrade to guests. A raw user API
+key appears only in the creation response, never subsequent lists.
+
+REST and MCP authenticate **only** an `Authorization: Bearer` user API key,
+not a browser cookie or URL parameter. GET `/api/openapi.json` is the public
+schema, and `/developers` has examples. Endpoints:
+
+| Method | Path | Required scope |
+| --- | --- | --- |
+| GET | `/api/v1/capabilities` | `diligence:read` |
+| POST | `/api/v1/sites/resolve` | `diligence:read` |
+| POST | `/api/v1/briefs` | `diligence:write` |
+| GET | `/api/v1/briefs` | `diligence:read` |
+| GET | `/api/v1/briefs/{id}` | `diligence:read` |
+
+POST `/api/mcp` exposes the matching five `cividian_*` tools, using Streamable
+HTTP JSON responses. Supported protocols are 2026-07-28, 2025-11-25 and
+2025-06-18. Modern requests require protocol/client metadata and matching
+MCP headers. Legacy clients initialize normally. Only keys with write scope
+see the create tool. There is no OAuth discovery or unauthenticated SSE stream.
+Use clients with custom Bearer headers. Batch messages are refused.
+
+Account limits: 120 reads/minute, 6 creations/minute, 50 creations/day, across
+all keys. Additional IP limits apply. A read key cannot create, another
+account's brief looks absent, and revocation takes effect on the next request.
+Keys expire after 90 days with a maximum of five active keys per account.
+API/MCP creation saves evidence, calculations and rules-based priorities;
+it never invokes paid inference. See ACCOUNT_SETUP.md for activation gates.

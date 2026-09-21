@@ -21,7 +21,7 @@ runs a budgeted smoke, and starts the local live demo.
 
 A reproducible export of the Site Diligence Agent subsystem from the private
 Cividian repository. It contains every source file the agent imports, a
-standalone guest-session host in place of Cividian's account system, the
+standalone guest and optional managed-account host isolated from Cividian's private identity system, the
 compiled Studio finance engine the scenarios reuse, the workspace page, the
 test suite, the evaluation set, and the Nebius smoke test. `MANIFEST.json`
 lists every file with its sha256 and origin; `EXCLUSIONS.md` names what was
@@ -39,8 +39,8 @@ AUTH_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('h
 DILIGENCE_FIXTURE_MODE=1 npm start
 ```
 
-Open http://localhost:3000. The header says which mode the reasoning stage is
-in. With `DILIGENCE_FIXTURE_MODE=1` and no Nebius key, the model stage is a
+Open http://localhost:3000 for the website and http://localhost:3000/app for
+the installable app. The app footer says which mode the reasoning stage is in. With `DILIGENCE_FIXTURE_MODE=1` and no Nebius key, the model stage is a
 clearly labeled rules-based fixture that exercises the same validator a live
 answer must pass. It is refused on any production-like host.
 
@@ -73,7 +73,21 @@ evidence gathering, scenario calculations, saves, and exports still work.
 Issue reports are downloaded for the user to review and send to their inviter.
 No report is sent automatically. Automatic report fields omit addresses,
 financial assumptions, cookies, and credentials; the user's description is
-included as entered. No account system or cross-device sync is implied.
+included as entered. Guest access is temporary; configured managed accounts
+can reopen their account briefs across devices.
+
+## Website, app and user integrations
+
+One host serves `/` for the marketing website and news, `/app` for the simplified
+workspace, `/login` for managed sign-in and `/account` for connections. Reports
+use expandable details instead of tabs. The app installs from supported
+browsers and requires an internet connection; it is not an App Store binary.
+
+[Account setup](docs/hackathon/ACCOUNT_SETUP.md) explains the managed identity
+project, provider setup and live acceptance. `/developers` documents the REST
+API at `/api/v1`, OpenAPI at `/api/openapi.json`, and MCP at `/api/mcp`.
+Keys are account-scoped, stored as hashes, expire after 90 days and can be
+revoked. API/MCP connections do not run paid inference.
 
 ## Live Nemotron on Nebius Token Factory
 
@@ -117,7 +131,8 @@ inference gate) and `docs/hackathon/API.md` (the HTTP surface). Modules live in
 - Zoning envelopes come from commercial providers Cividian has not licensed;
   the zoning row is unavailable and the plan says what to verify and with whom.
 - Parcel coverage without a provider key is Indiana only (public state layer).
-- Guest saves last 24 hours. There is no account system in this edition.
+- Guest saves last 24 hours. Managed accounts and personal API keys require
+  the separate auth setup; they stay unavailable until configured and tested.
 - Refresh is manual. Nothing runs on a schedule.
 - Cost figures are list-price estimates tied to a dated table, never billed
   amounts.

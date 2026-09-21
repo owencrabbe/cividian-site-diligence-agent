@@ -1,6 +1,6 @@
 {
   "name": "cividian-site-diligence-agent",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "private": false,
   "description": "Evidence-first site diligence copilot: site identity, sourced evidence, deterministic scenarios, and a Nemotron-on-Nebius reasoning stage validated against the evidence packet.",
   "type": "module",
@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node server.mjs",
-    "test": "node --test test/diligence/diligence.test.mjs",
+    "test": "node --test test/diligence/diligence.test.mjs test/diligence/accounts.test.mjs",
     "test:redis": "node --test test/diligence/budget-redis.test.mjs test/diligence/storage-redis.test.mjs",
     "eval": "node scripts/diligence-eval.mjs",
     "smoke:nebius": "node scripts/nebius-smoke.mjs",

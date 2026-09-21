@@ -8,7 +8,7 @@
       "functions": {
         "server.mjs": {
           "maxDuration": 60,
-          "includeFiles": "{diligence.html,studio-runtime/**,api/**,lib/**,data/**}"
+          "includeFiles": "{diligence*.html,diligence*.css,diligence*.svg,diligence*.webmanifest,diligence-sw.js,studio-runtime/**,api/**,lib/**,data/**}"
         }
       }
     }

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#284b3c"><title>Your account | Cividian</title><link rel="icon" href="/app-icon.svg" type="image/svg+xml"><link rel="stylesheet" href="/diligence-shared.css"></head>
+<body><header class="wrap nav"><a class="brand" href="/">CIVIDIAN</a><nav aria-label="Main"><a href="/developers">API &amp; MCP</a><a class="button small" href="/app">Open app <span aria-hidden="true">↗</span></a></nav></header>
+<main class="wrap page"><div id="loading" class="message" role="status">Connecting to your account…</div><p id="message" class="message" role="status" aria-live="polite"></p>
+<section id="loginView" class="login" hidden><p class="eyebrow">Your Cividian workspace</p><h1>Keep your work connected.</h1><p class="lead">Save briefs to your account and connect your own tools.</p>
+<div class="panel"><div id="loginUnavailable" hidden><h2>Guest access is ready.</h2><p>Account sign-in is being connected. You can use the app now, and download briefs to keep them.</p><p class="note">API keys require a verified account and are not available until sign-in is enabled.</p></div>
+<div id="loginMethods" hidden><p class="note">Have work in a guest session? Download it before signing in. Guest briefs do not transfer to your account.</p>
+<div id="social" hidden><div class="actions"><button id="google" class="button outline" type="button" hidden>Continue with Google</button><button id="github" class="button outline" type="button" hidden>Continue with GitHub</button></div></div>
+<form id="emailForm" hidden><label for="email">Email address</label><input id="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com"><div class="actions"><button class="button" type="submit">Email me a sign-in code</button></div><p class="note">No password to remember. New here? Your first sign-in creates your account.</p></form>
+<form id="codeForm" hidden><label for="code">Code from your email</label><input id="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" minlength="6" maxlength="10" required><p id="codeDestination" class="note"></p><div class="actions"><button class="button" type="submit">Sign in</button></div><button id="changeEmail" class="quiet-link" type="button">Use another email or request a new code</button></form></div>
+<div class="actions"><a class="button outline" href="/app" id="guestLink">Continue as guest</a></div><p class="fine">Guest saves belong to this browser session for up to 24 hours. Account keys are optional. Sign-in is handled by Supabase; your email identifies your account and is not included in site briefs.</p></div></section>
+<section id="accountView" hidden><p class="eyebrow">Account &amp; connections</p><h1>Your work, connected.</h1><p id="identity" class="lead"></p><div class="actions"><a class="button" href="/app">Open your workspace <span aria-hidden="true">↗</span></a><button id="logout" type="button" class="quiet-link">Sign out</button></div>
+<section class="panel" aria-labelledby="keyTitle"><h2 id="keyTitle">API keys</h2><p>Connect your account to a script or an AI assistant. Each key expires after 90 days. You can revoke it at any time.</p>
+<form id="createKeyForm"><div class="form-row"><div><label for="keyLabel">Name this connection</label><input id="keyLabel" required maxlength="60" placeholder="My desktop assistant" autocomplete="off"></div><div><label for="keyScope">Permission</label><select id="keyScope"><option value="read">Read my briefs</option><option value="write">Read and create briefs</option></select></div></div><p class="note">Read keys can search for sites and read your saved briefs. Creation uses source records, calculations and rules-based priorities. These connections do not run paid AI.</p><div class="actions"><button id="createKey" type="submit" class="button">Create key</button></div></form>
+<div id="keyOnce" class="key-output" hidden><strong>Save this key now. It is shown only once.</strong><label for="newKey">Your new API key</label><input id="newKey" readonly autocomplete="off" spellcheck="false"><div class="actions"><button id="copyKey" type="button" class="button small">Copy key</button><button id="hideKey" type="button" class="button small outline">I saved it</button></div><p class="note">Store it in a password manager or your tool's secret settings. Never put it in a website, shared document or public repository.</p></div>
+<p id="keysStatus" class="message" role="status"></p><ul id="keysList" class="keys" aria-label="Your API keys"></ul></section>
+<section class="panel"><h2>Connect an AI assistant</h2><p>Choose a remote MCP connection that supports a Bearer authorization header. Use this endpoint:</p><pre id="mcpUrl"></pre><p class="note">Set <code>Authorization: Bearer YOUR_API_KEY</code> in the client's secure connection settings. OAuth-only clients need a compatible adapter; automatic sign-in discovery is not available.</p><a class="text-link" href="/developers">Connection examples and API reference ↗</a></section>
+</section></main><footer class="wrap"><a class="brand" href="/">CIVIDIAN</a><span>Site intelligence, with the evidence attached.</span><div><a href="/app">App</a><a href="/developers">Developers</a></div></footer>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); }, busy = false, accountExpired = false;
+  function message(text, error) { $('message').textContent = text || ''; $('message').className = 'message' + (error ? ' error' : ''); }
+  function request(action, body) {
+    return fetch('/api/account?action=' + action, { method: body ? 'POST' : 'GET', credentials: 'same-origin', headers: body ? { 'content-type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined }).then(function (r) { return r.json().then(function (data) { if (!r.ok || !data.ok) throw new Error(data.note || (data.error === 'account_required' ? 'Sign in again to manage your account.' : 'This request could not complete. Please try again.')); return data; }); });
+  }
+  function action(fn) { if (busy) return; busy = true; document.querySelectorAll('button').forEach(function (b) { b.disabled = true; }); message(''); Promise.resolve().then(fn).catch(function (e) { message(e.message || 'Check your connection and try again.', true); }).finally(function () { busy = false; document.querySelectorAll('button').forEach(function (b) { b.disabled = false; }); $('createKey').disabled = !$('keyOnce').hidden; }); }
+  function clearKey() { $('newKey').value = ''; $('keyOnce').hidden = true; $('createKey').disabled = false; }
+  function renderKeys() {
+    return request('keys').then(function (r) {
+      $('keysList').replaceChildren(); $('keysStatus').textContent = r.keys.length ? '' : 'No connections yet. Create a key when you need one.';
+      r.keys.slice().reverse().forEach(function (key) {
+        var li = document.createElement('li'), info = document.createElement('div'), label = document.createElement('strong'), small = document.createElement('small');
+        label.textContent = key.label; small.textContent = key.prefix + ' · ' + (key.scopes.includes('diligence:write') ? 'Read and create' : 'Read only') + ' · ' + (key.revoked ? 'Revoked' : key.expiresAt <= Date.now() ? 'Expired' : 'Expires ' + new Date(key.expiresAt).toLocaleDateString()); info.append(label, small); li.append(info);
+        if (!key.revoked && key.expiresAt > Date.now()) { var button = document.createElement('button'); button.type = 'button'; button.className = 'button small outline'; button.textContent = 'Revoke'; button.setAttribute('aria-label', 'Revoke ' + key.label); button.addEventListener('click', function () { if (!confirm('Revoke “' + key.label + '”? Tools using this key will lose access immediately.')) return; action(function () { return request('revoke-key', { id: key.id }).then(function () { clearKey(); message('Connection revoked.'); return renderKeys(); }); }); }); li.append(button); }
+        $('keysList').append(li);
+      });
+    });
+  }
+  function load() { return request('status').then(function (r) {
+    $('loading').hidden = true; $('loginView').hidden = !!r.user; $('accountView').hidden = !r.user;
+    if (r.user) { $('identity').textContent = r.user.email; $('mcpUrl').textContent = location.origin + '/api/mcp'; return renderKeys(); }
+    accountExpired = !!r.signInRequired;
+    var available = r.auth.email || r.auth.google || r.auth.github;
+    $('loginUnavailable').hidden = !!available; $('loginMethods').hidden = !available; $('emailForm').hidden = !r.auth.email; $('social').hidden = !(r.auth.google || r.auth.github); $('google').hidden = !r.auth.google; $('github').hidden = !r.auth.github;
+    if (r.signInRequired) message('Your account session ended. Sign in again to reopen your saved work.', true);
+    if (new URLSearchParams(location.search).get('error')) message('Sign-in did not complete. Please try again.', true);
+  }); }
+  $('guestLink').addEventListener('click', function (e) { if (!accountExpired) return; e.preventDefault(); action(function () { return request('logout', {}).then(function () { location.assign('/app'); }); }); });
+  $('emailForm').addEventListener('submit', function (e) { e.preventDefault(); action(function () { return request('send-code', { email: $('email').value.trim() }).then(function () { $('emailForm').hidden = true; $('codeForm').hidden = false; $('codeDestination').textContent = 'Sent to ' + $('email').value.trim() + '. Check your inbox and spam folder.'; message('Your code is on its way. Use it within 10 minutes.'); $('code').focus(); }); }); });
+  $('codeForm').addEventListener('submit', function (e) { e.preventDefault(); action(function () { return request('verify-code', { code: $('code').value.trim() }).then(function () { location.replace('/account'); }); }); });
+  $('changeEmail').addEventListener('click', function () { $('codeForm').hidden = true; $('emailForm').hidden = false; $('code').value = ''; $('email').focus(); message(''); });
+  ['google', 'github'].forEach(function (provider) { $(provider).addEventListener('click', function () { action(function () { return request('oauth', { provider: provider }).then(function (r) { location.assign(r.url); }); }); }); });
+  $('logout').addEventListener('click', function () { action(function () { return request('logout', {}).then(function (r) { clearKey(); $('codeForm').hidden = true; return load().then(function () { message(r.providerRevoked ? 'Signed out of this browser.' : 'Signed out of this browser. The identity provider could not confirm revocation; retry when service returns.', !r.providerRevoked); }); }); }); });
+  $('createKeyForm').addEventListener('submit', function (e) { e.preventDefault(); action(function () { return request('create-key', { label: $('keyLabel').value.trim(), scopes: $('keyScope').value === 'write' ? ['diligence:read', 'diligence:write'] : ['diligence:read'] }).then(function (r) { $('newKey').value = r.key; $('keyOnce').hidden = false; $('createKey').disabled = true; $('keyLabel').value = ''; $('newKey').focus(); message('Key created. Save it before leaving this page.'); return renderKeys(); }); }); });
+  $('copyKey').addEventListener('click', function () { if (!$('newKey').value) return; navigator.clipboard.writeText($('newKey').value).then(function () { message('Key copied. Save it securely, then choose “I saved it”.'); }).catch(function () { $('newKey').select(); message('Select and copy the key from the field above.'); }); });
+  $('hideKey').addEventListener('click', function () { clearKey(); message('Key hidden. You can revoke it below if you need a replacement.'); });
+  window.addEventListener('pagehide', clearKey);
+  window.addEventListener('pageshow', function (e) { if (e.persisted) { clearKey(); location.reload(); } });
+  load().catch(function () { $('loading').textContent = 'Account service is temporarily unavailable. You can retry this page or open the guest app.'; message('Your saved account work has not been changed.', true); });
+})();
+</script></body></html>
