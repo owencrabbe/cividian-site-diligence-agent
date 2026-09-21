@@ -1,3 +1,28 @@
+# Main-site API and MCP integration
+
+The Cividian deployment uses its canonical account and `cvd_sk_` keys, managed
+at `/account`. The shared REST/MCP registry publishes these capabilities:
+
+| Capability | REST | MCP tool | Scope |
+| --- | --- | --- | --- |
+| Resolve site | POST `/api/v1/diligence/sites` with `query` | `diligence_resolve_site` | read |
+| Create brief | POST `/api/v1/diligence/briefs` with `query`, optional `objective`, `assumptions` | `diligence_create_brief` | read + diligence.write |
+| List saved briefs | GET `/api/v1/diligence/saved` | `diligence_list_briefs` | read |
+| Read saved brief | GET `/api/v1/diligence/briefs?id=...` | `diligence_brief` | read |
+
+All four require a verified account. The raw API key is shown once and stored
+only as a hash. Revocation, account erasure and ownership rules remain in the
+existing credential layer. Creation is limited to six per minute and fifty per
+day per account across keys and transports. API/MCP never initiate paid model
+calls. Full current schemas: `/openapi.json`; setup: `/developers`; MCP: `/mcp`.
+
+The standalone public edition retains its independent, optional managed-account
+adapter and `cvd_dlg_` keys. Those credentials do not authenticate to the main
+site. Its code and guest judging path remain reproducible without private
+Cividian account infrastructure.
+
+---
+
 # /api/diligence
 
 Same-origin browser API for the Site Diligence Agent. Every response is JSON.

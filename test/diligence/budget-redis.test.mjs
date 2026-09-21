@@ -5,6 +5,7 @@ import net from "node:net";
 import { spawn } from "node:child_process";
 import { createClient } from "redis";
 import { reserveRun, settleRun, budgetSnapshot } from "../../lib/diligence/budget.js";
+import { getBudgetRedis } from "../../lib/diligence/budget-connection.js";
 
 test("Redis Lua: parallel reservations, caps, settlement, TTL, and outage refusal", { timeout: 20000 }, async () => {
   const probe = net.createServer();
@@ -60,6 +61,25 @@ test("Redis Lua: parallel reservations, caps, settlement, TTL, and outage refusa
     const end = await budgetSnapshot({ env: nextEnv, connect, now: later });
     assert.equal(end.spentUsd, 0, "Daily counter starts empty");
     assert.equal(end.totalSpentUsd, 0.15, "Total spending remains after UTC rollover");
+    const originalBudgetUrl = process.env.DILIGENCE_BUDGET_REDIS_URL;
+    const originalAccountUrl = process.env.REDIS_URL;
+    let shared;
+    try {
+      process.env.DILIGENCE_BUDGET_REDIS_URL = url;
+      process.env.REDIS_URL = 'redis://127.0.0.1:1';
+      shared = await getBudgetRedis();
+      assert.ok(shared, 'Shared budget store connects independently of account storage');
+      const sharedSnapshot = await budgetSnapshot({ env: { ...nextEnv, REDIS_URL: undefined, DILIGENCE_BUDGET_REDIS_URL: url }, now: later });
+      assert.equal(sharedSnapshot.totalSpentUsd, 0.15, 'Changing hosts cannot reset the existing ledger');
+      await shared.quit();
+      process.env.DILIGENCE_BUDGET_REDIS_URL = 'redis://127.0.0.1:1';
+      process.env.REDIS_URL = url;
+      assert.equal(await getBudgetRedis(), null, 'A shared ledger outage cannot fall back to an empty account-store ledger');
+    } finally {
+      if (shared?.isOpen) await shared.quit();
+      if (originalBudgetUrl === undefined) delete process.env.DILIGENCE_BUDGET_REDIS_URL; else process.env.DILIGENCE_BUDGET_REDIS_URL = originalBudgetUrl;
+      if (originalAccountUrl === undefined) delete process.env.REDIS_URL; else process.env.REDIS_URL = originalAccountUrl;
+    }
   } finally {
     if (db.isOpen) await db.quit();
     child.kill("SIGTERM");

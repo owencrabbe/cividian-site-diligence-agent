@@ -1,6 +1,6 @@
 {
   "name": "cividian-site-diligence-agent",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": false,
   "description": "Evidence-first site diligence copilot: site identity, sourced evidence, deterministic scenarios, and a Nemotron-on-Nebius reasoning stage validated against the evidence packet.",
   "type": "module",

@@ -79,6 +79,7 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
       <button id="installBtn" type="button">Install app</button>
       <button id="helpBtn" type="button">Help &amp; privacy</button>
       <button id="feedbackBtn" type="button">Report an issue</button>
+      <a href="https://www.cividian.com/app.html">City workspace</a>
       <a href="/">About Cividian</a>
     </div></details>
   </div>
@@ -697,7 +698,7 @@ footer{padding:20px max(20px,3vw) 40px;font-size:11px;color:var(--muted);border-
   var installPrompt = null;
   window.addEventListener('beforeinstallprompt', function (event) { event.preventDefault(); installPrompt = event; });
   window.addEventListener('appinstalled', function () { installPrompt = null; $('installBtn').hidden = true; });
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () { /* Online app stays available when installation is unsupported. */ });
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js', { scope: '/diligence' }).catch(function () { /* Online app stays available when installation is unsupported. */ });
   if (window.matchMedia('(display-mode: standalone)').matches) $('installBtn').hidden = true;
   $('helpBtn').addEventListener('click', function () { $('helpDlg').showModal(); });
   $('helpClose').addEventListener('click', function () { $('helpDlg').close(); });

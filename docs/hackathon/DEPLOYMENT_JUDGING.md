@@ -1,3 +1,24 @@
+## Main-site integration, September 21
+
+The primary experience is `/diligence` on the existing Cividian domain and
+Vercel project, using the main account and brief store. Set
+`DILIGENCE_BUDGET_REDIS_URL` on that deployment to the existing judging host's
+Redis URL so both deployments reserve and settle against one unchanged AI
+ledger. Never replace the main `REDIS_URL`: it owns existing user records.
+The optional budget connection fails closed and cannot fall back to another
+store when configured. No namespace prefix is applied to the shared ledger.
+
+The approved allowance is $5 total existing/promotional credit only through
+2026-12-15T20:00:00Z, $1/day, $0.25/run, concurrency three, no paid top-up.
+Budget authorization does not prove provider credit remains available; the
+trial observed on September 21 expires in 28 days. Judge-period credit remains
+unverified until a promotional award is confirmed.
+
+Main pre-release rollback target: `dpl_J1CD9GvyknoxbaUqZb96LNkuNnXe`.
+The existing main health endpoint returned 503 before this integration. Redis
+responds PONG. Broad platform readiness must not be represented as passing
+until the remaining configured dependency failure is diagnosed and resolved.
+
 # Deployment and judging plan
 
 September 21 continuation: the original approval has expired and current

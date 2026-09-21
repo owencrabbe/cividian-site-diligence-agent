@@ -35,10 +35,11 @@ async function handler(req, res, resolveSession = getSession) {
   if (!rl.ok) return tooMany(res, rl);
 
   const session = await resolveSession(req);
-  const owner = ownerKey(session);
+  const needsVerification = !!session?.email && session.verified !== true;
+  const owner = needsVerification ? null : ownerKey(session);
   if (action === "status") {
     const caps = await capabilities(process.env);
-    return res.status(200).json({ ok: true, ...caps, session: { kind: owner ? owner.kind : "none", verified: !!(session && session.verified === true), expiresAt: owner?.expiresAt || null, signInRequired: !!session?.signInRequired } });
+    return res.status(200).json({ ok: true, ...caps, session: { kind: owner ? owner.kind : "none", verified: !!(session && session.verified === true), expiresAt: owner?.expiresAt || null, signInRequired: needsVerification || !!session?.signInRequired } });
   }
   if (!owner) return res.status(401).json({ ok: false, error: "auth_required", note: "Start a guest session or sign in to use the Site Diligence Agent." });
 

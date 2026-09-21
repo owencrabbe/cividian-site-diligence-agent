@@ -1,4 +1,11 @@
-# Cividian Site Diligence Agent (public edition)
+# Cividian Site Diligence Agent
+
+Site Diligence is part of the main Cividian product at
+https://www.cividian.com/diligence. This repository is the standalone,
+open-source edition of the same evidence and reasoning pipeline. Cividian
+accounts, keys, and city tools stay on the main site; this edition can run
+independently for judging and reproduction.
+ (public edition)
 
 An evidence-first development diligence copilot. Give it a site and a
 development objective; it resolves the site identity, gathers sourced evidence,
