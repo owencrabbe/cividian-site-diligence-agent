@@ -131,7 +131,12 @@ test("gates: guests, fixture hosts, an unverified reader price, and a paused cre
   await budget.recordProviderSignal("credit_exhausted", { env: LIVE });
   out = await zoning.readZoning(fx.site, { env: LIVE, ...s.deps });
   assert.equal(out.meta.reason, "paused"); assert.equal(out.meta.reader.outcome, "credit_paused");
+  assert.equal(out.meta.tavily.calls, 0, "a paused credit spends no Tavily credit");
+  budget.__test.reset();
+  out = await zoning.readZoning(fx.site, { env: { ...LIVE, AI_APPROVED_BUDGET_USD: "0.000001", DILIGENCE_DAILY_BUDGET_USD: "0.000001", DILIGENCE_PER_RUN_BUDGET_USD: "0.000001" }, ...s.deps });
+  assert.equal(out.meta.reason, "budget_refused"); assert.equal(out.meta.detail, "approved_budget_exhausted");
   assert.equal(s.calls.reader, 0, "no reader call in any gated case");
+  assert.deepEqual([s.calls.place, s.calls.search, s.calls.extract], [0, 0, 0], "no geocoder or Tavily call when the reader could not run afterwards");
   budget.__test.reset();
 });
 

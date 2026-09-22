@@ -1,8 +1,8 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-22T20:29:31.706Z",
+  "generatedAt": "2026-09-22T20:45:19.778Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "90dbaedc73b70edc4d1b0b1122d4e17dba70865a",
+  "sourceCommit": "a50b676f48c9e917b222e8e1120524cbf65acf8b",
   "branch": "",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
@@ -194,7 +194,7 @@
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 9341,
-      "sha256": "135387847f4a1b8163bdae7379e028bb12260181e844934be2825fbe8463d9d0",
+      "sha256": "909ef68db0a463a8eea17af44f5cbed1f579b5f9015c12f7fa43e43f3f160767",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -229,7 +229,7 @@
     {
       "path": "EXCLUSIONS.md",
       "bytes": 1743,
-      "sha256": "947d4985ef2f743acd2a92fa3bc0ab48eef673693c807acc1c2d2346e55d9625",
+      "sha256": "b1590cd818980f45cb5508a35f76a140a3765eb9da6332237b158c86431f3235",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -438,8 +438,8 @@
     },
     {
       "path": "lib/diligence/zoning.js",
-      "bytes": 39789,
-      "sha256": "63e5d84a9df098b3b8d5357ef5a48d60c246f4e3737972a13d93fe46648e7c2f",
+      "bytes": 40606,
+      "sha256": "2ede991f2f5611965915bb4d7df48262216e39ffacdac56287b67de66834768c",
       "origin": "lib/diligence/zoning.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -816,8 +816,8 @@
     },
     {
       "path": "test/diligence/zoning.test.mjs",
-      "bytes": 21200,
-      "sha256": "bbcad8067ae43d206f6941a3daf9c490b2b2ee064e75f97057645142fed89b24",
+      "bytes": 21766,
+      "sha256": "d96059f7e64d37346ef447f53b53077b4c0f18d3a31f585705009e450e571ea8",
       "origin": "test/diligence/zoning.test.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
