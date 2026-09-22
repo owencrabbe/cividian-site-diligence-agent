@@ -6,13 +6,13 @@
 // lib/diligence/brief.js; this file is the skin.
 
 import { readBody, methodGuard, query, rateLimit, sameOrigin, tooMany, forbidden, getSession, withStorageBoundary } from "../lib/diligence/host.js";
-import { capabilities, startRun, reasonRun, refreshRun, loadBrief, listBriefs, removeBrief, ownerKey } from "../lib/diligence/brief.js";
+import { capabilities, startRun, zoningRun, reasonRun, refreshRun, loadBrief, listBriefs, removeBrief, ownerKey } from "../lib/diligence/brief.js";
 import { resolveSite } from "../lib/diligence/site.js";
 import { renderBriefHtml } from "../lib/diligence/render.js";
 
-export const config = { maxDuration: 30 };
+export const config = { maxDuration: 60 };
 const MAX_BODY_BYTES = 65536;
-const RATES = { status: [60, 60], site: [30, 60], evidence: [12, 60], reason: [6, 60], refresh: [6, 60], remove: [12, 60], get: [60, 60], list: [30, 60], export: [30, 60] };
+const RATES = { status: [60, 60], site: [30, 60], evidence: [12, 60], zoning: [6, 60], reason: [6, 60], refresh: [6, 60], remove: [12, 60], get: [60, 60], list: [30, 60], export: [30, 60] };
 
 function publicBrief(b) {
   if (!b) return b;
@@ -25,9 +25,9 @@ async function handler(req, res, resolveSession = getSession) {
   if (!methodGuard(req, res, ["GET", "POST"])) return;
   const q = query(req);
   const action = String(q.action || (req.method === "GET" ? "status" : "")).toLowerCase();
-  if (!RATES[action]) return res.status(200).json({ ok: false, error: "unknown_action", note: "Actions: status, site, evidence, reason, refresh, remove, get, list, export." });
-  if (req.method === "POST" && !["site", "evidence", "reason", "refresh", "remove"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use GET for " + action + "." });
-  if (req.method === "GET" && ["site", "evidence", "reason", "refresh", "remove"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use POST for " + action + "." });
+  if (!RATES[action]) return res.status(200).json({ ok: false, error: "unknown_action", note: "Actions: status, site, evidence, zoning, reason, refresh, remove, get, list, export." });
+  if (req.method === "POST" && !["site", "evidence", "zoning", "reason", "refresh", "remove"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use GET for " + action + "." });
+  if (req.method === "GET" && ["site", "evidence", "zoning", "reason", "refresh", "remove"].includes(action)) return res.status(200).json({ ok: false, error: "method_action_mismatch", note: "Use POST for " + action + "." });
   if (req.method === "POST" && !sameOrigin(req)) return forbidden(res);
   // Read-only capabilities must explain a storage outage; all workflow
   // actions retain the shared, fail-closed limiter.
@@ -66,6 +66,13 @@ async function handler(req, res, resolveSession = getSession) {
       const out = await startRun({ site: body.site, objective: body.objective, assumptions: body.assumptions }, owner);
       if (!out.ok) return res.status(200).json(out);
       return res.status(200).json({ ok: true, id: out.brief.id, brief: publicBrief(out.brief), stage: { name: "evidence", ms: Date.now() - t } });
+    }
+    if (action === "zoning") {
+      const t = Date.now();
+      const out = await zoningRun(String(body.id || ""), owner, {}, { signal: ctl.signal });
+      if (res.destroyed) return;
+      if (!out.ok) return res.status(200).json(out);
+      return res.status(200).json({ ok: true, id: out.brief.id, brief: publicBrief(out.brief), stage: { name: "zoning", ms: Date.now() - t } });
     }
     if (action === "reason") {
       const t = Date.now();

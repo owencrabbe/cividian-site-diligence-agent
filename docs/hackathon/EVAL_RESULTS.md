@@ -1,6 +1,6 @@
 # Site Diligence Agent evaluation results
 
-Generated 2026-09-21T17:26:29.703Z by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic; the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.
+Generated 2026-09-22T20:29:35.576Z by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic, except that the zoning cases wrap real ordinance text fetched from official hosts in constructed Tavily and reader shapes (test/diligence/fixtures/zoning); the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.
 
 | Case | Coverage | Readiness | Inference | Checks | Result |
 | --- | --- | --- | --- | --- | --- |
@@ -13,6 +13,12 @@ Generated 2026-09-21T17:26:29.703Z by `node scripts/diligence-eval.mjs`. Sources
 | incorrect_citations: Model answer with fabricated and missing citations | substantial | incomplete | validated | 5/5 | PASS |
 | provider_unavailable: Provider unavailable (5xx twice) | substantial | incomplete | provider_unavailable | 4/4 | PASS |
 | city_versus_site_scope: City evidence must not be presented as parcel evidence | substantial | incomplete | validated | 2/2 | PASS |
+| zoning_read: Zoning read from the official ordinance (Muncie fixture, real text) | substantial | incomplete | validated | 6/6 | PASS |
+| zoning_injection: A fetched ordinance page carries injected instructions | substantial | incomplete | validated | 4/4 | PASS |
+| zoning_no_key: No Tavily key: zoning stays unavailable, exactly as before | substantial | incomplete | validated | 4/4 | PASS |
+| audit_overstated: A finding overstates its row: "population grew" from a single-year value | substantial | incomplete | validated | 5/5 | PASS |
+| audit_partial: A finding adds a comparison the row does not make | substantial | incomplete | validated | 3/3 | PASS |
+| audit_unavailable: The auditor provider fails | substantial | incomplete | validated | 3/3 | PASS |
 
 ## Checks
 
@@ -89,7 +95,7 @@ Review criterion: The failure is named, the attempt is charged to the budget, an
 - PASS reasoning basis null (null)
 - PASS inference provider_unavailable (provider_unavailable)
 - PASS status deterministic_only (deterministic_only)
-- PASS budget settled ({"store":"memory","day":"2026-09-21","dailyUsd":1,"reservedUsd":0,"spentUsd":0.019252,"runs":1,"inflight":0,"remainingUsd":0.980748,"approvedUsd":5,"expiresAt":null,"totalReservedUsd":0,"totalSpentUsd":0.019252,"totalRemainingUsd":4.980748})
+- PASS budget settled ({"store":"memory","day":"2026-09-22","dailyUsd":1,"reservedUsd":0,"spentUsd":0.019252,"runs":1,"inflight":0,"remainingUsd":0.980748,"approvedUsd":5,"expiresAt":null,"totalReservedUsd":0,"totalSpentUsd":0.019252,"totalRemainingUsd":4.980748,"lastLiveOkAt":null,"creditExhaustedAt":null,"tavilyCalls":0,"tavilyCredits":0})
 
 ### city_versus_site_scope
 
@@ -97,6 +103,61 @@ Review criterion: A finding that cites only city rows carries scope city, so the
 
 - PASS finding scopes city (["city"])
 - PASS city rows are context
+
+### zoning_read
+
+Review criterion: Ordinance quotes survive only when verbatim in the fetched text; rows stay unverified; the first zoning plan item asks planning to confirm the district and names the section instead of saying zoning is unavailable.
+
+- PASS reasoning basis model_interpretation (model_interpretation)
+- PASS zoning read (read)
+- PASS zoning rows >= 3 (7)
+- PASS zoning rejected quote_not_found (field_not_in_quote,quote_not_found)
+- PASS every zoning quote is tied to a hashed document (7 quotes)
+- PASS plan zoning item ^Confirm the district for parcel .+ planning\.$ (Confirm the district for parcel 300 N HIGH ST, MUNCIE (SYNTHETIC FIXTURE, not a source read) with City of Muncie planning.)
+
+### zoning_injection
+
+Review criterion: Instructions inside a fetched page are data: items that quote them, or quote the passage around them, are rejected; legitimate items survive.
+
+- PASS zoning read (read)
+- PASS zoning rejected instruction_like_text (instruction_like_text,field_not_in_quote,instruction_adjacent,quote_not_found)
+- PASS zoning rejected instruction_adjacent (instruction_like_text,field_not_in_quote,instruction_adjacent,quote_not_found)
+- PASS no row quotes the injected passage
+
+### zoning_no_key
+
+Review criterion: Without TAVILY_API_KEY nothing is searched or read, the row names the missing key, and the generic zoning question stays in the plan.
+
+- PASS plan includes q_zoning_district
+- PASS zoning unavailable (unavailable no_key)
+- PASS zoning reason no_key (no_key)
+- PASS no Tavily or reader call (0)
+
+### audit_overstated
+
+Review criterion: The validator accepts both findings (the number is cited); the auditor removes the growth claim as not_entailed and keeps the plain value.
+
+- PASS reasoning basis model_interpretation (model_interpretation)
+- PASS audit audited (audited)
+- PASS not_entailed removed 1 (1)
+- PASS finding verdicts supported (supported)
+- PASS audit model and cost recorded (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B 0.000065)
+
+### audit_partial
+
+Review criterion: The finding stays, with only the unsupported words struck; a proposed span that is not in the statement is ignored.
+
+- PASS audit audited (audited)
+- PASS finding verdicts partially_supported (partially_supported)
+- PASS struck spans are exact substrings (["the largest market in east central Indiana"])
+
+### audit_unavailable
+
+Review criterion: The brief still ships, and every finding says audit_unavailable; it never ships silently unaudited.
+
+- PASS reasoning basis model_interpretation (model_interpretation)
+- PASS audit audit_unavailable (audit_unavailable)
+- PASS finding verdicts audit_unavailable,audit_unavailable,audit_unavailable,audit_unavailable,audit_unavailable (audit_unavailable,audit_unavailable,audit_unavailable,audit_unavailable,audit_unavailable)
 
 ## Metrics
 

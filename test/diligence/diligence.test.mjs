@@ -4,7 +4,7 @@
 // budget store is used. Run: node --test test/diligence/
 import test, { before, after } from "node:test";
 import assert from "node:assert/strict";
-import { deps, siteFor, runToBrief, countyOk, parcelsOk, parcelsNoKey, parcelsNoCoverage, cityOk, cityNoKey, cityNotFound, gapsOk, gapsNoKey, zoningNoKey, NOW_2026, SITE_INPUT, GUEST_OWNER, OTHER_OWNER, ACCOUNT_OWNER, SYNTHETIC, squareAround, POINT } from "./helpers.mjs";
+import { networkAttempts, deps, siteFor, runToBrief, parcelsOk, parcelsNoKey, parcelsNoCoverage, cityOk, cityNoKey, cityNotFound, gapsNoKey, NOW_2026, SITE_INPUT, GUEST_OWNER, OTHER_OWNER, ACCOUNT_OWNER, SYNTHETIC, squareAround, POINT } from "./helpers.mjs";
 
 const original = { ...process.env };
 before(() => {
@@ -21,6 +21,7 @@ const packetMod = await import("../../lib/diligence/packet.js");
 const schema = await import("../../lib/diligence/schema.js");
 const nebius = await import("../../lib/diligence/nebius.js");
 const budget = await import("../../lib/diligence/budget.js");
+const credit = await import("../../lib/diligence/credit.js");
 const brief = await import("../../lib/diligence/brief.js");
 const render = await import("../../lib/diligence/render.js");
 const diff = await import("../../lib/diligence/diff.js");
@@ -425,7 +426,13 @@ test("nebius: one fixed endpoint, bearer auth, json_schema response format, mode
   assert.equal(r.requestId, "chatcmpl-test"); assert.deepEqual(r.usage, { inputTokens: 100, outputTokens: 20 }); assert.deepEqual(r.output, { a: 1 });
   const cost = nebius.estimateCost(ENV.NEBIUS_MODEL, 100, 20);
   assert.equal(cost.usd, Math.round(((100 * 0.3 + 20 * 0.9) / 1e6) * 1e6) / 1e6); assert.equal(cost.pricing.verified, true); assert.equal(cost.pricing.asOf, "2026-09-20");
-  assert.equal(nebius.estimateCost("nvidia/Nemotron-3_5-Lightning", 1, 1).pricing.verified, false, "Verifying Super does not verify another model's price");
+  nebius.NEMOTRON_MODELS["nvidia/synthetic-unverified"] = { label: "synthetic", region: "eu-north1", inputPer1M: 0.01, outputPer1M: 0.01 };
+  try {
+    const unverified = nebius.estimateCost("nvidia/synthetic-unverified", 1, 1);
+    assert.equal(unverified.pricing.verified, false, "Verifying Super does not verify another model's price");
+    assert.equal(unverified.usd, null, "an unverified price is never used for a spending estimate");
+    assert.equal(unverified.basis, "price_unverified");
+  } finally { delete nebius.NEMOTRON_MODELS["nvidia/synthetic-unverified"]; }
   assert.equal(nebius.estimateCost("nvidia/unknown", 1, 1).usd, null);
 });
 
@@ -481,23 +488,23 @@ test("budget: reservation covers schema and both attempts; failures and retried 
 test("budget: total ceiling survives day rollover and approval-note edits; expiry and duplicate settlement fail closed", async () => {
   budget.__test.reset();
   const env = { AI_BUDGET_APPROVAL_REFERENCE: "synthetic", AI_APPROVED_BUDGET_USD: "0.1", DILIGENCE_DAILY_BUDGET_USD: "0.06", DILIGENCE_PER_RUN_BUDGET_USD: "0.06", AI_BUDGET_APPROVAL_EXPIRES_AT: "2026-09-23T00:00:00Z" };
-  const first = await budget.reserveRun({ env, estimateUsd: 0.06, now: new Date("2026-09-20T23:59:00Z") });
+  const first = await budget.reserveRun({ model: nebius.DEFAULT_MODEL, env, estimateUsd: 0.06, now: new Date("2026-09-20T23:59:00Z") });
   assert.equal(first.ok, true);
   assert.equal(await budget.settleRun(first.reservationId, null, { env }), true);
   assert.equal(await budget.settleRun(first.reservationId, 0.06, { env }), false);
   const later = { ...env, AI_BUDGET_APPROVAL_REFERENCE: "edited-note" };
   const now = new Date("2026-09-21T00:01:00Z");
-  assert.equal((await budget.reserveRun({ env: later, estimateUsd: 0.05, now })).error, "approved_budget_exhausted");
-  const accepted = await budget.reserveRun({ env: later, estimateUsd: 0.04, now });
+  assert.equal((await budget.reserveRun({ model: nebius.DEFAULT_MODEL, env: later, estimateUsd: 0.05, now })).error, "approved_budget_exhausted");
+  const accepted = await budget.reserveRun({ model: nebius.DEFAULT_MODEL, env: later, estimateUsd: 0.04, now });
   assert.equal(accepted.ok, true);
   const snap = await budget.budgetSnapshot({ env: later, now });
   assert.equal(snap.totalSpentUsd, 0.06);
   assert.equal(snap.totalReservedUsd, 0.04);
   assert.equal(snap.totalRemainingUsd, 0);
   assert.equal(budget.budgetPolicy(env, new Date("2026-09-23T00:00:00Z")).ok, false);
-  assert.equal((await budget.reserveRun({ env, estimateUsd: 0.001, now: new Date("2026-09-24T00:00:00Z") })).error, "budget_policy_invalid");
+  assert.equal((await budget.reserveRun({ model: nebius.DEFAULT_MODEL, env, estimateUsd: 0.001, now: new Date("2026-09-24T00:00:00Z") })).error, "budget_policy_invalid");
   assert.equal(budget.budgetPolicy({ ...env, AI_BUDGET_APPROVAL_EXPIRES_AT: "tomorrow" }).ok, false);
-  assert.equal((await budget.reserveRun({ env, estimateUsd: -1, now })).ok, false);
+  assert.equal((await budget.reserveRun({ model: nebius.DEFAULT_MODEL, env, estimateUsd: -1, now })).ok, false);
   budget.__test.reset();
 });
 
@@ -508,19 +515,19 @@ test("budget: policy reasons are explicit; the in-process store reserves atomica
   const env = { AI_BUDGET_APPROVAL_REFERENCE: "owner-note-2026-09-19", AI_APPROVED_BUDGET_USD: "1", DILIGENCE_DAILY_BUDGET_USD: "0.01", DILIGENCE_PER_RUN_BUDGET_USD: "0.005", DILIGENCE_MAX_CONCURRENT: "1" };
   assert.equal(budget.budgetPolicy(env).ok, true);
   assert.equal(budget.budgetPolicy({ ...env, DILIGENCE_DAILY_BUDGET_USD: "5" }).ok, false, "daily above approved is refused");
-  const r1 = await budget.reserveRun({ estimateUsd: 0.004, env });
+  const r1 = await budget.reserveRun({ model: nebius.DEFAULT_MODEL, estimateUsd: 0.004, env });
   assert.equal(r1.ok, true); assert.equal(r1.store, "memory");
-  const r2 = await budget.reserveRun({ estimateUsd: 0.004, env });
+  const r2 = await budget.reserveRun({ model: nebius.DEFAULT_MODEL, estimateUsd: 0.004, env });
   assert.equal(r2.ok, false); assert.equal(r2.error, "concurrency_limit");
   await budget.settleRun(r1.reservationId, 0.003, { env });
   const snap = await budget.budgetSnapshot({ env });
   assert.equal(snap.spentUsd, 0.003); assert.equal(snap.reservedUsd, 0); assert.equal(snap.inflight, 0); assert.equal(snap.runs, 1);
-  const r3 = await budget.reserveRun({ estimateUsd: 0.0049, env });
+  const r3 = await budget.reserveRun({ model: nebius.DEFAULT_MODEL, estimateUsd: 0.0049, env });
   assert.equal(r3.ok, true);
   await budget.settleRun(r3.reservationId, 0.0049, { env });
-  const r4 = await budget.reserveRun({ estimateUsd: 0.004, env });
+  const r4 = await budget.reserveRun({ model: nebius.DEFAULT_MODEL, estimateUsd: 0.004, env });
   assert.equal(r4.ok, false); assert.equal(r4.error, "daily_budget_exhausted");
-  const r5 = await budget.reserveRun({ estimateUsd: 0.5, env });
+  const r5 = await budget.reserveRun({ model: nebius.DEFAULT_MODEL, estimateUsd: 0.5, env });
   assert.equal(r5.error, "per_run_cap_exceeded");
   budget.__test.reset();
 });
@@ -699,4 +706,113 @@ test("erasure: account briefs and their index are found by the account erasure p
   const plan = JSON.stringify(planAccountErasure(rows, email));
   assert.ok(plan.includes("pago:diligence:brief:acct:" + h) && plan.includes("pago:diligence:index:acct:" + h), "account keys are erased");
   assert.ok(!plan.includes("guest:abcdef") && !plan.includes("budget:2026"), "guest saves expire by TTL and spend counters hold no personal data");
+});
+
+test("pricing: each model id is priced and routed on its own; removed, unverified, or unnamed models are refused by the budget", async () => {
+  assert.equal(nebius.endpointFor("nvidia/nemotron-3-super-120b-a12b"), nebius.REGION_ENDPOINTS["us-central1"]);
+  assert.equal(nebius.endpointFor("nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"), nebius.REGION_ENDPOINTS["eu-north1"]);
+  const nano = nebius.estimateCost("nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B", 1e6, 1e6);
+  assert.equal(nano.usd, 0.3); assert.equal(nano.pricing.verified, true); assert.equal(nano.pricing.asOf, "2026-09-22"); assert.match(nano.pricing.source, /api\/public\/models_info/);
+  assert.equal(nebius.estimateCost(nebius.DEFAULT_MODEL, 1e6, 1e6).usd, 1.2, "Super keeps its own price");
+  const omni = nebius.nebiusStatus({ NEBIUS_API_KEY: "k", NEBIUS_MODEL: "nvidia/Nemotron-3-Nano-Omni" });
+  assert.equal(omni.configured, false); assert.equal(omni.modelRemoved, "2026-08-31"); assert.ok(omni.reasons.some((r) => /removed from Token Factory/.test(r)));
+  budget.__test.reset();
+  const env = { AI_BUDGET_APPROVAL_REFERENCE: "ref", AI_APPROVED_BUDGET_USD: "1", DILIGENCE_DAILY_BUDGET_USD: "1" };
+  assert.equal((await budget.reserveRun({ model: "nvidia/Nemotron-3-Nano-Omni", estimateUsd: 0.01, env })).error, "price_unverified");
+  assert.equal((await budget.reserveRun({ estimateUsd: 0.01, env })).error, "price_unverified", "a reservation that names no model is refused");
+  nebius.NEMOTRON_MODELS["nvidia/synthetic-unverified"] = { label: "synthetic", region: "eu-north1", inputPer1M: 0.01, outputPer1M: 0.01 };
+  try {
+    assert.equal((await budget.reserveRun({ model: "nvidia/synthetic-unverified", estimateUsd: 0.01, env })).error, "price_unverified");
+    let calls = 0;
+    const live = { AUTH_SECRET: "x".repeat(40), NEBIUS_API_KEY: "k", NEBIUS_MODEL: "nvidia/synthetic-unverified", DILIGENCE_LIVE_INFERENCE: "1", AI_BUDGET_APPROVAL_REFERENCE: "ref", AI_APPROVED_BUDGET_USD: "5", DILIGENCE_DAILY_BUDGET_USD: "1", DILIGENCE_GUEST_INFERENCE: "1" };
+    const out = await runToBrief(brief, { d: deps({ env: live, complete: async () => { calls++; return { ok: false, error: "provider_unavailable" }; } }) });
+    assert.equal(out.brief.run.inference.outcome, "price_unverified"); assert.equal(calls, 0, "no provider call without a verified price");
+  } finally { delete nebius.NEMOTRON_MODELS["nvidia/synthetic-unverified"]; }
+  assert.equal((await budget.reserveRun({ model: "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B", estimateUsd: 0.01, env })).ok, true);
+  budget.__test.reset();
+});
+
+test("credit: an exhausted or expired credit is named, never mistaken for a bad key, a bad request, or a rate limit", async () => {
+  const mk = (status, body) => ({ status, redirected: false, headers: { get: () => null }, text: async () => JSON.stringify(body) });
+  const call = (res) => nebius.nebiusComplete({ system: "s", user: "u" }, { env: ENV, transport: async () => res });
+  assert.equal((await call(mk(402, {}))).error, "provider_credit_exhausted");
+  assert.equal((await call(mk(403, { error: { message: "Insufficient balance. Top up your account to continue." } }))).error, "provider_credit_exhausted");
+  assert.equal((await call(mk(400, { error: { message: "Your credits have expired" } }))).error, "provider_credit_exhausted");
+  assert.equal((await call(mk(401, { error: { message: "Invalid API key" } }))).error, "provider_auth");
+  assert.equal((await call(mk(400, { error: { message: "max_tokens is too large" } }))).error, "provider_bad_request");
+  assert.equal(nebius.creditRefusal("Rate limit exceeded, retry later"), false);
+  assert.equal(nebius.creditRefusal("quota for requests per minute reached"), false);
+});
+
+test("credit: status reports the ledger and key presence, never the key; an exhausted ledger or credit pauses with the plain banner", async () => {
+  budget.__test.reset();
+  const env = { NEBIUS_API_KEY: "cvd_sk_should_never_leak_0123456789", DILIGENCE_LIVE_INFERENCE: "1", AI_BUDGET_APPROVAL_REFERENCE: "ref", AI_APPROVED_BUDGET_USD: "0.02", DILIGENCE_DAILY_BUDGET_USD: "0.02", DILIGENCE_PER_RUN_BUDGET_USD: "0.02", AI_BUDGET_APPROVAL_EXPIRES_AT: "2099-12-15T20:00:00Z", NEBIUS_CREDIT_EXPIRES_AT: "2099-10-19T00:00:00Z" };
+  const now = new Date("2099-09-22T12:00:00Z");
+  let s = await credit.creditStatus(env, { now });
+  assert.ok(!JSON.stringify(s).includes("should_never_leak"));
+  assert.equal(s.keyPresent, true); assert.equal(s.live, true); assert.equal(s.paused, null); assert.equal(s.banner, null);
+  assert.equal(s.ledger.approvedUsd, 0.02); assert.equal(s.ledger.remainingUsd, 0.02); assert.equal(s.ledger.approvalExpiresAt, "2099-12-15T20:00:00Z");
+  assert.equal(s.credit.expiresAt, "2099-10-19T00:00:00Z"); assert.equal(s.credit.balanceReadable, false); assert.equal(s.credit.status, "unknown");
+  const r = await budget.reserveRun({ model: nebius.DEFAULT_MODEL, estimateUsd: 0.0199, env, now });
+  assert.equal(r.ok, true);
+  await budget.settleRun(r.reservationId, 0.0199, { env });
+  s = await credit.creditStatus(env, { now });
+  assert.ok(credit.minRunUsd(nebius.DEFAULT_MODEL) > 0.0001);
+  assert.equal(s.paused.reason, "approved_budget_exhausted"); assert.equal(s.live, false);
+  assert.equal(s.banner, "Live AI paused: evidence, scenarios, and the investigation plan still work.");
+  budget.__test.reset();
+  s = await credit.creditStatus(env, { now: new Date("2099-10-20T00:00:00Z") });
+  assert.equal(s.paused.reason, "credit_expired"); assert.equal(s.credit.expired, true); assert.equal(s.banner, credit.PAUSED_BANNER);
+  s = await credit.creditStatus({ ...env, NEBIUS_API_KEY: "" }, { now });
+  assert.equal(s.keyPresent, false); assert.equal(s.mode, "unavailable"); assert.equal(s.paused, null); assert.equal(s.banner, credit.PAUSED_BANNER);
+  assert.equal(credit.creditExpiry({ NEBIUS_CREDIT_EXPIRES_AT: "October" }), null, "a malformed expiry is ignored, not guessed");
+  budget.__test.reset();
+});
+
+test("credit: a refused credit pauses live calls on the shared ledger, the deterministic brief still ships, and a later success clears it", async () => {
+  const env = { AUTH_SECRET: "x".repeat(40), NEBIUS_API_KEY: "k", DILIGENCE_LIVE_INFERENCE: "1", AI_BUDGET_APPROVAL_REFERENCE: "ref", AI_APPROVED_BUDGET_USD: "5", DILIGENCE_DAILY_BUDGET_USD: "1", DILIGENCE_GUEST_INFERENCE: "1" };
+  budget.__test.reset();
+  let calls = 0;
+  const d = deps({ env, complete: async () => { calls++; return { ok: false, error: "provider_credit_exhausted", requestedModel: nebius.DEFAULT_MODEL, attempts: 1 }; } });
+  const first = await runToBrief(brief, { d });
+  assert.equal(first.brief.run.inference.outcome, "credit_exhausted"); assert.equal(calls, 1);
+  assert.equal(first.brief.reasoning, null);
+  assert.ok(first.brief.evidence.length > 0 && first.brief.baselinePlan.length > 0, "evidence and the rules-based plan still ship");
+  const caps = await brief.capabilities(env);
+  assert.equal(caps.inference.mode, "live"); assert.equal(caps.inference.paused.reason, "credit_exhausted");
+  assert.equal(caps.inference.banner, credit.PAUSED_BANNER); assert.equal(caps.inference.credit.status, "credit_exhausted");
+  assert.equal(caps.inference.keyPresent, true);
+  const second = await runToBrief(brief, { d });
+  assert.equal(second.brief.run.inference.outcome, "credit_paused"); assert.equal(calls, 1, "no provider call while paused");
+  const snap = await budget.budgetSnapshot({ env });
+  assert.equal(credit.livePause({ env, now: new Date(Date.parse(snap.creditExhaustedAt) + credit.CREDIT_PAUSE_MS + 1000), budget: snap, model: nebius.DEFAULT_MODEL }), null, "the pause lifts after six hours");
+  await budget.recordProviderSignal("ok", { env, now: new Date(Date.parse(snap.creditExhaustedAt) + 1000) });
+  const after = await brief.capabilities(env);
+  assert.equal(after.inference.paused, null, "a later success clears the pause"); assert.equal(after.inference.credit.status, "last_call_ok");
+  budget.__test.reset();
+});
+
+test("uptime probe: two free GETs per host, a metadata-only receipt, and a down host fails the run", async () => {
+  const { probeHosts } = await import("../../scripts/diligence-uptime.mjs");
+  const seen = [];
+  const json = (status, body) => ({ status, json: async () => body });
+  const fetchImpl = async (url, init) => {
+    seen.push({ url, method: init.method, cookie: init.headers && init.headers.cookie });
+    if (url.startsWith("https://down.example")) throw new Error("ECONNREFUSED");
+    if (url.endsWith("/healthz")) return json(200, { ok: true, status: "live" });
+    return json(200, { ok: true, agentVersion: "site-diligence-agent/test", secretish: "should-not-copy", inference: { mode: "live", model: nebius.DEFAULT_MODEL, keyPresent: true, paused: { reason: "credit_exhausted" }, reasons: [], ledger: { store: "redis", approvedUsd: 5, spentUsd: 1, remainingUsd: 4, approvalExpiresAt: "2026-12-15T20:00:00Z" }, credit: { status: "credit_exhausted" } } });
+  };
+  const receipt = await probeHosts({ hosts: ["https://up.example/some/path", "https://down.example"], fetchImpl });
+  assert.equal(receipt.schema, "diligence.uptime.v1"); assert.equal(receipt.inference, "none");
+  assert.deepEqual(seen.map((s) => s.url), ["https://up.example/healthz", "https://up.example/api/diligence?action=status", "https://down.example/healthz", "https://down.example/api/diligence?action=status"]);
+  assert.ok(seen.every((s) => s.method === "GET" && !s.cookie), "GET only, no session");
+  assert.equal(receipt.hosts[0].up, true); assert.equal(receipt.hosts[0].liveAi, "paused"); assert.equal(receipt.hosts[0].summary.paused, "credit_exhausted");
+  assert.equal(receipt.hosts[0].summary.ledger.remainingUsd, 4);
+  assert.equal(receipt.hosts[1].up, false); assert.equal(receipt.hosts[1].health.error, "network_error");
+  assert.equal(receipt.ok, false);
+  assert.ok(!JSON.stringify(receipt).includes("should-not-copy"), "only named fields leave the response");
+});
+
+test("offline: no code path reached the network during this suite", () => {
+  assert.deepEqual(networkAttempts(), []);
 });

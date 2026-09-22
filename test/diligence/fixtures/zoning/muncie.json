@@ -1,0 +1,204 @@
+{
+  "provenance": {
+    "kind": "constructed",
+    "note": "Constructed for tests from official ordinance text fetched 2026-09-22 from the source URLs below, wrapped in the shapes Tavily Search, Tavily Extract and the reader return. This is not a recorded Tavily or Nebius response; titles, snippets and the reader output are scripted. Page markers and extraction headers were removed, PDF private-use glyphs were normalized, and any em dash was replaced by a hyphen to meet the repository's writing rule. Replace with scripts/record-zoning-fixtures.mjs output once TAVILY_API_KEY is set.",
+    "sources": [
+      {
+        "url": "https://api.municode.com/CodesContent?jobId=489477&productId=13993&nodeId=COOR_TITXVLAUS_CH150ZOCO_DIV3ZO",
+        "file": "muncie-150.41-zones.txt",
+        "sha256": "148cca55d246da6456e64805c4c6bbd51b9b5c90bc304f7371c50c5af15f513f"
+      },
+      {
+        "url": "https://api.municode.com/CodesContent?jobId=489477&productId=13993&nodeId=COOR_TITXVLAUS_CH150ZOCO_DIV5REZO",
+        "file": "muncie-150.57-r1.txt",
+        "sha256": "1a8bf15dfc96a5a71dd70ee42038771571e8ad70bea0afaae1af0b76a73e90a8"
+      },
+      {
+        "url": "https://api.municode.com/CodesContent?jobId=489477&productId=13993&nodeId=COOR_TITXVLAUS_CH150ZOCO_DIV15BCCOBUZO",
+        "file": "muncie-150.126-bc.txt",
+        "sha256": "d96659af915608d0fab7db1c4cc8f1486378c1de8c117c997c03f7bbda17bdd8"
+      }
+    ]
+  },
+  "site": {
+    "query": "300 N High St, Muncie, IN",
+    "point": {
+      "lat": 40.19628,
+      "lon": -85.387806
+    },
+    "state": "IN",
+    "city": "Muncie",
+    "parcel": {
+      "address": "300 N HIGH ST",
+      "zoningCode": null
+    }
+  },
+  "place": {
+    "ok": true,
+    "place": {
+      "name": "Muncie city",
+      "basename": "Muncie",
+      "geoid": "1851876",
+      "lsad": "city"
+    },
+    "county": {
+      "name": "Delaware County",
+      "basename": "Delaware",
+      "geoid": "18035"
+    }
+  },
+  "search": {
+    "ok": true,
+    "requestId": "constructed-search-muncie",
+    "credits": 1,
+    "results": [
+      {
+        "url": "https://library.municode.com/in/muncie/codes/code_of_ordinances?nodeId=COOR_TITXVLAUS_CH150ZOCO_DIV3ZO",
+        "title": "DIVISION 3. - ZONES | Code of Ordinances | Muncie, IN | Municode Library",
+        "content": "Sec. 150.41. - Classes of zones.",
+        "score": 0.91
+      },
+      {
+        "url": "https://example.com/muncie-zoning-summary",
+        "title": "Muncie zoning summary",
+        "content": "Unofficial summary.",
+        "score": 0.7
+      },
+      {
+        "url": "https://library.municode.com/in/muncie/codes/code_of_ordinances?nodeId=COOR_TITXVLAUS_CH150ZOCO_DIV5REZO",
+        "title": "DIVISION 5. - R-1 RESIDENCE ZONE | Code of Ordinances | Muncie, IN",
+        "content": "Sec. 150.55. - Permitted uses.",
+        "score": 0.88
+      },
+      {
+        "url": "https://library.municode.com/in/anderson/codes/code_of_ordinances",
+        "title": "Code of Ordinances | Anderson, IN",
+        "content": "Another city's code.",
+        "score": 0.5
+      },
+      {
+        "url": "https://library.municode.com/in/muncie/codes/code_of_ordinances?nodeId=COOR_TITXVLAUS_CH150ZOCO_DIV15BCCOBUZO",
+        "title": "DIVISION 15. - BC COMMUNITY BUSINESS ZONE | Code of Ordinances | Muncie, IN",
+        "content": "Sec. 150.125. - Permitted uses.",
+        "score": 0.86
+      }
+    ]
+  },
+  "extract": {
+    "ok": true,
+    "requestId": "constructed-extract-muncie",
+    "credits": 1,
+    "results": [
+      {
+        "url": "https://library.municode.com/in/muncie/codes/code_of_ordinances?nodeId=COOR_TITXVLAUS_CH150ZOCO_DIV3ZO",
+        "rawContent": "## DIVISION 3. - ZONES\n\n\n## Sec. 150.40. - General.\nIn order to carry out the purposes of this chapter, the territory within the corporate\nlimits of the city is divided into zones or districts, paying reasonable regard to\nexisting conditions, the character of buildings erected in each zone, the most desirable\nuse for which the land in each zone may be adapted, and the conservation of property\nvalues throughout the city.\n(Code 1968, § 130.50)\n\n## Sec. 150.41. - Classes of zones.\nThe territory within the corporate limits of the city is divided into the following\nzones:\nF\nFarming Zone\nR-1\nResidence Zone\nR-2\nResidence Zone\nR-3\nResidence Zone\nR-4\nResidence Zone\nR-4A\nResidence Zone\nR-5\nResidence Zone\nR-6\nResidence Zone\nBP\nBusiness and Professional Office Zone\nCB\nCentral Business Zone\nBL\nLimited Business Zone\nBC\nCommunity Business Zone\nBV\nVariety Business Zone\nMT\nMajor Trading Zone\nIL\nLimited Industrial Zone\nII\nIntense Industrial Zone\nIP\nIndustrial Park Zone\nAD\nAirport Development Zone\nSSS\nStudent Social Service Zone\nMHR\nMobile Home Residence Zone\n(Code 1968, § 130.51; amend. Ord. No. 624-80, 11-10-80; amend. Ord. No. 661-80, 3-2-80;\namend. Ord. No. 67-83, 9-12-83)\n\n## Sec. 150.42. - Zone maps.\n(A)\nGeneral. The zones referred to in § 150.41 and their boundaries are shown upon maps which are made a part of this chapter. These\nmaps are designated as the \"Zone Maps for the City.\" The maps and all notations, references,\nand other information shown thereon, shall be as much a part of this chapter as if\nmatters set forth in them were all fully described in this chapter.\n(B)\nIdentification and recording. All city zone maps shall be identified by the signature\nof the mayor and the president of the common council of the city. They shall be attested\nby the city clerk and shall bear the seal of the city. Following the adoption of the\ncity maps by the proper legislative authority, a copy of this chapter, inclusive of\nzone maps, shall be filed with the city clerk and the county recorder.\n(C)\nZone boundaries. Where any property is indicated in the zone maps as acreage and is\nnot subdivided into lots, or where a zone boundary line shall be determined by using\nthe scale shown on the map, zone boundaries are intended to follow lot lines, property\nlines, railroad rights-of-way, city and county limits, shore lines, lines of streams,\ncanals, lakes, or other bodies of water. Where a boundary divides a lot which was\nin single ownership at the time of the enactment of this chapter, the zone applying\nto the larger portion of the lot shall be considered as extending to the entire lot.\nIf each portion of the lot is equal in size, then the most restrictive zone shall\napply to both portions of the divided lot.\n(D)\nRestoration. In the event any official zone map may become damaged, destroyed, lost,\nor difficult to interpret due to physical deterioration or the nature and number of\nchanges made, the common council of the city may by ordinance and after public hearing\nadopt a new official map.\n(E)\nChanges. No changes shall be made in the zone maps of the city, except in full conformity\nwith the procedures set forth in this chapter. Zone maps shall be revised every year\nin December, and all zone changes officially adopted by the proper governmental body\nshall be incorporated on the maps. The maps as updated shall be submitted to the plan\ncommission for its consideration. If the commission is satisfied that the changes\nare correct, it shall forward the maps to the common council of the city, for adoption.\nOnce adopted, a copy of the updated maps shall be filed with the city clerk and the\ncounty recorder.\n(F)\nStreet vacation. Whenever a street, road, alley, railroad right-of-way, or other public\nway is officially vacated, the zones on each side of the vacated way shall be extended\nto the center of the street, road, alley, railroad right-of-way, or public way. This\nchange shall be automatically achieved and shall not require following procedures\nestablished in this chapter for proposed zone changes.\n(G)\nAnnexation. Any territory officially annexed to the city, shall retain the same zone\nor zones as it had when the territory was unincorporated.\n(H)\nSimilar uses. Similar uses to those permitted in each zone may be allowable. Whether\na certain use is similar to a use listed in a specific zone, the similarity shall\nbe determined by the commission under established procedures.\n(I)\nProcedural.\n(1)\nEach proposed zoning change referred to the common council of the city, shall set\nforth the exact use for which the petitioner is requesting change. If the common council\nacts favorably on the requested change, the change shall be only for the specific\nuse requested by the petitioner and for no other use. Should the petitioner wish to\nchange the use from the use originally granted but within the same general zone, he\nshall submit a new petition and follow established procedures as for a new change\nin zoning.\n(2)\nShould the petitioner to whom a zone change is granted for a specific use fail to\nbegin construction or installation of a use approved by the common council of the\ncity, within one year after the passage of the change of zone, the administrative\nzoning officer shall so inform the common council which may initiate proceedings to\nrezone the property subject of the zone change to its original classification.\n(3)\nWithin 60 days prior to the expiration of the one year period, the petitioner may\npresent the common council with a bill of particulars setting forth reasons for failure\nto commence construction or use. The common council may consider the reasons in deciding\nwhether or not to initiate a change in zone as herein provided.\n(Code 1968, § 130.52; amend. Ord. No. 67-83, 9-12-83)\n\n## Secs. 150.43, 150.44. - Reserved.\n"
+      },
+      {
+        "url": "https://library.municode.com/in/muncie/codes/code_of_ordinances?nodeId=COOR_TITXVLAUS_CH150ZOCO_DIV5REZO",
+        "rawContent": "## DIVISION 5. - R-1 RESIDENCE ZONE\n\n\n## Sec. 150.55. - Permitted uses.\nNo building, structure, or land shall be used or occupied and no building or structure\nshall hereafter be erected, constructed, reconstructed, moved, expanded, or enlarged\nexcept for the following uses:\n(A)\nSingle unit dwellings as regulated in sections 150.57 through 150.63 .\n(B)\nBuildings or structures owned, leased, or used by a municipal, township, county, state,\nor federal government, provided the buildings or structures meet the provisions of\nsection 150.18 and the provisions of sections 150.57 through 150.63 .\n(C)\nPublic schools, colleges, and universities, and private academic schools, all subject\nto the provisions of section 150.18 and the provisions of section 150.57 through 150.63 .\n(D)\nBuildings or structures used for religious assembly subject to the provisions of section 150.17 and the provisions of sections 150.57 through 150.63 .\n(E)\nSigns and outdoor advertising as regulated in section 150.212 .\n(F)\nTemporary buildings used during construction, and including storage of building materials\nand equipment, for a period not to exceed the duration of such construction.\n(G)\nAccessory uses and structures as regulated in section 150.23 .\n(Code 1968, § 130.70; Ord. No. 67-83, 9-12-83)\n\n## Sec. 150.56. - Special uses subject to approval by the board of zoning appeals.\nThe following uses shall be allowed when approved by the Delaware-Muncie Metropolitan\nBoard of Zoning Appeals under the established procedures in section 150.216 and subject to the provisions herein specified:\n(A)\nCharitable institutions provided buildings or structures placed thereon meet the provisions\nof section 150.17 and the provisions of section 150.57 through 150.63 .\n(B)\nHospitals provided that the premises upon which they are built shall be a minimum\nten acres in area, and all uses and buildings or structures placed thereon shall be\nat least 100 feet from any side and rear property line and shall meet the provisions\nof sections 150.58 and 150.62 .\n(C)\nCemeteries provided the site for a cemetery is a minimum of ten acres in area, and\nall buildings placed thereon shall be at least 100 feet from any side and rear property\nline and shall meet the provisions of sections 150.58 and 150.62 .\n(D)\nNursery schools and child care centers subject to the performance standards contained\nin section 150.226 , and provided all uses and buildings or structures placed thereon shall meet the\nprovisions of sections 150.57 through 150.63 .\n(E)\nHome occupations subject to the performance standards contained in section 150.222 , and provided all uses and buildings or structures placed thereon shall meet the\nprovisions of section 150.57 through 150.63 .\n(F)\nNursing homes. All buildings placed thereon shall be at least 100 feet from any side\nand rear property line and shall meet the provisions of sections 150.58 and 150.62 .\n(Ord. No. 67-83, 9-12-83)\n\n## Sec. 150.57. - Lot width, frontage, and area.\nThe width and street frontage of a lot shall be a minimum of 40 feet at the building\nline and there shall be a minimum 4,800 square feet in area, exclusive of rights-of-way.\nWhenever public sewer and/or water facilities are not available and no unit sanitary\nsewer is available, the board of health requirements for lot area shall prevail, but\nshall not be less than 4,800 square feet in area, exclusive of rights-of-way.\n(Code 1968, § 130.71; Ord. No. 67-83, 9-12-83; Ord. No. 24-25 , § 2, 8-4-25)\n\n## Sec. 150.58. - Front yard setback, all lots.\nThere shall be a front yard setback of a minimum of 20 feet in depth measured from\nthe right-of-way line to the front wall of the building.\n(Code 1968, § 130.72; Ord. No. 67-83, 9-12-83; Ord. No. 24-25 , § 3, 8-4-25)\n\n## Sec. 150.59. - Side yard setback, interior lots.\nThere shall be two side yard setbacks of an interior lot, each being a minimum five\nfeet in width measured at right angles to the side property line.\n(Ord. No. 67-83, 9-12-83; Ord. No. 24-25 , § 4, 8-4-25)\n\n## Sec. 150.60. - Side yard setback, corner lots.\nThere shall be two side yard setbacks of a corner lot. The side yard adjoining the\nstreet shall be a minimum of 20 feet in depth measured from the right-of-way line\nto the side wall of the building. The side yard adjoining the adjacent property shall\nbe a minimum of five feet in width measured at right angles to the side property line.\n(Ord. No. 67-83, 9-12-83; Ord. No. 24-25 , § 5, 8-4-25)\n\n## Sec. 150.61. - Rear yard setback, all lots.\nThere shall be a rear yard setback of a minimum 15 feet in depth measured from the\nrear property line to the rear wall of the building.\n(Code 1968, § 130.74; amend. Ord. No. 67-83, 9-12-83; Ord. No. 24-25 , § 6, 8-4-25)\n\n## Sec. 150.62. - Height.\nNo building or structure shall exceed 30 feet in height.\n(Code 1968, § 130.75; amend. Ord. No. 67-83, 9-12-83)\n\n## Sec. 150.63. - Minimum floor area and building width.\nThe minimum floor area of any dwelling shall be not less than 600 square feet exclusive\nof garages, carports, open porches, or breezeways. The dimensions of the dwelling\nshall be not less than 24 feet in width nor less than 24 feet in depth.\n(Code 1968, § 130.76; amend. Ord. No. 67-83, 9-12-83; Ord. No. 24-25 , § 7, 8-4-25)\n\n## Sec. 150.64. - Reserved.\n"
+      },
+      {
+        "url": "https://library.municode.com/in/muncie/codes/code_of_ordinances?nodeId=COOR_TITXVLAUS_CH150ZOCO_DIV15BCCOBUZO",
+        "rawContent": "## DIVISION 15. - BC COMMUNITY BUSINESS ZONE\n\n\n## Sec. 150.125. - Permitted uses.\nNo building, structure, or land shall be used, and no building or structure shall\nbe hereafter erected, structurally altered, enlarged, or maintained except for the\nfollowing uses:\n(A)\nUses permitted in the BL Limited Business Zone.\n(B)\nHealth centers.\n(C)\nRestaurants, but not drive-in restaurants, cafes, and lunchrooms.\n(D)\nBusiness and professional offices, political offices, union offices, and real estate\noffices.\n(E)\nOutdoor advertising, as regulated in this chapter.\n(F)\nParking lots, not parking garages.\n(G)\nFraternal, philanthropic, civic, and service organizations.\n(H)\nGasoline stations, car washes, subject to performance standards set forth in this\nchapter.\n(I)\nPhotographic studios and offices.\n(J)\nGrocery stores.\n(K)\nBakeries.\n(L)\nJewelers; camera shops.\n(M)\nFraternities; sororities.\n(N)\nHardware stores, furniture stores, paint and glass stores.\n(O)\nLicense bureaus; travel services.\n(P)\nLaundries; dry cleaning establishments.\n(Q)\nDepartment stores, sporting goods, and art and music centers.\n(R)\nFlorist shops; candy and ice cream stores.\n(Code 1968, § 130.140)\n\n## Sec. 150.126. - Front yard.\nThere shall be a front yard of not less than 25 feet in depth measured from the right-of-way\nline to the front wall of the building.\n(Code 1968, § 130.141)\n\n## Sec. 150.127. - Side yard.\nThere shall not be any minimum side yard requirements except that where a BC Community\nBusiness Zone abuts a residence zone no building shall be closer to any existing dwelling\nthan 50 feet.\n(Code 1968, § 130.142)\n\n## Sec. 150.128. - Rear yard.\nThere shall be a rear yard of not less than 25 percent of the depth of the lot, but\nneed not exceed 25 feet.\n(Code 1968, § 130.143)\n\n## Sec. 150.129. - Height.\nNo building or structure shall exceed three stories or 45 feet in height.\n(Code 1968, § 130.144)\n\n## Sec. 150.130. - Conditions.\nBusiness establishments shall be of a retail or service nature. Goods shall be sold\nat retail. Servicing and processing shall be conducted within completely enclosed\nbuildings. Drive-in establishments other than gasoline service stations, offering\ngoods and services directly to customers waiting in parked vehicles shall not be permitted.\nWhenever a business establishment abuts a residence zone, the area between the business\nestablishment and the residence zone shall be adequately buffered.\n(Code 1968, § 130.145)\n\n## Secs. 150.131-150.134. - Reserved.  [COOR_TITXVLAUS_CH150ZOCO_DIV15BCCOBUZO_SS150.131--150.134RE]\n"
+      }
+    ],
+    "failed": []
+  },
+  "reader": {
+    "district_candidates": [
+      {
+        "district_code": "R-1",
+        "district_name": "Residence Zone",
+        "quote": "R-1\nResidence Zone",
+        "doc_id": "zdoc_1",
+        "section": "Sec. 150.41"
+      },
+      {
+        "district_code": "BC",
+        "district_name": "Community Business Zone",
+        "quote": "BC\nCommunity Business Zone",
+        "doc_id": "zdoc_1",
+        "section": "Sec. 150.41"
+      }
+    ],
+    "permitted_uses": [
+      {
+        "district_code": null,
+        "use": "Single unit dwellings",
+        "quote": "Single unit dwellings as regulated in sections 150.57 through 150.63 .",
+        "doc_id": "zdoc_2",
+        "section": "Sec. 150.55"
+      },
+      {
+        "district_code": null,
+        "use": "Restaurants",
+        "quote": "Restaurants, but not drive-in restaurants, cafes, and lunchrooms.",
+        "doc_id": "zdoc_3",
+        "section": "Sec. 150.125"
+      },
+      {
+        "district_code": "BC",
+        "use": "Hotels",
+        "quote": "Restaurants, but not drive-in restaurants, cafes, and lunchrooms.",
+        "doc_id": "zdoc_3",
+        "section": "Sec. 150.125"
+      }
+    ],
+    "conditional_uses": [],
+    "dimensional_standards": [
+      {
+        "district_code": null,
+        "standard": "min_lot_area",
+        "value_text": "4,800 square feet",
+        "quote": "The width and street frontage of a lot shall be a minimum of 40 feet at the building line and there shall be a minimum 4,800 square feet in area, exclusive of rights-of-way.",
+        "doc_id": "zdoc_2",
+        "section": "Sec. 150.57"
+      },
+      {
+        "district_code": null,
+        "standard": "max_height",
+        "value_text": "30 feet",
+        "quote": "No building or structure shall exceed 30 feet in height.",
+        "doc_id": "zdoc_2",
+        "section": "Sec. 150.62"
+      },
+      {
+        "district_code": null,
+        "standard": "front_setback",
+        "value_text": "25 feet",
+        "quote": "There shall be a front yard of not less than 25 feet in depth measured from the right-of-way line to the front wall of the building.",
+        "doc_id": "zdoc_3",
+        "section": "Sec. 150.126"
+      },
+      {
+        "district_code": null,
+        "standard": "max_height",
+        "value_text": "60 feet",
+        "quote": "No building or structure shall exceed 60 feet in height.",
+        "doc_id": "zdoc_2",
+        "section": "Sec. 150.62"
+      }
+    ]
+  },
+  "expect": {
+    "status": "read",
+    "jurisdiction": "City of Muncie",
+    "slug": "muncie",
+    "minRows": 7,
+    "planSection": "Sec. 150.41",
+    "dropped": [
+      {
+        "url": "https://example.com/muncie-zoning-summary",
+        "reason": "not_official_domain"
+      },
+      {
+        "url": "https://library.municode.com/in/anderson/codes/code_of_ordinances",
+        "reason": "other_jurisdiction"
+      }
+    ],
+    "rejectedReasons": [
+      "quote_not_found",
+      "field_not_in_quote"
+    ]
+  }
+}

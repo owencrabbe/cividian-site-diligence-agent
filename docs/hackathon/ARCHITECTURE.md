@@ -19,6 +19,7 @@ suitability, engineering feasibility, or financial performance.
 | A. City and site | `diligence.html`, `POST /api/diligence?action=site` | Address or map point resolves to a site identity: city, state, county, WGS84 point, and a parcel candidate from the provider chain. A bare city name is a `city_centroid` and is refused for site work. |
 | B. Objective | client | One of `residential_infill`, `mixed_use`, `adaptive_reuse`, with editable labeled assumptions. |
 | C. Evidence | `?action=evidence` | City ACS read, county market gaps, parcel record, zoning provider status, and the site identity itself become `evidence.record.v1` rows. Missing sources become `unavailable` rows with the reason. |
+| C2. Zoning | `?action=zoning` | The Census Geocoder picks the jurisdiction; Tavily finds the adopted ordinance on official hosts; a Nemotron reader quotes districts, uses and dimensional standards; only verbatim, hash-checked quotes become `unverified` evidence rows. |
 | D. Inspect | client evidence panel | Facts, assumptions, conflicts, and unknowns with scope, vintage, retrieval time, status, and source link. |
 | E. Scenarios | `?action=evidence` (same run) | Deterministic capacity and screening for the chosen objective, reusing the Studio finance engine (`studio.screening.v1`). Unknown inputs stay null. |
 | F. Reasoning | `?action=reason` | Nemotron on Nebius Token Factory receives a bounded packet and returns strict JSON. Every citation is validated against packet ids. Fixture mode is explicit and never runs on a production-like host. |
@@ -33,6 +34,10 @@ lib/diligence/
   objectives.js     objectives, assumption defaults, question library, required evidence sets
   site.js           site identity resolution and validation (geocode, county, parcel containment)
   evidence.js       evidence.record.v1 builders and the gather step (city, county gaps, parcel, zoning)
+  zoning.js         ordinance read: jurisdiction, official-source discovery, reader, verbatim quote verification
+  tavily.js         Tavily Search and Extract over fetch (server-held key, bounded, no redirects)
+  credit.js         credit and ledger status, live-call pause, the plain paused banner
+  audit.js          entailment auditor: a second model checks each accepted finding against its cited rows
   scenarios.js      deterministic scenario engine over the Studio finance runtime; sensitivity; readiness
   packet.js         bounded, id-addressed packet for the model; untrusted text is data
   schema.js         diligence.reasoning.v1 JSON schema, validator, citation and scope checks
@@ -169,18 +174,80 @@ request id, usage, dated cost estimate, packet hash, evidence hash, limits),
 and `changes` (after a refresh). `owner` is `{ kind: "account" | "guest" }`;
 no email or session id leaves the server.
 
+## Three NVIDIA models, three jobs
+
+```mermaid
+flowchart LR
+  A["Site, objective,<br/>assumptions"] --> B["Evidence and scenarios<br/>(deterministic)"]
+  B --> Z1["Census Geocoder:<br/>city or county"]
+  Z1 --> Z2["Tavily Search and Extract:<br/>official ordinance text"]
+  Z2 --> R["Nemotron 3.5 Lightning<br/>READS the ordinance"]
+  R --> V1["Verbatim quote check<br/>(deterministic)"]
+  V1 -->|"unverified zoning rows"| P["Bounded evidence packet"]
+  B --> P
+  P --> S["Nemotron 3 Super<br/>REASONS over the packet"]
+  S --> V2["Schema, citation and<br/>number validator (deterministic)"]
+  V2 --> AU["Nemotron 3 Nano 30B<br/>AUDITS each finding"]
+  AU -->|"removes or flags only"| BR["Brief and<br/>investigation plan"]
+```
+
+Each model has one job and every model step is followed or preceded by a
+deterministic check. The reader's quotes must be verbatim in the fetched text.
+Super's answer must cite packet ids and cited numbers. The auditor sees each
+accepted finding with only its cited rows and says whether the rows entail it:
+`not_supported` removes the finding (`not_entailed`), `partially_supported`
+keeps it with the unsupported words struck (they must be exact substrings of
+the statement), `supported` keeps it. The auditor cannot add a finding, a
+citation or a number. If it cannot run (fixture mode, price not verified,
+budget refused, credit paused, provider failure) every finding carries
+`audit_unavailable`; the brief is never silently unaudited. Verdict counts,
+the auditor's model id and its cost estimate are recorded in
+`reasoning.audit` and shown in the transparency panel and the export. All
+three calls are priced per model and reserved in the one shared ledger.
+
+## Zoning ordinance reader
+
+Zoning is the first question in site diligence, and before this stage every
+brief said "zoning unavailable". The zoning stage reads the adopted ordinance
+itself:
+
+| Step | What happens | Failure is |
+| --- | --- | --- |
+| Jurisdiction | Census Geocoder (current TIGER): inside an incorporated place means city or town zoning, outside means county zoning. | `jurisdiction_undetermined`, and the read stops |
+| Discovery | Tavily Search with `include_domains` limited to official hosts. Each URL is checked again: https, allowed host, the state path segment on code hosts that file by state, and the jurisdiction's name in the path or title. At most 5 results, 4 documents. | `no_official_sources` |
+| Retrieval | Tavily Extract text, capped per document and in total; a PDF is fetched once and hashed (8 MB cap, streamed, refused past the cap). Images are skipped. | `extract_failed`, `document_too_large`, `image_input_unsupported` |
+| Reading | `DILIGENCE_READER_MODEL` (default Nemotron 3.5 Lightning) gets a bounded packet; document text is data. Strict JSON: districts, permitted uses, conditional uses, dimensional standards, each with quote, doc_id, section. Priced and reserved in the shared ledger. | `reader_failed`, `budget_refused`, `paused` |
+| Verification | Keep an item only if its quote is verbatim (whitespace normalized) in the fetched text, its own fields sit inside the quote, and it is not near instruction-like text. | per item: `quote_not_found`, `field_not_in_quote`, `instruction_like_text`, `instruction_adjacent`, `unknown_document`, `quote_length` |
+
+Kept items become `evidence.record.v1` rows: `kind: "source_observed"`,
+`extraction: "model_output"`, `status: "unverified"`, jurisdiction scope
+(context, never a parcel fact), the source URL, the fetched text's sha256, and
+the quote as `excerpt`. The UI labels them "Read from the ordinance, confirm
+with the planning office." When a district was read, the first zoning plan item
+becomes "Confirm the district for parcel X with planning" and cites the
+section. Tavily is metered in its own credits, counted per brief and on the
+ledger record.
+
+Model choice, recorded 2026-09-22: the handoff planned Nemotron 3 Nano Omni as
+a document and image reader. Nebius removed `nvidia/Nemotron-3-Nano-Omni` from
+Token Factory on 2026-08-31, and no NVIDIA model in the current catalog
+accepts image input. The reader is therefore text-only. It defaults to
+Nemotron 3.5 Lightning, which the deprecation notice names as Omni's
+replacement and which has a 1M-token context for long ordinances. Nano 30B
+stays available for the auditor, so each job keeps its own model.
+
 ## Nemotron on Nebius
 
 | Item | Value | Verified |
 | --- | --- | --- |
-| Endpoint | `https://api.tokenfactory.us-central1.nebius.com/v1/chat/completions` | Signed-in model public-endpoint setup code, 2026-09-20 |
+| Endpoint | per model region: us-central1 `https://api.tokenfactory.us-central1.nebius.com/v1/chat/completions` (Super, Ultra); eu-north1 `https://api.tokenfactory.nebius.com/v1/chat/completions` (Nano 30B, Lightning) | Super: signed-in setup code, 2026-09-20; regions: public catalog and app region map, 2026-09-22 |
 | Auth | `Authorization: Bearer $NEBIUS_API_KEY` | same |
 | Default model | `nvidia/nemotron-3-super-120b-a12b` | Nebius Nemotron page (code sample), Mastra and OpenRouter catalogs, 2026-09-19 |
-| Alternatives | `nvidia/Nemotron-3_5-Lightning`, `nvidia/Nemotron-3-Ultra-550b-a55b` | third-party catalogs; verify entitlement |
-| Deprecated | `nvidia/Llama-3_1-Nemotron-Ultra-253B-v1`, `nvidia/Nemotron-3-Nano-Omni` (2026-08-31) | Nebius deprecation notice |
+| Other catalog ids | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`, `nvidia/Nemotron-3_5-Lightning`, `nvidia/Nemotron-3-Ultra-550b-a55b` | public catalog JSON, 2026-09-22 |
+| Removed | `nvidia/Llama-3_1-Nemotron-Ultra-253B-v1`; `nvidia/Nemotron-3-Nano-Omni` (2026-08-31, refused by id in code). No NVIDIA model in the catalog accepts image input. | Nebius deprecation notice; catalog, 2026-09-22 |
 | Structured output | `response_format: { type: "json_schema", json_schema: {...} }`, schema also in prompt | Nebius JSON docs |
 | Rate limits | 429 with `Retry-After`; `x-ratelimit-remaining-*` headers | Nebius rate limit docs |
-| Pricing (estimate basis) | super-120b: $0.30 in / $0.90 out per 1M; Lightning: $0.06 / $0.24; Ultra: $1 / $3 | third-party catalogs, 2026-09-19; not read from a Nebius price page |
+| Pricing (estimate basis) | Super $0.30 in / $0.90 out per 1M; Nano 30B $0.06 / $0.24; Lightning $0.06 / $0.24; Ultra $1 / $3. A model without a verified price is refused by the budget (`price_unverified`). | Super: signed-in price table 2026-09-20; all: public catalog JSON 2026-09-22 (VERIFICATION_RECEIPTS section 21) |
 
 The model id must start with `nvidia/`; the demo path refuses any other id and
 never falls back to a different provider. The adapter records provider,

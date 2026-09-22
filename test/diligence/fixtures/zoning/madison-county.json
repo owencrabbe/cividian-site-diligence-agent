@@ -1,0 +1,71 @@
+{
+  "provenance": {
+    "kind": "constructed",
+    "note": "Constructed for tests from official ordinance text fetched 2026-09-22 from the source URLs below, wrapped in the shapes Tavily Search, Tavily Extract and the reader return. This is not a recorded Tavily or Nebius response; titles, snippets and the reader output are scripted. Page markers and extraction headers were removed, PDF private-use glyphs were normalized, and any em dash was replaced by a hyphen to meet the repository's writing rule. Replace with scripts/record-zoning-fixtures.mjs output once TAVILY_API_KEY is set. Madison County posts no adopted ordinance text on its official site as of 2026-09-22 (only a consultant-hosted draft code and a proposed map), so the only search results are unofficial copies. The example.org and example.net URLs stand in for those copies.",
+    "sources": [
+      {
+        "url": "https://www.madisoncounty.in.gov/departments/planning-commission",
+        "note": "county planning commission page; no ordinance text posted"
+      }
+    ]
+  },
+  "site": {
+    "query": "map point, unincorporated Madison County, IN",
+    "point": {
+      "lat": 40.2,
+      "lon": -85.8
+    },
+    "state": "IN",
+    "city": null,
+    "parcel": {
+      "address": null,
+      "zoningCode": null
+    }
+  },
+  "place": {
+    "ok": true,
+    "place": null,
+    "county": {
+      "name": "Madison County",
+      "basename": "Madison",
+      "geoid": "18095"
+    }
+  },
+  "search": {
+    "ok": true,
+    "requestId": "constructed-search-madison",
+    "credits": 1,
+    "results": [
+      {
+        "url": "https://example.org/madison-county-indiana-zoning-ordinance-2022",
+        "title": "Madison County, Indiana zoning ordinance (third-party copy)",
+        "content": "Unofficial copy.",
+        "score": 0.7
+      },
+      {
+        "url": "https://example.net/sites/madison-county/udo-draft-d.pdf",
+        "title": "Madison Co UDO Draft D",
+        "content": "Draft code.",
+        "score": 0.6
+      }
+    ]
+  },
+  "extract": {
+    "ok": true,
+    "requestId": null,
+    "credits": 0,
+    "results": [],
+    "failed": []
+  },
+  "reader": {
+    "district_candidates": [],
+    "permitted_uses": [],
+    "conditional_uses": [],
+    "dimensional_standards": []
+  },
+  "expect": {
+    "status": "unavailable",
+    "reason": "no_official_sources",
+    "jurisdiction": "Madison County (unincorporated)"
+  }
+}

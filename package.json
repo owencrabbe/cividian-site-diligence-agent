@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node server.mjs",
-    "test": "node --test test/diligence/diligence.test.mjs test/diligence/accounts.test.mjs",
+    "test": "node --test test/diligence/diligence.test.mjs test/diligence/zoning.test.mjs test/diligence/audit.test.mjs test/diligence/accounts.test.mjs",
     "test:redis": "node --test test/diligence/budget-redis.test.mjs test/diligence/storage-redis.test.mjs",
     "eval": "node scripts/diligence-eval.mjs",
     "smoke:nebius": "node scripts/nebius-smoke.mjs",
