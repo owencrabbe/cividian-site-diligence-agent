@@ -18,7 +18,7 @@ const nebius = await import("../../lib/diligence/nebius.js");
 
 const fixtures = loadZoningFixtures();
 
-const LIVE = { AUTH_SECRET: "x".repeat(40), NEBIUS_API_KEY: "k", TAVILY_API_KEY: "tvly-test-not-real", DILIGENCE_LIVE_INFERENCE: "1", AI_BUDGET_APPROVAL_REFERENCE: "ref", AI_APPROVED_BUDGET_USD: "5", DILIGENCE_DAILY_BUDGET_USD: "1", DILIGENCE_GUEST_INFERENCE: "1" };
+const LIVE = { DILIGENCE_TAVILY_ENABLED: "1", TAVILY_BUDGET_APPROVAL_REFERENCE: "synthetic", TAVILY_APPROVED_CREDITS: "1000", TAVILY_DAILY_CREDITS: "1000", TAVILY_APPROVAL_EXPIRES_AT: "2030-01-01T00:00:00Z", AUTH_SECRET: "x".repeat(40), NEBIUS_API_KEY: "k", TAVILY_API_KEY: "tvly-test-not-real", DILIGENCE_LIVE_INFERENCE: "1", AI_BUDGET_APPROVAL_REFERENCE: "ref", AI_APPROVED_BUDGET_USD: "5", DILIGENCE_DAILY_BUDGET_USD: "1", DILIGENCE_GUEST_INFERENCE: "1" };
 const scripted = zoningScripted;
 
 test("fixtures: every zoning fixture names itself constructed, not recorded, and carries its sources", () => {
@@ -131,7 +131,12 @@ test("gates: guests, fixture hosts, an unverified reader price, and a paused cre
   await budget.recordProviderSignal("credit_exhausted", { env: LIVE });
   out = await zoning.readZoning(fx.site, { env: LIVE, ...s.deps });
   assert.equal(out.meta.reason, "paused"); assert.equal(out.meta.reader.outcome, "credit_paused");
+  assert.equal(out.meta.tavily.calls, 0, "a paused credit spends no Tavily credit");
+  budget.__test.reset();
+  out = await zoning.readZoning(fx.site, { env: { ...LIVE, AI_APPROVED_BUDGET_USD: "0.000001", DILIGENCE_DAILY_BUDGET_USD: "0.000001", DILIGENCE_PER_RUN_BUDGET_USD: "0.000001" }, ...s.deps });
+  assert.equal(out.meta.reason, "budget_refused"); assert.equal(out.meta.detail, "approved_budget_exhausted");
   assert.equal(s.calls.reader, 0, "no reader call in any gated case");
+  assert.deepEqual([s.calls.place, s.calls.search, s.calls.extract], [0, 0, 0], "no geocoder or Tavily call when the reader could not run afterwards");
   budget.__test.reset();
 });
 
@@ -219,7 +224,7 @@ test("limits: an oversize PDF is refused before it is buffered, long text is tru
 });
 
 test("tavily: bearer key, include_domains, no redirects, bounded bodies, and named refusals", async () => {
-  const env = { TAVILY_API_KEY: "tvly-test-not-real" };
+  const env = { ...LIVE };
   let seen;
   const ok = (body) => ({ status: 200, headers: { get: () => null }, text: async () => JSON.stringify(body) });
   const r = await tavily.tavilySearch({ query: "Muncie Indiana zoning ordinance", includeDomains: ["library.municode.com"], maxResults: 5 }, { env, transport: async (url, init) => { seen = { url, init }; return ok({ results: [{ url: "https://library.municode.com/in/muncie", title: "Muncie", content: "c", score: 0.9 }], request_id: "req-1", usage: { credits: 1 } }); } });

@@ -156,3 +156,19 @@ Check actual provider usage and account controls as well. Never clear budget
 or reservation keys, switch Redis databases, or raise caps to evade an
 exhausted approval. A local in-memory store resets on process exit, so the
 owner setup requires Redis even for local live verification.
+
+## Optional ordinance discovery
+
+A Tavily key alone does not activate discovery. After the owner approves a
+credit amount and verifies the provider account controls, configure the key
+as a sensitive value plus `DILIGENCE_TAVILY_ENABLED=1`,
+`TAVILY_BUDGET_APPROVAL_REFERENCE`, positive integer
+`TAVILY_APPROVED_CREDITS` and `TAVILY_DAILY_CREDITS` (daily no greater than
+total), and a future `TAVILY_APPROVAL_EXPIRES_AT`. Defaults remain disabled.
+
+Each Basic Search reserves one credit, Advanced Search two, and Extract one
+(Basic) or two (Advanced) per five URLs before dispatch. Failed or uncertain
+requests retain that reservation. The cumulative Redis total never resets
+with a new day, deployment or approval note. Both hosts must use the same
+budget store. No provider key, additional allowance or paid plan is created
+by the release. Check `/api/diligence` for the named unmet conditions.

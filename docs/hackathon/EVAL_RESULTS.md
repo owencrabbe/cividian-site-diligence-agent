@@ -1,6 +1,6 @@
 # Site Diligence Agent evaluation results
 
-Generated 2026-09-22T20:29:35.576Z by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic, except that the zoning cases wrap real ordinance text fetched from official hosts in constructed Tavily and reader shapes (test/diligence/fixtures/zoning); the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.
+Generated 2026-09-22T20:46:11.314Z by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic, except that the zoning cases wrap real ordinance text fetched from official hosts in constructed Tavily and reader shapes (test/diligence/fixtures/zoning); the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.
 
 | Case | Coverage | Readiness | Inference | Checks | Result |
 | --- | --- | --- | --- | --- | --- |
@@ -18,6 +18,7 @@ Generated 2026-09-22T20:29:35.576Z by `node scripts/diligence-eval.mjs`. Sources
 | zoning_no_key: No Tavily key: zoning stays unavailable, exactly as before | substantial | incomplete | validated | 4/4 | PASS |
 | audit_overstated: A finding overstates its row: "population grew" from a single-year value | substantial | incomplete | validated | 5/5 | PASS |
 | audit_partial: A finding adds a comparison the row does not make | substantial | incomplete | validated | 3/3 | PASS |
+| audit_malformed: The auditor returns a disputed span absent from the statement | substantial | incomplete | validated | 2/2 | PASS |
 | audit_unavailable: The auditor provider fails | substantial | incomplete | validated | 3/3 | PASS |
 
 ## Checks
@@ -145,11 +146,18 @@ Review criterion: The validator accepts both findings (the number is cited); the
 
 ### audit_partial
 
-Review criterion: The finding stays, with only the unsupported words struck; a proposed span that is not in the statement is ignored.
+Review criterion: The finding stays with the exact unsupported words struck. Malformed audits are tested separately and must remain unavailable.
 
 - PASS audit audited (audited)
 - PASS finding verdicts partially_supported (partially_supported)
 - PASS struck spans are exact substrings (["the largest market in east central Indiana"])
+
+### audit_malformed
+
+Review criterion: An invented disputed span invalidates the entire audit; the finding is preserved with audit_unavailable, never reported as successfully audited.
+
+- PASS audit audit_unavailable (audit_unavailable)
+- PASS finding verdicts audit_unavailable (audit_unavailable)
 
 ### audit_unavailable
 
@@ -162,7 +170,7 @@ Review criterion: The brief still ships, and every finding says audit_unavailabl
 ## Metrics
 
 - Citation validity: every accepted finding cites only packet ids (enforced by the validator; cases complete_evidence and incorrect_citations).
-- Unsupported-claim rate on accepted output: 0 by construction; rejected items are listed per case.
+- These scripted cases test citation, numeric and audit gates; they do not measure factual accuracy or prove that all unsupported claims are removed. Rejected items are listed per case.
 - Missing information: null values and named reasons (sparse_evidence).
 - City versus site scope: findings carry the narrowest cited scope (city_versus_site_scope).
 - Scenario consistency: arithmetic and readiness criteria (unit tests in test/diligence).

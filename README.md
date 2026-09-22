@@ -123,7 +123,11 @@ Optional:
 
 | Variable | Value |
 | --- | --- |
-| `TAVILY_API_KEY` | enables the zoning ordinance read; without it zoning stays `no_key` and nothing is searched |
+| `TAVILY_API_KEY` | server-only credential; the separate credit approval below is also required |
+| `DILIGENCE_TAVILY_ENABLED` | `1` only after the owner approves Tavily usage; disabled by default |
+| `TAVILY_BUDGET_APPROVAL_REFERENCE` | who approved Tavily credits and when |
+| `TAVILY_APPROVED_CREDITS` / `TAVILY_DAILY_CREDITS` | positive integer ceilings; daily at or below total; configure only the approved amount |
+| `TAVILY_APPROVAL_EXPIRES_AT` | future ISO expiry for the separate Tavily allowance |
 | `DILIGENCE_READER_MODEL` | zoning reader, default `nvidia/Nemotron-3_5-Lightning` |
 | `DILIGENCE_AUDIT_MODEL` | finding auditor, default `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` |
 | `NEBIUS_CREDIT_EXPIRES_AT` | ISO expiry of your Nebius credit; live calls pause after it |
