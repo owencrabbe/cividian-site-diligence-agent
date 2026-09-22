@@ -82,6 +82,10 @@ Two deployment shapes, both prepared:
 | `DILIGENCE_MAX_CONCURRENT` | default 3 | optional |
 | `DILIGENCE_GUEST_INFERENCE` | `1` so judges need no account | yes |
 | `CENSUS_API_KEY` | live city and county rows | recommended |
+| `NEBIUS_CREDIT_EXPIRES_AT` | ISO expiry of the Nebius credit with timezone; live calls pause after it | optional |
+| `TAVILY_API_KEY` | zoning ordinance discovery (Tavily Search and Extract); without it zoning stays `no_key` | for the zoning read (gate G3) |
+| `DILIGENCE_READER_MODEL` | zoning reader, default `nvidia/Nemotron-3_5-Lightning`; must be a priced NVIDIA id | optional |
+| `DILIGENCE_AUDIT_MODEL` | finding auditor, default `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`; must be a priced NVIDIA id | optional |
 | `DILIGENCE_FIXTURE_MODE` | must be unset or `0` on any host; refused automatically when production-like | must not be set |
 
 ## Health, readiness, rollback
@@ -96,6 +100,34 @@ Two deployment shapes, both prepared:
 - Failure states are explicit in the UI: provider rate limit, timeout,
   unavailable, budget exhausted, output rejected. The deterministic brief
   always remains.
+
+## Weekly uptime check (by hand, never scheduled)
+
+Nebius trial credit lasts 30 days, and judging runs 2026-12-01 to
+2026-12-15. Once a week until judging ends, run from the repository root:
+
+```bash
+node scripts/diligence-uptime.mjs --out=docs/hackathon/receipts/uptime-$(date -u +%Y%m%d).json
+```
+
+It makes two free GETs per host (`/healthz` and
+`/api/diligence?action=status`), with no session and no model call. It
+prints one line per host and writes a metadata-only receipt: status codes,
+latency, live-AI mode, the pause reason, and the shared ledger's dollars and
+dates. Exit 1 means a host is down: check the Vercel deployment and Redis.
+"live AI: paused" is not an outage. The deterministic brief keeps working;
+the reason names what to fix:
+
+| Pause reason | Owner action |
+| --- | --- |
+| `credit_exhausted` | claim or top up credit (gate G1); calls retry six hours after the refusal |
+| `credit_expired` | new credit, then update or unset `NEBIUS_CREDIT_EXPIRES_AT` |
+| `approved_budget_exhausted` | a new ledger approval (gate G2); never raise it without one |
+| `daily_budget_exhausted` | none; resets at midnight UTC |
+| `budget_store_unavailable` | check Redis |
+
+The same ledger block is served at `/api/ai-status` (same origin) and in the
+transparency panel of the workspace.
 
 ## Expected operational cost (assumptions stated)
 

@@ -205,6 +205,170 @@
         "noSiteApplicabilityOnCityRows": true
       },
       "review": "A finding that cites only city rows carries scope city, so the UI labels it as context even if the sentence sounds site-specific."
+    },
+    {
+      "id": "zoning_read",
+      "title": "Zoning read from the official ordinance (Muncie fixture, real text)",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {
+        "hardCostPerSqft": 210,
+        "rentPerSqftMonth": 1.6,
+        "capRatePct": 7
+      },
+      "model": "scripted_valid",
+      "zoning": "fixture:muncie",
+      "expect": {
+        "zoningStatus": "read",
+        "zoningRowsMin": 3,
+        "zoningQuotesVerbatim": true,
+        "zoningRejectedInclude": [
+          "quote_not_found"
+        ],
+        "planZoningQuestionMatches": "^Confirm the district for parcel .+ planning\\.$",
+        "reasoningBasis": "model_interpretation"
+      },
+      "review": "Ordinance quotes survive only when verbatim in the fetched text; rows stay unverified; the first zoning plan item asks planning to confirm the district and names the section instead of saying zoning is unavailable."
+    },
+    {
+      "id": "zoning_injection",
+      "title": "A fetched ordinance page carries injected instructions",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {
+        "hardCostPerSqft": 210,
+        "rentPerSqftMonth": 1.6,
+        "capRatePct": 7
+      },
+      "model": "scripted_valid",
+      "zoning": "fixture:muncie:injected",
+      "expect": {
+        "zoningStatus": "read",
+        "zoningRejectedInclude": [
+          "instruction_like_text",
+          "instruction_adjacent"
+        ],
+        "zoningNoHostileRows": true
+      },
+      "review": "Instructions inside a fetched page are data: items that quote them, or quote the passage around them, are rejected; legitimate items survive."
+    },
+    {
+      "id": "zoning_no_key",
+      "title": "No Tavily key: zoning stays unavailable, exactly as before",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {
+        "hardCostPerSqft": 210,
+        "rentPerSqftMonth": 1.6,
+        "capRatePct": 7
+      },
+      "model": "scripted_valid",
+      "zoning": "no_key",
+      "expect": {
+        "zoningStatus": "unavailable",
+        "zoningReason": "no_key",
+        "zoningNoPaidCalls": true,
+        "planIncludes": [
+          "q_zoning_district"
+        ]
+      },
+      "review": "Without TAVILY_API_KEY nothing is searched or read, the row names the missing key, and the generic zoning question stays in the plan."
+    },
+    {
+      "id": "audit_overstated",
+      "title": "A finding overstates its row: \"population grew\" from a single-year value",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {
+        "hardCostPerSqft": 210,
+        "rentPerSqftMonth": 1.6,
+        "capRatePct": 7
+      },
+      "model": "scripted_audit_overstated",
+      "expect": {
+        "reasoningBasis": "model_interpretation",
+        "auditOutcome": "audited",
+        "auditRemoved": 1,
+        "findingVerdicts": [
+          "supported"
+        ],
+        "auditCostRecorded": true
+      },
+      "review": "The validator accepts both findings (the number is cited); the auditor removes the growth claim as not_entailed and keeps the plain value."
+    },
+    {
+      "id": "audit_partial",
+      "title": "A finding adds a comparison the row does not make",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {
+        "hardCostPerSqft": 210,
+        "rentPerSqftMonth": 1.6,
+        "capRatePct": 7
+      },
+      "model": "scripted_audit_partial",
+      "expect": {
+        "auditOutcome": "audited",
+        "findingVerdicts": [
+          "partially_supported"
+        ],
+        "partialSpansInStatement": true
+      },
+      "review": "The finding stays, with only the unsupported words struck; a proposed span that is not in the statement is ignored."
+    },
+    {
+      "id": "audit_unavailable",
+      "title": "The auditor provider fails",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {
+        "hardCostPerSqft": 210,
+        "rentPerSqftMonth": 1.6,
+        "capRatePct": 7
+      },
+      "model": "scripted_audit_down",
+      "expect": {
+        "reasoningBasis": "model_interpretation",
+        "auditOutcome": "audit_unavailable",
+        "findingVerdicts": [
+          "audit_unavailable",
+          "audit_unavailable",
+          "audit_unavailable",
+          "audit_unavailable",
+          "audit_unavailable"
+        ]
+      },
+      "review": "The brief still ships, and every finding says audit_unavailable; it never ships silently unaudited."
     }
   ]
 }

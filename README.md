@@ -9,9 +9,12 @@ independently for judging and reproduction.
 
 An evidence-first development diligence copilot. Give it a site and a
 development objective; it resolves the site identity, gathers sourced evidence,
-computes deterministic scenarios, asks NVIDIA Nemotron on Nebius Token Factory
-to reason over a bounded evidence packet, validates every citation, and
-produces a ten-section decision brief with a prioritized investigation plan.
+computes deterministic scenarios, reads the adopted zoning ordinance (Tavily
+finds it on official sources, NVIDIA Nemotron 3.5 Lightning quotes it, and only
+word-for-word quotes survive), asks Nemotron 3 Super on Nebius Token Factory to
+reason over a bounded evidence packet, validates every citation, has Nemotron 3
+Nano audit each finding against the rows it cites, and produces a ten-section
+decision brief with a prioritized investigation plan.
 
 Decision support only. Nothing here determines legal entitlement, zoning
 compliance, investment suitability, engineering feasibility, or financial
@@ -116,7 +119,20 @@ Set every one of these:
 | `DILIGENCE_GUEST_INFERENCE` | `1` to let guest sessions trigger live reasoning (judging) |
 | `REDIS_URL` | required on any deployed host; the in-process budget store is local only |
 
-`GET /api/diligence` lists which conditions are unmet, by name. Prove the
+Optional:
+
+| Variable | Value |
+| --- | --- |
+| `TAVILY_API_KEY` | enables the zoning ordinance read; without it zoning stays `no_key` and nothing is searched |
+| `DILIGENCE_READER_MODEL` | zoning reader, default `nvidia/Nemotron-3_5-Lightning` |
+| `DILIGENCE_AUDIT_MODEL` | finding auditor, default `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` |
+| `NEBIUS_CREDIT_EXPIRES_AT` | ISO expiry of your Nebius credit; live calls pause after it |
+
+Every model is priced from the dated table in `lib/diligence/nebius.js` and
+reserved in the same spending ledger; an unpriced model id is refused.
+
+`GET /api/diligence` lists which conditions are unmet, by name, and reports
+the ledger, key presence (never the value) and any pause. Prove the
 connection with one tiny request:
 
 ```bash
@@ -135,8 +151,14 @@ inference gate) and `docs/hackathon/API.md` (the HTTP surface). Modules live in
 
 ## Limitations
 
-- Zoning envelopes come from commercial providers Cividian has not licensed;
-  the zoning row is unavailable and the plan says what to verify and with whom.
+- Zoning is read from the ordinance text, never assigned: rows are
+  `unverified` and labeled "Read from the ordinance, confirm with the planning
+  office", and the plan asks planning to confirm the district. Without a
+  Tavily key, or where no official source is found, the zoning row is
+  unavailable with its reason. Scanned ordinances and map images cannot be
+  read; no NVIDIA model on Token Factory accepts image input.
+- The auditor can only remove or flag findings. If it cannot run, every
+  finding says `audit_unavailable`.
 - Parcel coverage without a provider key is Indiana only (public state layer).
 - Guest saves last 24 hours. Managed accounts and personal API keys require
   the separate auth setup; they stay unavailable until configured and tested.

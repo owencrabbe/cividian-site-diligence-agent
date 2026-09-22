@@ -1,9 +1,9 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-21T17:25:00.928Z",
+  "generatedAt": "2026-09-22T20:45:19.778Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "158b62afc22c344ad15001927979e51f5e2e75cb",
-  "branch": "feat/nebius-site-diligence-agent",
+  "sourceCommit": "a50b676f48c9e917b222e8e1120524cbf65acf8b",
+  "branch": "",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
   "entries": [
@@ -18,7 +18,8 @@
     "scripts/diligence-eval.mjs",
     "scripts/demo-diligence.mjs",
     "scripts/verify-diligence-judging.mjs",
-    "scripts/setup-diligence-live.mjs"
+    "scripts/setup-diligence-live.mjs",
+    "scripts/diligence-uptime.mjs"
   ],
   "substituted": [
     "lib/diligence/host.js",
@@ -73,8 +74,8 @@
     },
     {
       "path": "api/diligence.js",
-      "bytes": 7062,
-      "sha256": "c3906a89694cbe7e58fe4f8fe2587dc55525597889df9b669042522be43dc572",
+      "bytes": 7507,
+      "sha256": "7aa50c35e13adb74b1275bdb4af4b1148af9ff7ce74e7b8eb587546ecd9348d7",
       "origin": "api/diligence.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -150,8 +151,8 @@
     },
     {
       "path": "diligence.html",
-      "bytes": 104271,
-      "sha256": "f028bfaeb4a6c78d9af1c8e860b3344c3331b09ea8af7ec05310dce7efcd8dbd",
+      "bytes": 112243,
+      "sha256": "640accce70ec85765319cc5dc6e61a8c08246700b3e040b4afa24c7d6a4f90ee",
       "origin": "diligence.html",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -164,15 +165,15 @@
     },
     {
       "path": "docs/hackathon/API.md",
-      "bytes": 8476,
-      "sha256": "c885ed03802ca6cc53f69f02030dbd386bce83f4173f4451083fa25fa3f35a0a",
+      "bytes": 10526,
+      "sha256": "5360dad6c2264c66f5ebbda71ccb356b945194a16868ea1948c91c2264852136",
       "origin": "docs/hackathon/API.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "docs/hackathon/ARCHITECTURE.md",
-      "bytes": 14012,
-      "sha256": "fe60730ffe346355b36d095a672935ff9872cd580e6be22ac7cd82c72162c637",
+      "bytes": 19495,
+      "sha256": "6d98ca429ed5ab36bc2af4594901c737a6a53cfda252292eed8ec8f8202c045b",
       "origin": "docs/hackathon/ARCHITECTURE.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -185,15 +186,15 @@
     },
     {
       "path": "docs/hackathon/DEPLOYMENT_JUDGING.md",
-      "bytes": 11464,
-      "sha256": "1d66a24b444f4a82ccd834c52d865b0581fb6af8dc0c4c2b2debe2bad13c58e2",
+      "bytes": 13279,
+      "sha256": "15a16a10041e51f20e62653414b22434f69d41ab3bcb06fdd4c4d574f2ba1169",
       "origin": "docs/hackathon/DEPLOYMENT_JUDGING.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
-      "bytes": 5541,
-      "sha256": "4a28e07982e4be58749052f278f5b526735b31279fd12f119b105d0e10e7f345",
+      "bytes": 9341,
+      "sha256": "909ef68db0a463a8eea17af44f5cbed1f579b5f9015c12f7fa43e43f3f160767",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -228,7 +229,7 @@
     {
       "path": "EXCLUSIONS.md",
       "bytes": 1743,
-      "sha256": "1cfb0e81c214455ca76a359774e782dc45dba8da864db1e0d4edb590e881c05b",
+      "sha256": "b1590cd818980f45cb5508a35f76a140a3765eb9da6332237b158c86431f3235",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -289,9 +290,16 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "lib/diligence/audit.js",
+      "bytes": 9731,
+      "sha256": "60b6546da0b3062fb24ade42a87b3b15782d2a287d369216e9c34b5b8b9a7f72",
+      "origin": "lib/diligence/audit.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "lib/diligence/brief.js",
-      "bytes": 24405,
-      "sha256": "5c661d1cac3612d85865671425c55109f4e5214454cd0f56dd9b878abb545c12",
+      "bytes": 33240,
+      "sha256": "14cbf41135964a32b856661a912c8f5dcd5c8a207abad74b1884ba20fe73d49a",
       "origin": "lib/diligence/brief.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -304,9 +312,16 @@
     },
     {
       "path": "lib/diligence/budget.js",
-      "bytes": 13579,
-      "sha256": "7af4fe7247a6785697046e1be639c87591921d04c0ca37b1d6a37375876e02fb",
+      "bytes": 16131,
+      "sha256": "79d25541cdd15e3df67bbc98949f0077ed88ee833fae4ef36f537c3f29d92ab9",
       "origin": "lib/diligence/budget.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/credit.js",
+      "bytes": 6025,
+      "sha256": "889e26d8b515611b58741abbbc7757c8f00d3d80ed8e6c0eecbc8c4c605f4a40",
+      "origin": "lib/diligence/credit.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
@@ -346,8 +361,8 @@
     },
     {
       "path": "lib/diligence/nebius.js",
-      "bytes": 13575,
-      "sha256": "67a1e373082796f95e7963899f6d1e75088c98041f914b8086524de259169c70",
+      "bytes": 17798,
+      "sha256": "e28e22a11f1f297aaa39f0fb4225829ba9da264951ddc1e375fb7228edff7f9c",
       "origin": "lib/diligence/nebius.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -367,8 +382,8 @@
     },
     {
       "path": "lib/diligence/render.js",
-      "bytes": 15604,
-      "sha256": "d6655f7d1b5b599ca93232406317a1cdfbcba9e48bf0816396b3d78ad7ce103d",
+      "bytes": 17344,
+      "sha256": "d774cdf3c19bc9c7f42eda001cb43ba1936c78072432ea741358bfb3be253fd8",
       "origin": "lib/diligence/render.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -412,6 +427,20 @@
       "bytes": 3210,
       "sha256": "1bf91212c66d4217fe1d39d8d6a0e92ad815951013a12b409c199933b80b63e9",
       "origin": "lib/diligence/storage.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/tavily.js",
+      "bytes": 6563,
+      "sha256": "011125c91ca0f62dea436ddb5cfb53c84c67450013fc17c0a5ebbe3e820f7af4",
+      "origin": "lib/diligence/tavily.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/diligence/zoning.js",
+      "bytes": 40606,
+      "sha256": "2ede991f2f5611965915bb4d7df48262216e39ffacdac56287b67de66834768c",
+      "origin": "lib/diligence/zoning.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
@@ -563,15 +592,15 @@
     },
     {
       "path": "package.json",
-      "bytes": 919,
-      "sha256": "60fc3a054995682aeb0847ccbca5ad71ac92fb1d1216ce8197ab3fd7480e2795",
+      "bytes": 980,
+      "sha256": "224747a3f5e1d935fc3cfa84164cd0ab7931725d38be4e344d963da372f7174a",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "README.md",
-      "bytes": 8621,
-      "sha256": "8a6bfa4d5fc11fcf7e78a8e3dd4e18950ea53fc664839a269fc604598f7e6c19",
+      "bytes": 9873,
+      "sha256": "7bc3e894f6d29ba280bf7029a75dd5c51e5221b657f707dc7192985524eca326",
       "origin": "docs/hackathon/PUBLIC_EDITION_README.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -584,15 +613,22 @@
     },
     {
       "path": "scripts/diligence-eval.mjs",
-      "bytes": 11257,
-      "sha256": "b71ea4b2376fc7a596d6d57d71afb512013cac85540af74e7180d85f22b268d2",
+      "bytes": 17665,
+      "sha256": "98b91b87c54cb317b07a4bb3229913d18e6f8a3313fab7719ae46ebcd265e889",
       "origin": "scripts/diligence-eval.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "scripts/diligence-uptime.mjs",
+      "bytes": 5891,
+      "sha256": "5a261c9f13b6df30e517f2daef4c9a59e41a531d85cfabbd6629621f7f2a38a4",
+      "origin": "scripts/diligence-uptime.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "scripts/nebius-smoke.mjs",
-      "bytes": 3516,
-      "sha256": "449c51bbb16c19c8359c184a99db0245d95dbd4d224c99bb2564be7ffe81da43",
+      "bytes": 3537,
+      "sha256": "90a2d623cabc87f434a302cd5eb907774d4316415275dbaf63d1cd9332557c2b",
       "origin": "scripts/nebius-smoke.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -695,23 +731,30 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "test/diligence/audit.test.mjs",
+      "bytes": 11052,
+      "sha256": "64b88eeda715323e0f92931d2ee8fffd2520bbc6caac4c3cce61b31247924bde",
+      "origin": "test/diligence/audit.test.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "test/diligence/budget-redis.test.mjs",
-      "bytes": 6315,
-      "sha256": "8e75f571dc9b61d1df986fcebc0c5cda520a18275030270037ea79596a385fae",
+      "bytes": 7271,
+      "sha256": "12bcd4e3664de806fe6071c396a13780b7568146861c312211c7c87547b46f4f",
       "origin": "test/diligence/budget-redis.test.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "test/diligence/diligence.test.mjs",
-      "bytes": 55468,
-      "sha256": "a0d6cbc9517d854e072b90f591126521acb4ee5b71c62f224028964fe4349e29",
+      "bytes": 66258,
+      "sha256": "c7a474f3ce7385eae72b5cf581e9fc882ba649d96218599d62c4720206cf5e37",
       "origin": "test/diligence/diligence.test.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "test/diligence/evals/cases.json",
-      "bytes": 6704,
-      "sha256": "a274502be762a972e45c812b508ec3b22e73a1c87765489d7db24e0ceb3192c2",
+      "bytes": 11872,
+      "sha256": "d5437ffe4af14013983f9455fd20390da85bb3ed552ce7947d6eb296930eeca6",
       "origin": "test/diligence/evals/cases.json",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -723,9 +766,44 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "test/diligence/fixtures/zoning/anderson.json",
+      "bytes": 17720,
+      "sha256": "13d8616c241adb58a8cc7e4bddaeafa6a7e3e66a194f2facb5c7853ac10013fb",
+      "origin": "test/diligence/fixtures/zoning/anderson.json",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/fixtures/zoning/delaware-county.json",
+      "bytes": 65152,
+      "sha256": "26d85555a0a5376463fa2882e80d9fe7df7adeb54c9cd40f3222810283a03382",
+      "origin": "test/diligence/fixtures/zoning/delaware-county.json",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/fixtures/zoning/fort-wayne.json",
+      "bytes": 34026,
+      "sha256": "c95732d98f4e6d701f1218eb74d41cbfb132a1b7935b456730a1639356dfc231",
+      "origin": "test/diligence/fixtures/zoning/fort-wayne.json",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/fixtures/zoning/madison-county.json",
+      "bytes": 2396,
+      "sha256": "b59e1d64e4000f1abc613191a57c04e293343923b48bba20715f9c3bd732a83e",
+      "origin": "test/diligence/fixtures/zoning/madison-county.json",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/fixtures/zoning/muncie.json",
+      "bytes": 20920,
+      "sha256": "d0488cd5ce78c874fb98c6506be33318ff5eec522ce014593578327b4156ab9a",
+      "origin": "test/diligence/fixtures/zoning/muncie.json",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "test/diligence/helpers.mjs",
-      "bytes": 5987,
-      "sha256": "b137772bf074bfe6c78799ab5b5b90d1a22c97176832645cdb441282014311e6",
+      "bytes": 9293,
+      "sha256": "34225edf2df723410e9463e724710e14e3b68a708007435ac0a5e03e7f5ce71d",
       "origin": "test/diligence/helpers.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -734,6 +812,13 @@
       "bytes": 3695,
       "sha256": "e13ba07cea2b87965b59f643d0d3b0af8d2fa859630136e65a7e80ae734f1774",
       "origin": "test/diligence/storage-redis.test.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "test/diligence/zoning.test.mjs",
+      "bytes": 21766,
+      "sha256": "d96059f7e64d37346ef447f53b53077b4c0f18d3a31f585705009e450e571ea8",
+      "origin": "test/diligence/zoning.test.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
@@ -748,7 +833,7 @@
     {
       "name": "closure computed",
       "ok": true,
-      "detail": "58 files, packages jose,redis"
+      "detail": "63 files, packages jose,redis"
     },
     {
       "name": "runtime packages are the two allowed",
@@ -783,7 +868,7 @@
     {
       "name": "npm test in the export",
       "ok": true,
-      "detail": "pass 55 fail 0"
+      "detail": "pass 84 fail 0"
     },
     {
       "name": "evaluation set in the export",

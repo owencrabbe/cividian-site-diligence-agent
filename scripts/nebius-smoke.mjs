@@ -15,7 +15,7 @@ export async function runSmoke({ env = process.env, complete = nebiusComplete, c
   const request = { system, user, schemaName: "smoke", schema, maxTokens: 64, temperature: 0 };
   const estimated = estimateRequestCost(status.model, request);
   if (estimated.usd == null) return { ok: false, error: "no_price_for_model" };
-  const reservation = await reserveRun({ estimateUsd: estimated.usd, env, connect });
+  const reservation = await reserveRun({ model: status.model, estimateUsd: estimated.usd, env, connect });
   if (!reservation.ok) return { ok: false, error: reservation.error, reasons: reservation.reasons };
   const t0 = Date.now();
   let result, cost = estimated, settled = false;

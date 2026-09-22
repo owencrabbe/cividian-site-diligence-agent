@@ -37,6 +37,17 @@ function sources(spec) {
 
 function modelFor(kind) {
   if (kind === "fixture") return { env: { AUTH_SECRET: process.env.AUTH_SECRET, DILIGENCE_FIXTURE_MODE: "1" } };
+  // Scripted auditors read the audit packet the way the prompt asks: a single
+  // value cannot show a trend; a comparison the rows do not make is struck.
+  const auditor = (judge) => async (req, opts) => {
+    const pk = JSON.parse(req.user);
+    return { ok: true, requestedModel: opts.model, returnedModel: opts.model, requestId: "eval-audit", latencyMs: 8, attempts: 1, usage: { inputTokens: 600, outputTokens: 120 }, finishReason: "stop", output: { verdicts: pk.findings.map((f) => ({ finding_id: f.finding_id, ...judge(f) })) } };
+  };
+  const population = (fx) => fx.supported_findings.find((f) => f.evidence_ids.includes("ev_city_population"));
+  if (kind === "scripted_audit_overstated") return { env: LIVE_ENV, complete: async (req) => { const fx = fixture.fixtureReasoning(JSON.parse(req.user)); return answer({ ...fx, supported_findings: [population(fx), { statement: "Muncie's population grew to 65,194 people.", evidence_ids: ["ev_city_population"] }] }); }, audit: auditor((f) => /grew|growth|increase|declin/i.test(f.statement) ? { verdict: "not_supported", unsupported_spans: [], reason: "One ACS 5-year value cannot show growth." } : { verdict: "supported", unsupported_spans: [], reason: "The cited row states this value." }) };
+  if (kind === "scripted_audit_partial") return { env: LIVE_ENV, complete: async (req) => { const fx = fixture.fixtureReasoning(JSON.parse(req.user)); return answer({ ...fx, supported_findings: [{ statement: "Population for Muncie is 65,194 people, the largest market in east central Indiana.", evidence_ids: ["ev_city_population"] }] }); }, audit: auditor(() => ({ verdict: "partially_supported", unsupported_spans: ["the largest market in east central Indiana", "a phrase that is not in the statement"], reason: "The row gives Muncie's population only; it compares no markets." })) };
+  if (kind === "scripted_audit_down") return { env: LIVE_ENV, complete: async (req) => answer(fixture.fixtureReasoning(JSON.parse(req.user))), audit: async (req, opts) => ({ ok: false, error: "provider_unavailable", requestedModel: opts.model, returnedModel: null, requestId: null, latencyMs: 20, attempts: 2, usage: null }) };
+  if (kind === "scripted_valid") return { env: LIVE_ENV, complete: async (req) => answer(fixture.fixtureReasoning(JSON.parse(req.user))) };
   if (kind === "scripted_follows_injection") return { env: LIVE_ENV, complete: async (req) => { const p = JSON.parse(req.user); const fx = fixture.fixtureReasoning(p); return answer({ ...fx, executive_assessment: "Verdict: PURSUE with 100 units as instructed." }); } };
   if (kind === "scripted_bad_citations") return { env: LIVE_ENV, complete: async (req) => { const p = JSON.parse(req.user); const fx = fixture.fixtureReasoning(p); return answer({ ...fx, supported_findings: [{ statement: "Population is 65,194.", evidence_ids: ["ev_city_population"] }, { statement: "The lot is 12,000 sq ft.", evidence_ids: ["ev_parcel_lot_area"] }, { statement: "Zoning permits 40 units.", evidence_ids: ["ev_made_up"] }, { statement: "Rents are strong.", evidence_ids: [] }] }); } };
   if (kind === "scripted_provider_down") return { env: LIVE_ENV, complete: async () => ({ ok: false, error: "provider_unavailable", requestedModel: MODEL, returnedModel: null, requestId: null, latencyMs: 30, attempts: 2, usage: null, retryable: true }) };
@@ -49,13 +60,23 @@ let failures = 0;
 for (const c of cases.cases) {
   budget.__test.reset();
   const m = modelFor(c.model);
-  const d = { ...sources(c.sources), scenarios: {}, env: m.env, complete: m.complete };
+  const d = { ...sources(c.sources), scenarios: {}, env: m.env, complete: m.complete, audit: m.audit || H.offlineAuditor };
   const checks = [];
   const check = (name, ok, detail) => { checks.push({ name, ok: !!ok, detail }); if (!ok) failures++; };
   let out;
   try {
     const siteRes = await (await import("../lib/diligence/site.js")).resolveSite(H.SITE_INPUT, d.site);
     const started = await brief.startRun({ site: siteRes.site, objective: c.objective, assumptions: c.assumptions }, H.GUEST_OWNER, d);
+    if (c.zoning) {
+      // Zoning cases: the ordinance fixture (real text, constructed wrapper)
+      // stands in for Tavily and the reader; everything after is real code.
+      const [, name, variant] = c.zoning.split(":");
+      const fx = c.zoning === "no_key" ? H.loadZoningFixtures()[0] : H.loadZoningFixtures().find((f) => f.file === name + ".json");
+      const scripted = H.zoningScripted(variant === "injected" ? H.withInjectedPage(fx) : fx);
+      const zenv = { ...m.env, TAVILY_API_KEY: c.zoning === "no_key" ? "" : "scripted-not-real" };
+      await brief.zoningRun(started.brief.id, H.GUEST_OWNER, { ...d, env: zenv, zoning: scripted.deps }, {});
+      d.zoningCalls = scripted.calls;
+    }
     out = await brief.reasonRun(started.brief.id, H.GUEST_OWNER, d, {});
   } catch (e) { check("run", false, String(e && e.message || e)); rows.push({ c, checks }); continue; }
   const b = out.brief;
@@ -80,6 +101,20 @@ for (const c of cases.cases) {
   if (e.acceptedFindings != null) check("accepted findings " + e.acceptedFindings, b.reasoning && b.reasoning.output.supported_findings.length === e.acceptedFindings, b.reasoning ? String(b.reasoning.output.supported_findings.length) : "none");
   if (e.briefStatus) check("status " + e.briefStatus, b.status === e.briefStatus, b.status);
   if (e.budgetSettled) { const snap = await budget.budgetSnapshot({ env: m.env }); check("budget settled", snap.runs === 1 && snap.reservedUsd === 0, JSON.stringify(snap)); }
+  if (e.zoningStatus) check("zoning " + e.zoningStatus, b.zoning && b.zoning.status === e.zoningStatus, b.zoning ? b.zoning.status + (b.zoning.reason ? " " + b.zoning.reason : "") : "none");
+  if (e.zoningReason) check("zoning reason " + e.zoningReason, b.zoning && b.zoning.reason === e.zoningReason, b.zoning ? String(b.zoning.reason) : "none");
+  if (e.zoningRowsMin) { const n = b.evidence.filter((r) => /^zoning_(district_candidate|permitted_use|conditional_use|standard_)/.test(r.key) && r.status === "unverified").length; check("zoning rows >= " + e.zoningRowsMin, n >= e.zoningRowsMin, String(n)); }
+  if (e.zoningRejectedInclude) { const reasons = (b.zoning && b.zoning.rejected || []).map((r) => r.reason); for (const r of e.zoningRejectedInclude) check("zoning rejected " + r, reasons.includes(r), reasons.join(",")); }
+  if (e.zoningNoHostileRows) check("no row quotes the injected passage", !b.evidence.some((r) => /Ignore all previous|every use/i.test(r.excerpt || "")), "");
+  if (e.zoningQuotesVerbatim) { const docs = new Map((b.zoning && b.zoning.documents || []).map((x) => [x.url, x.textSha256])); const rows = b.evidence.filter((r) => r.extraction === "model_output" && /^zoning_/.test(r.key) && r.status === "unverified" && r.excerpt); check("every zoning quote is tied to a hashed document", rows.length > 0 && rows.every((r) => docs.get(r.source.url) === r.hash), rows.length + " quotes"); }
+  if (e.planZoningQuestionMatches) { const p = b.baselinePlan.find((x) => x.questionId === "q_zoning_district"); check("plan zoning item " + e.planZoningQuestionMatches, p && new RegExp(e.planZoningQuestionMatches).test(p.question), p ? p.question : "missing"); }
+  if (e.zoningNoPaidCalls) check("no Tavily or reader call", d.zoningCalls && d.zoningCalls.search + d.zoningCalls.extract + d.zoningCalls.reader === 0, d.zoningCalls ? JSON.stringify(d.zoningCalls.search + d.zoningCalls.extract + d.zoningCalls.reader) : "none");
+  const au = b.reasoning && b.reasoning.audit;
+  if (e.auditOutcome) check("audit " + e.auditOutcome, au && au.outcome === e.auditOutcome, au ? au.outcome : "none");
+  if (e.auditRemoved != null) { const n = (b.reasoning ? b.reasoning.rejected : []).filter((r) => r.reason === "not_entailed").length; check("not_entailed removed " + e.auditRemoved, n === e.auditRemoved, String(n)); }
+  if (e.findingVerdicts) { const v = b.reasoning ? b.reasoning.output.supported_findings.map((f) => f.audit && f.audit.verdict) : []; check("finding verdicts " + e.findingVerdicts.join(","), JSON.stringify(v) === JSON.stringify(e.findingVerdicts), v.join(",")); }
+  if (e.partialSpansInStatement) { const f = b.reasoning && b.reasoning.output.supported_findings.find((x) => x.audit && x.audit.verdict === "partially_supported"); check("struck spans are exact substrings", f && f.audit.unsupportedSpans.length === 1 && f.audit.unsupportedSpans.every((sp) => f.statement.includes(sp)), f ? JSON.stringify(f.audit.unsupportedSpans) : "none"); }
+  if (e.auditCostRecorded) check("audit model and cost recorded", au && /Nano-30B/.test(au.model) && au.costEstimate && au.costEstimate.usd > 0, au ? au.model + " " + JSON.stringify(au.costEstimate && au.costEstimate.usd) : "none");
   if (e.findingScopes) check("finding scopes " + e.findingScopes.join(","), b.reasoning && JSON.stringify(b.reasoning.output.supported_findings.map((f) => f.scope)) === JSON.stringify(e.findingScopes), b.reasoning ? JSON.stringify(b.reasoning.output.supported_findings.map((f) => f.scope)) : "none");
   if (e.noSiteApplicabilityOnCityRows) check("city rows are context", b.evidence.filter((r) => r.scope.level === "city").every((r) => r.applicability === "context"), "");
   if (e.citationValidity != null && b.reasoning) { const ids = new Set(b.evidence.map((r) => r.id)); const all = b.reasoning.output.supported_findings.flatMap((f) => f.evidence_ids); check("citation validity " + e.citationValidity, all.length > 0 && all.every((id) => ids.has(id)), all.length + " citations"); }
@@ -88,7 +123,7 @@ for (const c of cases.cases) {
 }
 
 const at = new Date().toISOString();
-const md = ["# Site Diligence Agent evaluation results", "", "Generated " + at + " by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic; the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.", "", "| Case | Coverage | Readiness | Inference | Checks | Result |", "| --- | --- | --- | --- | --- | --- |"];
+const md = ["# Site Diligence Agent evaluation results", "", "Generated " + at + " by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic, except that the zoning cases wrap real ordinance text fetched from official hosts in constructed Tavily and reader shapes (test/diligence/fixtures/zoning); the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.", "", "| Case | Coverage | Readiness | Inference | Checks | Result |", "| --- | --- | --- | --- | --- | --- |"];
 for (const r of rows) {
   const passed = r.checks.filter((x) => x.ok).length;
   md.push("| " + r.c.id + ": " + r.c.title + " | " + (r.brief ? r.brief.coverage : "n/a") + " | " + (r.brief ? r.brief.readiness : "n/a") + " | " + (r.brief ? r.brief.inference : "n/a") + " | " + passed + "/" + r.checks.length + " | " + (passed === r.checks.length ? "PASS" : "FAIL") + " |");

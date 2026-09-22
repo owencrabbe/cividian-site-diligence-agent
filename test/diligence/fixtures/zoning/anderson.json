@@ -1,0 +1,160 @@
+{
+  "provenance": {
+    "kind": "constructed",
+    "note": "Constructed for tests from official ordinance text fetched 2026-09-22 from the source URLs below, wrapped in the shapes Tavily Search, Tavily Extract and the reader return. This is not a recorded Tavily or Nebius response; titles, snippets and the reader output are scripted. Page markers and extraction headers were removed, PDF private-use glyphs were normalized, and any em dash was replaced by a hyphen to meet the repository's writing rule. Replace with scripts/record-zoning-fixtures.mjs output once TAVILY_API_KEY is set. The Anderson source is the city's Zoning Guide, a reference manual compiled from the code; the codified chapter on American Legal refused plain requests, so the fixture records that extract as failed.",
+    "sources": [
+      {
+        "url": "https://www.cityofanderson.com/DocumentCenter/View/4884/Zoning-Guide-2024",
+        "file": "anderson-guide-districts-established.txt",
+        "sha256": "9cc940aca1ff691509e8394ec1659cfa20c983f3b83a600bae30236989cae524",
+        "note": "PDF pages 34-35"
+      },
+      {
+        "url": "https://www.cityofanderson.com/DocumentCenter/View/4884/Zoning-Guide-2024",
+        "file": "anderson-guide-figures-1-2.txt",
+        "sha256": "141a2bbb19201540aec205ff1d491beac90f0cbb4acaf52acad28380f5ea7a07",
+        "note": "PDF pages 73-74"
+      }
+    ]
+  },
+  "site": {
+    "query": "120 E 8th St, Anderson, IN",
+    "point": {
+      "lat": 40.1053,
+      "lon": -85.68
+    },
+    "state": "IN",
+    "city": "Anderson",
+    "parcel": {
+      "address": "120 E 8TH ST",
+      "zoningCode": null
+    }
+  },
+  "place": {
+    "ok": true,
+    "place": {
+      "name": "Anderson city",
+      "basename": "Anderson",
+      "geoid": "1801468",
+      "lsad": "city"
+    },
+    "county": {
+      "name": "Madison County",
+      "basename": "Madison",
+      "geoid": "18095"
+    }
+  },
+  "search": {
+    "ok": true,
+    "requestId": "constructed-search-anderson",
+    "credits": 1,
+    "results": [
+      {
+        "url": "https://www.cityofanderson.com/DocumentCenter/View/4884/Zoning-Guide-2024",
+        "title": "Zoning Guide 2024 | Anderson, IN - Official Website",
+        "content": "Districts Established.",
+        "score": 0.9
+      },
+      {
+        "url": "https://codelibrary.amlegal.com/codes/andersonin/latest/anderson_in/0-0-0-17900",
+        "title": "Chapter 160: Zoning Code | Anderson, IN | American Legal",
+        "content": "Zoning code.",
+        "score": 0.85
+      },
+      {
+        "url": "https://library.municode.com/sc/anderson/codes/code_of_ordinances",
+        "title": "Anderson, SC Code of Ordinances",
+        "content": "Unified development ordinance.",
+        "score": 0.6
+      }
+    ]
+  },
+  "extract": {
+    "ok": true,
+    "requestId": "constructed-extract-anderson",
+    "credits": 1,
+    "results": [
+      {
+        "url": "https://www.cityofanderson.com/DocumentCenter/View/4884/Zoning-Guide-2024",
+        "rawContent": "Districts Established\nA) The city is classified and divided into 16\ndistricts designated as follows:\nR1- Residential District\nR2 - Residential District\nR3 - Residential District\nR4 - Residential District\nB1 - Local Business District\nB2 - General Business District\nB3 - Neighborhood Shopping Center\nDistrict\nB4 - Community Shopping Center District\nB5 - Office Zone District\nB6 - Business Arterial Zone District\nI1 - Industrial District\nI2 - Industrial District\nI3 - Industrial Reserved District\nFW - Floodway District\nFF - Floodway Fringe District\nTND - Traditional Neighborhood District\n\nB) The districts identified\ndescribed as follows:\n\nabove\n\na)\n\nR1: This district is established\nfor single-family residential use\nin conformity with the types of\nneighborhoods, which have\noccurred and are likely to\ndevelop in the areas as classified\nin the zone map. The specific\nrequirements for this district are\nshown in Figure 1 on page 71.\nThe minimum requirements for\nlot size, ground floor area of\ndwellings, and lot width are the\nlargest in this district.\n\nb)\n\nR2:\nThis is a single-family\ndwelling district. Requirements\nfor minimum lot size and ground\nfloor area of structures are\nconsiderably less stringent than\nthe requirements for the R1\nDistrict.\n\nc)\n\nR3: This district is established to\npermit single-family and twofamily dwellings. Normally, the\nR3 District is located in areas\nwhere\nmany\ntwo-family\ndwellings have already occurred\nand are acceptable to the\nneighborhoods so zoned.\n\nd)\n\nR4: The R4 District will permit\nresidential use without limitation\nas to the number of families to be\nhoused in a building so long as\nthe prescribed lot area per family\ncan be provided. Many multifamily dwellings and two-family\ndwellings occur in the R4\nDistrict, as well as many large\nolder homes, which would be\nsuitable for conversion to multifamily use.\n\nare\n\n1) Residential districts, R1, R2, R3, and\nR4 are established for residential use\nin conformity with the types of\nneighborhoods, which have occurred\nand are likely to develop in the areas\nso designated in the zone map. The\ndistricts differ primarily with respect\nto requirements of lot size, ground\nfloor area, and the number of\nfamilies, which may be housed in\none building.\nThe specific\nrequirements for each residential\ndistrict are shown in Figure 1 on\npage 71.\nCertain nonresidential\ncontingent uses are automatically\npermitted in these districts (see\nFigures 7 and 8 on page 75 & 76),\nand some special exceptions (see\nFigure 9 on page 76, 77, 78 and 79)\nmay be permitted with the approval\nof the Board. A brief description of\neach residential district follows:\n\nPage 33 - 7/25/2024\n\n \n2) Six business districts. B1, B2, B3,\nB4, B5, and B6 are established to\nmeet the specific requirements for\nthe several classes of business uses\nneeded to give adequate service\nthrough the city as related to present\nand future development. Singlefamily dwellings are permitted in all\nof the business districts, except the\nB4.\nNo residential uses are\npermitted in a B4 Community\nShopping Center District.\nTwofamily and multi-family dwellings\nare permitted in the B1 and B2\nDistricts.\nAll residential uses\npermitted in the business districts are\nsubject to the requirements of Figure\n1 on page 71.\nThe specific\nrequirements for business uses in\nthese districts are given in Figures 2,\n3, and 4, on pages 72, 73 and 74.\nFor contingent uses permitted in the\nbusiness districts, see Figures 7 and\n8 on page 75 and 76 and for special\nexceptions see Figure 9 on page 76,\n77, 78 and 79. A brief description of\nthe business districts follows:\na)\n\nB1: This district is designed and\nlocated in neighborhoods to\naccommodate\nthe\nprimary\nshopping and service needs of\nthe locality. Although limited in\narea, B1 Districts are important\nto the economic welfare of the\ncommunity\nin\nplacing\nconvenience and impulse goods\nshops close to the consumer.\n\nb)\n\nB2: This is a general business\ndistrict providing for all types of\nbusiness and service uses,\nincluding warehouse and storage\nfacilities as well as some light\nindustrial operations.\n\nc)\n\nB3: This district is designed to\nencourage\ndevelopment\nof\nplanned neighborhood shopping\ncenters at convenient locations\nwithin areas specifically zoned in\nthe B3 District.\nA special\nexception is required.\n\nd)\n\nB4: This district is provided to\nmeet the need for retail shopping\nfacilities in planned shopping\ncenters in the sections of the city\nwhere no clear pattern of\nbusiness use now exists. It is\nproposed that each such business\ncenter be established on a single,\nwell-planned site of at least five\nacres in area to accommodate the\nshopping needs of a community.\nA special exception is required.\n\ne)\n\nB5: This district is provided to\nmeet the need for professional,\nbusiness,\ncharitable,\nand\nnonprofit activities in districts\nwhere other business activities\nshould be excluded. Such offices\nare\nproposed\nto\nprovide,\nprimarily,\nservices\nas\ndistinguished from goods and\nwares\nand\ngenerally\nany\nprofessional or business activity\nengaging principally in the sale\nor provision of services shall be\npermitted and any professional\nbusiness or commercial activity\nengaged principally in the sale of\ngoods, wares, or merchandise\nshall be excluded. The sale of\ngoods, wares, or merchandise by\nreference to catalogs or other\nsimilar materials providing for\ndelivery of the merchandise at\nsome place other than the sale\nshall also be excluded.\n\nPage 34 - 7/25/2024\n\nFigure 1\nResidential Uses and Requirements\n            Requirements                 Single-Family Dwelling       Two-Family Dwelling         Multi-Family Dwelling\n\nDistrict in which use is permitted      R1, R2, R3, R4, B1, B2,      R3, R4, B1, B2, I1 and     R4, B1, B2 and I1\n                                        B3, B6, I1 and I3            I3\nMinimum lot size in square feet per     R1**            9,000        R3 & I3 3,500              R4 & B1           2,500\ndwelling unit in districts indicated    R2 & I3**       7,000        R4, B1, B2 & I1            B2 & I1           2,000\n                                        R3, R4, B1, B2,              3,000\n                                         B3 & I1        6,000\nMinimum lot width in feet in            R1                    70     R3, R4, B1, B2,            R4, B1, B2 & I1       50\ndistricts indicated                     R2 & I3               60      I1 & I3 50\n                                        R3, R4, B1, B2,\n                                         B3 & I1              50\nMaximum building height in feet in      R1, R2, R3, R4, B1,          R3, R4, B1, B2,            R435\ndistricts indicated                      B2, B3, I1 & I3 35           B3, I1 & I3               B145\n                                                                     35                         B2 & I1               80\nMinimum front yard*                     30 feet                      30 feet                    30 feet\nMinimum side yard (one)                 5 feet                       5 feet                     5 feet\nMinimum side yards (both or two) in     20 %                         20 %                       20 %\npercent of lot width\nMinimum rear yard                       20 feet                      20 feet                    20 feet\nMinimum ground floor area in            One Story                    R3                         First two units, same as\nsquare feet in districts indicated      R1              1,100        1,250                      two-family dwelling, plus\n                                        R2 & I3           900        R4, B1 & I3                additional area per unit:\n                                        R3, R4, B1, B2,              960\n                                         B3 & I1          750        B2 & I1                    R4                  300\n                                                                     750                        B1, B2 & I1         200\n                                        Two Story\n                                        R1                  900\n                                        R2 & I3             750\n                                        R3, R4, B1, B2,\n                                         B3 & I1              750\nNumber of vehicle parking spaces to     One                          Two                        One for each dwelling unit\nbe provided on the lot\nMaximum lot coverage in percent of      35 %                         35 %                       40 %\nlot\nVision clearance on corner lot          Yes                          Yes                        Yes\n\n*The minimum front yard setback requirement shall not apply where the front building setback line is established in a\nrecorded subdivision.\n**This represents the required minimum lot size when the following utility systems are installed and utilized: a) Sanitary\nSewer System, b) Approved Public or Community Water Supply System or c) Storm Sewer System. In the absence or non-\nutilization of any of the above described utility systems, add the following area in square feet to the minimum lot size: a)\n2,000 b) 1,000 c) 2,000\n\n\n\n                                                  Page 72 - 7/25/2024\n \nFigure 2\nBusiness Uses and Requirements\n       Requirements             Local Business       General Business       Office Zone           Arterial\n                                                                             District           Business Zone\nDistricts in which use is       B1, B2, B3*,         B2 & I1              B5                   B6*\npermitted                       B4* & I1\nMinimum front yard in feet      B1 & I1              B2        None       B5        30         B6        45\nin districts indicated          30                   I1          30\n                                B2      None\n                                B3*       45\n                                B4*       60\nMinimum side yard in feet       10 feet              10 feet              10 feet              10 feet\nMaximum building height in      B1         35        B2        125        B5        35         B6        35\nfeet in districts indicated     B2        125        I1         75\n                                B3*        40\n                                B4*        50\n                                I1         75\nMinimum rear yard in feet       20 feet              20 feet              20 feet              20 feet\n\n\nMaximum lot coverage in         50% by buildings     50% by buildings     50% by buildings     75% by buildings\npercent of lot                  75% by buildings     75% by buildings     75% by buildings     and hard\n                                and hard surfaces    and hard surfaces    and hard surfaces    surfaces. The\n                                                                                               remainder of the\n                                                                                               lot must be\n                                                                                               maintained in\n                                                                                               green space\nVision clearance on corner      Yes                  Yes                  Yes                  Yes\nlots\nSign limitations                As per Sign          As per Sign          One free             Only wall signs,\n                                Ordinance            Ordinance            standing sign per    ground signs,\n                                                                          lot. Maximum         awnings and\n                                                                          height, 5 ft.        canopies will be\n                                                                          Limited to 32        permitted in this\n                                                                          square ft. of face   district\n                                                                          area in each of\n                                                                          two directions\n*May be permitted as a special exception in accordance with the requirements of Figure 9\n\n\n\n\n                                              Page 73 - 7/25/2024\n"
+      }
+    ],
+    "failed": [
+      {
+        "url": "https://codelibrary.amlegal.com/codes/andersonin/latest/anderson_in/0-0-0-17900",
+        "error": "403 challenge"
+      }
+    ]
+  },
+  "reader": {
+    "district_candidates": [
+      {
+        "district_code": "R1",
+        "district_name": "Residential District",
+        "quote": "R1- Residential District",
+        "doc_id": "zdoc_1",
+        "section": "Districts Established"
+      },
+      {
+        "district_code": "B2",
+        "district_name": "General Business District",
+        "quote": "B2 - General Business District",
+        "doc_id": "zdoc_1",
+        "section": "Districts Established"
+      }
+    ],
+    "permitted_uses": [
+      {
+        "district_code": "R3",
+        "use": "single-family and twofamily dwellings",
+        "quote": "R3: This district is established to permit single-family and twofamily dwellings.",
+        "doc_id": "zdoc_1",
+        "section": "Districts Established"
+      }
+    ],
+    "conditional_uses": [],
+    "dimensional_standards": [
+      {
+        "district_code": null,
+        "standard": "front_setback",
+        "value_text": "30 feet",
+        "quote": "Minimum front yard* 30 feet",
+        "doc_id": "zdoc_1",
+        "section": "Figure 1"
+      },
+      {
+        "district_code": null,
+        "standard": "rear_setback",
+        "value_text": "20 feet",
+        "quote": "Minimum rear yard 20 feet",
+        "doc_id": "zdoc_1",
+        "section": "Figure 1"
+      },
+      {
+        "district_code": "R1",
+        "standard": "min_lot_area",
+        "value_text": "12,000",
+        "quote": "Minimum lot size in square feet per R1** 12,000",
+        "doc_id": "zdoc_1",
+        "section": "Figure 1"
+      }
+    ]
+  },
+  "expect": {
+    "status": "read",
+    "jurisdiction": "City of Anderson",
+    "slug": "anderson",
+    "minRows": 5,
+    "planSection": "Districts Established",
+    "referenceSummary": true,
+    "dropped": [
+      {
+        "url": "https://library.municode.com/sc/anderson/codes/code_of_ordinances",
+        "reason": "other_jurisdiction"
+      }
+    ],
+    "rejectedReasons": [
+      "quote_not_found"
+    ]
+  }
+}

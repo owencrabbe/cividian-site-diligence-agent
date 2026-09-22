@@ -79,13 +79,48 @@ Returns `{ ok: true, id: "dlg_…", brief: <diligence.brief.v1 with reasoning: n
 Partial success is normal: unavailable sources appear as evidence rows with
 `status: "unavailable"` and the brief `status` is `"partial"`.
 
+## POST /api/diligence?action=zoning
+
+Body: `{ "id": "dlg_…" }`. Reads the adopted zoning ordinance for a saved
+draft, before `reason`. Gated like reasoning (live inference, guest
+permission, shared ledger) and it needs `TAVILY_API_KEY`.
+
+1. The Census Geocoder decides the jurisdiction: inside an incorporated place
+   is city or town zoning, outside is county zoning.
+2. Tavily Search looks only at official hosts (the jurisdiction's verified
+   domains, library.municode.com, codelibrary.amlegal.com, ecode360.com,
+   codepublishing.com, in.gov). Each result must name the jurisdiction.
+3. Tavily Extract returns the text; a PDF is also hashed (8 MB cap).
+4. The reader model (`DILIGENCE_READER_MODEL`, default
+   `nvidia/Nemotron-3_5-Lightning`) returns districts, permitted and
+   conditional uses and dimensional standards, each with a quote.
+5. Only quotes found verbatim in the fetched text survive, and each item's own
+   fields must sit inside its quote.
+
+Survivors become evidence rows with `extraction: "model_output"`, `status:
+"unverified"`, the source URL, the fetched text's sha256 and the quote as
+`excerpt`. `brief.zoning` records the jurisdiction, documents (metadata and
+hashes, never the text), reader model, usage, cost estimate, rejected items and
+Tavily calls. Without a key the brief keeps one `unavailable` row with reason
+`no_key`. The earlier interpretation is cleared because it no longer covers the
+evidence; run `reason` again.
+
 ## POST /api/diligence?action=reason
 
 Body: `{ "id": "dlg_…" }`. Runs the model stage for a saved draft. Returns the
 full brief with `reasoning` filled, or with `reasoning: null` and
 `run.inference` describing why (`unavailable`, `budget_exhausted`,
 `provider_rate_limited`, `provider_timeout`, `provider_unavailable`,
+`credit_exhausted`, `credit_paused`, `price_unverified`,
 `output_rejected` with the rejection list, `cancelled`).
+
+After validation, the auditor (`DILIGENCE_AUDIT_MODEL`, default
+`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`) checks each supported finding against
+its cited rows. Each finding gains `audit: { verdict, unsupportedSpans, reason }`
+with verdict `supported`, `partially_supported`, `not_audited` or
+`audit_unavailable`; findings the auditor judges `not_supported` are removed and
+listed in `reasoning.rejected` with reason `not_entailed`. `reasoning.audit`
+records the outcome, model, verdict counts, request id, usage and cost estimate.
 
 Aborting the request cancels the provider call.
 
