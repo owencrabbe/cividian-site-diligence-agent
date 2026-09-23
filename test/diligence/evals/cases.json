@@ -339,7 +339,31 @@
         ],
         "partialSpansInStatement": true
       },
-      "review": "The finding stays, with only the unsupported words struck; a proposed span that is not in the statement is ignored."
+      "review": "The finding stays with the exact unsupported words struck. Malformed audits are tested separately and must remain unavailable."
+    },
+    {
+      "id": "audit_malformed",
+      "title": "The auditor returns a disputed span absent from the statement",
+      "sources": {
+        "city": "ok",
+        "gaps": "ok",
+        "parcels": "ok",
+        "zoning": "no_key"
+      },
+      "objective": "residential_infill",
+      "assumptions": {
+        "hardCostPerSqft": 210,
+        "rentPerSqftMonth": 1.6,
+        "capRatePct": 7
+      },
+      "model": "scripted_audit_malformed",
+      "expect": {
+        "auditOutcome": "audit_unavailable",
+        "findingVerdicts": [
+          "audit_unavailable"
+        ]
+      },
+      "review": "An invented disputed span invalidates the entire audit; the finding is preserved with audit_unavailable, never reported as successfully audited."
     },
     {
       "id": "audit_unavailable",

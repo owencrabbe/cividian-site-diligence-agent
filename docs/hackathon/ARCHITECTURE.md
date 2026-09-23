@@ -2,8 +2,10 @@
 
 Status: implementation contract for the Nebius x NVIDIA Global AI Hackathon
 entry (track: Best Apps and Agents). Written 2026-09-19 against origin/main
-`22c3fed`. Everything below describes code in this branch; sections marked
-"planned" are not yet implemented.
+`22c3fed`; updated 2026-09-22 for the zoning reader, the auditor and the
+judging-period credit status (PRs #112, #114, #115). Everything below
+describes code in this branch; sections marked "planned" are not yet
+implemented.
 
 ## Product promise
 
@@ -296,3 +298,7 @@ Nebius accepts extra request properties in its chat-completion API schema:
 https://docs.tokenfactory.nebius.com/api-reference/inference/create-chat-completion .
 Hosted acceptance passed with these settings: 4,362 input tokens, 708 output
 tokens, 3,910 ms and finish_reason=stop. All 12 journey checks passed.
+
+## Integrated release safeguards, September 22
+
+See [release hardening](RELEASE_HARDENING_20260922.md) for the separate atomic Tavily allowance, pinned public-source fetching, strict auditor validation and whole-batch benchmark preflight. Live activation and local fixture evidence remain separate.

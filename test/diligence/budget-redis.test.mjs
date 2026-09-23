@@ -5,6 +5,7 @@ import net from "node:net";
 import { spawn } from "node:child_process";
 import { createClient } from "redis";
 import { reserveRun, settleRun, budgetSnapshot, recordProviderSignal } from "../../lib/diligence/budget.js";
+import { reserveTavily, tavilySnapshot } from "../../lib/diligence/tavily-budget.js";
 import { getBudgetRedis } from "../../lib/diligence/budget-connection.js";
 import { DEFAULT_MODEL } from "../../lib/diligence/nebius.js";
 
@@ -69,6 +70,12 @@ test("Redis Lua: parallel reservations, caps, settlement, TTL, and outage refusa
     assert.equal(signalled.creditExhaustedAt, later.toISOString(), "A credit refusal is recorded on the shared ledger");
     assert.equal(signalled.totalSpentUsd, 0.15, "Recording a signal never changes spend");
     assert.equal(await db.ttl("pago:diligence:budget:total"), -1, "The signal does not add an expiry to the ledger");
+    const tavilyEnv = { ...env, TAVILY_API_KEY: "synthetic", DILIGENCE_TAVILY_ENABLED: "1", TAVILY_BUDGET_APPROVAL_REFERENCE: "synthetic", TAVILY_APPROVED_CREDITS: "9", TAVILY_DAILY_CREDITS: "6", TAVILY_APPROVAL_EXPIRES_AT: "2030-01-01T00:00:00Z" };
+    const tavily = await Promise.all(Array.from({ length: 5 }, () => reserveTavily({ env: tavilyEnv, connect, now, credits: 3 })));
+    assert.equal(tavily.filter(Boolean).length, 2, "concurrent Tavily calls cannot exceed the daily cap");
+    assert.equal(await reserveTavily({ env: tavilyEnv, connect, now: later, credits: 3 }), true);
+    assert.equal(await reserveTavily({ env: tavilyEnv, connect, now: later, credits: 1 }), false, "day rollover cannot reset the total");
+    assert.equal((await tavilySnapshot({ env: tavilyEnv, connect, now: later })).reservedCredits, 9);
     const originalBudgetUrl = process.env.DILIGENCE_BUDGET_REDIS_URL;
     const originalAccountUrl = process.env.REDIS_URL;
     let shared;

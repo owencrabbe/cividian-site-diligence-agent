@@ -27,6 +27,33 @@ export function inferenceReceipt(brief) {
   };
 }
 
+// The zoning stage answers honestly either way: a read with verbatim, hashed,
+// unverified rows, or a named reason (no_key, no_official_sources, ...).
+export function zoningReceipt(brief) {
+  const z = brief.zoning || null;
+  const rows = (brief.evidence || []).filter((r) => /^zoning_(district_candidate|permitted_use|conditional_use|standard_)/.test(r.key));
+  return z ? { status: z.status, reason: z.reason || null, jurisdiction: z.jurisdiction ? z.jurisdiction.label : null, kept: z.kept, rejected: (z.rejected || []).map((x) => x.reason), documents: (z.documents || []).map((d) => ({ host: d.host, type: d.type, skipped: d.skipped || null, textSha256: d.textSha256 || null })), reader: z.reader ? { model: z.reader.model, outcome: z.reader.outcome, requestId: z.reader.requestId, usage: z.reader.usage } : null, tavilyCalls: z.tavily ? z.tavily.calls : null, rows: rows.length } : null;
+}
+
+export function assertZoning(brief, expectRead) {
+  assert.ok(brief.zoning, "The zoning stage must record its outcome");
+  if (brief.zoning.status !== "read") { assert.ok(!expectRead, "Zoning was expected to read an ordinance: " + brief.zoning.reason); assert.ok(brief.zoning.reason, "An unread ordinance names its reason"); return; }
+  const rows = brief.evidence.filter((r) => /^zoning_(district_candidate|permitted_use|conditional_use|standard_)/.test(r.key));
+  assert.ok(rows.length > 0, "A read produces rows");
+  for (const r of rows) {
+    assert.equal(r.status, "unverified"); assert.equal(r.extraction, "model_output");
+    assert.match(r.hash || "", /^[0-9a-f]{64}$/); assert.ok(r.excerpt && r.source && /^https:\/\//.test(r.source.url || ""));
+  }
+}
+
+// Every finding carries an audit verdict; audited only when expected.
+export function assertAudit(brief, expectAudited) {
+  const a = brief.reasoning && brief.reasoning.audit;
+  assert.ok(a, "The reasoning must record the audit");
+  assert.ok(brief.reasoning.output.supported_findings.every((f) => f.audit && f.audit.verdict), "No finding ships silently unaudited");
+  if (expectAudited) { assert.equal(a.outcome, "audited", "The auditor was expected to run: " + (a.cause || a.outcome)); assert.match(a.model, /^nvidia\//); assert.ok(a.requestId); }
+}
+
 export function assertInference(brief, mode) {
   assert.equal(brief.run?.inference?.mode, mode, "Actual run must use the requested mode");
   assert.equal(brief.run?.inference?.outcome, "validated", "Rejected or unavailable reasoning is not a passing demo");
@@ -43,6 +70,7 @@ export function assertInference(brief, mode) {
 
 async function main() {
   const fixture = process.argv.includes("--fixture");
+  const expectZoning = process.argv.includes("--expect-zoning");
   assert.ok(fixture !== process.argv.includes("--live"), "Choose exactly one: --fixture or --live");
   const { base, local } = demoTarget(process.env.BASE, fixture);
   if (!fixture) assert.ok(process.env.AI_BUDGET_APPROVAL_REFERENCE && Number(process.env.AI_APPROVED_BUDGET_USD) > 0, "Live checks require a written approval reference and USD ceiling");
@@ -70,6 +98,12 @@ async function main() {
     if (!fixture) assert.equal(status.inference.guestAllowed, true);
     receipt.budgetStore = status.inference.budget.store;
     pass("capabilities and budget store");
+    assert.equal(typeof status.inference.keyPresent, "boolean");
+    assert.ok(status.inference.ledger && "remainingUsd" in status.inference.ledger && "approvalExpiresAt" in status.inference.ledger);
+    assert.ok(status.zoning && status.audit, "Zoning and audit capabilities are reported");
+    receipt.ledger = { remainingUsd: status.inference.ledger.remainingUsd, approvalExpiresAt: status.inference.ledger.approvalExpiresAt, paused: status.inference.paused ? status.inference.paused.reason : null };
+    receipt.capabilities = { zoning: status.zoning.available, reader: status.zoning.readerModel, audit: status.audit.available, auditor: status.audit.model };
+    pass("ledger, credit and model capabilities");
     assert.equal((await request("/api/diligence?action=list", null, "")).status, 401); pass("anonymous read refused");
     assert.equal((await request("/api/guest", {}, "", "https://cross-origin.example")).status, 403);
     assert.equal((await request("/api/diligence?action=site", { query: "Muncie, IN" }, "", "https://cross-origin.example")).status, 403); pass("cross-origin writes refused");
@@ -81,9 +115,14 @@ async function main() {
     assert.equal(site.site.kind, "address"); pass("Muncie site");
     const evidence = await json("evidence", { site: site.site, objective: "residential_infill", assumptions: { hardCostPerSqft: 210, rentPerSqftMonth: 1.6, capRatePct: 7 } });
     pass("evidence and scenarios");
+    const zoning = await json("zoning", { id: evidence.id });
+    receipt.zoning = zoningReceipt(zoning.brief);
+    assertZoning(zoning.brief, expectZoning); pass("zoning stage " + zoning.brief.zoning.status + (zoning.brief.zoning.reason ? " (" + zoning.brief.zoning.reason + ")" : ""));
     const reason = await json("reason", { id: evidence.id });
     receipt.inference = inferenceReceipt(reason.brief);
     assertInference(reason.brief, mode); pass("reasoning validated");
+    receipt.audit = reason.brief.reasoning.audit ? { outcome: reason.brief.reasoning.audit.outcome, cause: reason.brief.reasoning.audit.cause || null, model: reason.brief.reasoning.audit.model, counts: reason.brief.reasoning.audit.verdictCounts, requestId: reason.brief.reasoning.audit.requestId } : null;
+    assertAudit(reason.brief, mode === "live" && status.audit.available); pass("findings audited or marked audit_unavailable");
     const id = reason.id;
     const exported = await request("/api/diligence?action=export&id=" + id + "&format=json");
     assert.equal(exported.status, 200);

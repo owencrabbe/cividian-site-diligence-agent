@@ -1,0 +1,415 @@
+{
+  "schema": "diligence.live_sites.v1",
+  "compiled": "2026-09-22",
+  "note": "Public addresses of commercial buildings, industrial parcels and publicly owned or marketed redevelopment land only; no residences and nothing from any owner-level list. Each site names the public page that shows its type, and each address returned exactly one Census Geocoder match in the expected city on 2026-09-22. Postal city can differ from municipal limits; the zoning stage decides jurisdiction from the point itself.",
+  "sites": [
+    {
+      "id": "anderson-1",
+      "city": "Anderson",
+      "address": "2900 South Scatterfield Road, Anderson, IN 46016",
+      "category": "vacant_lot",
+      "objective": "mixed_use",
+      "source": {
+        "url": "https://www.andersonecondev.com/RealEstate.aspx?PID=23",
+        "title": "Scatterfield Business Park, Real Estate Locator, City of Anderson Economic Development",
+        "quote": "Brownfield land formerly used by GM for manufacturing and engineering now under the ownership of the Anderson Redevelopment Commission (ARC)."
+      },
+      "geocode": {
+        "matchedAddress": "2900 S SCATTERFIELD RD, ANDERSON, IN, 46016",
+        "lat": 40.090031,
+        "lon": -85.652469
+      }
+    },
+    {
+      "id": "anderson-2",
+      "city": "Anderson",
+      "address": "1106 Meridian Street, Anderson, IN 46016",
+      "category": "downtown_building",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://www.andersonecondev.com/RealEstate.aspx?PID=15",
+        "title": "Union Building, Real Estate Locator, City of Anderson Economic Development",
+        "quote": "Renovated historic office building. The Union Building, an Anderson landmark, is now available for lease."
+      },
+      "geocode": {
+        "matchedAddress": "1106 MERIDIAN ST, ANDERSON, IN, 46016",
+        "lat": 40.104989,
+        "lon": -85.679145
+      }
+    },
+    {
+      "id": "anderson-3",
+      "city": "Anderson",
+      "address": "1305 West 29th Street, Anderson, IN 46016",
+      "category": "industrial_parcel",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://properties.zoomprospector.com/wvpa/property/1305-West-29th-Street-Anderson-Indiana/23C5B80B-1BEB-4975-9436-E476CDD997B2",
+        "title": "ANDERSON IN Property report | Property for Lease 1305 West 29th Street, 15000 sqft",
+        "quote": "former heavy manufacturing building with 22 dock-high doors"
+      },
+      "geocode": {
+        "matchedAddress": "1305 W 29TH ST, ANDERSON, IN, 46016",
+        "lat": 40.087359,
+        "lon": -85.69615
+      }
+    },
+    {
+      "id": "anderson-4",
+      "city": "Anderson",
+      "address": "800 Main Street, Anderson, IN 46016",
+      "category": "commercial_building",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://www.andersonecondev.com/RealEstate.aspx?PID=16",
+        "title": "Citizens Plaza Building, Real Estate Locator, City of Anderson Economic Development",
+        "quote": "Our co-working space offers a range of facilities, including high-speed internet, printing and scanning services, private meeting rooms, and a fully equipped kitchen."
+      },
+      "geocode": {
+        "matchedAddress": "800 MAIN ST, ANDERSON, IN, 46016",
+        "lat": 40.107841,
+        "lon": -85.678116
+      }
+    },
+    {
+      "id": "muncie-1",
+      "city": "Muncie",
+      "address": "1200 W Eighth St, Muncie, IN 47302",
+      "category": "vacant_lot",
+      "objective": "mixed_use",
+      "source": {
+        "url": "https://www.racertrust.org/properties/muncie-industrial-land",
+        "title": "Muncie Industrial Land :: RACER Trust",
+        "quote": "Description of Property: Vacant industrial land"
+      },
+      "geocode": {
+        "matchedAddress": "1200 W 8TH ST, MUNCIE, IN, 47302",
+        "lat": 40.182047,
+        "lon": -85.399291
+      }
+    },
+    {
+      "id": "muncie-2",
+      "city": "Muncie",
+      "address": "300 N High St, Muncie, IN 47305",
+      "category": "downtown_building",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://www.muncie.in.gov/",
+        "title": "City of Muncie, Indiana (official website)",
+        "quote": "Muncie City Hall 300 N High Street Muncie, IN 47305"
+      },
+      "geocode": {
+        "matchedAddress": "300 N HIGH ST, MUNCIE, IN, 47305",
+        "lat": 40.196215,
+        "lon": -85.387766
+      }
+    },
+    {
+      "id": "muncie-3",
+      "city": "Muncie",
+      "address": "1701 W Kilgore Ave, Muncie, IN 47304",
+      "category": "industrial_parcel",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://properties.zoomprospector.com/wvpa/property/1701-W.-Kilgore-Ave.-Muncie-Indiana/2B626E83-293E-47C2-AFB8-161D9CF9214B",
+        "title": "MUNCIE IN Property report | Property for Sale 1701 W. Kilgore Ave., 11070 sqft",
+        "quote": "this 11,070 square foot facility features refrigerated rooms, truck docks, and offices"
+      },
+      "geocode": {
+        "matchedAddress": "1701 W KILGORE AVE, MUNCIE, IN, 47304",
+        "lat": 40.18547,
+        "lon": -85.406768
+      }
+    },
+    {
+      "id": "muncie-4",
+      "city": "Muncie",
+      "address": "3501 N Granville Ave, Muncie, IN 47303",
+      "category": "commercial_building",
+      "objective": "mixed_use",
+      "source": {
+        "url": "https://www.hullpg.com/property-details/muncie-mall",
+        "title": "MUNCIE MALL | HPGCorp",
+        "quote": "Muncie Mall is an enclosed shopping center serving Delaware County and the surrounding East Central Indiana region."
+      },
+      "geocode": {
+        "matchedAddress": "3501 N GRANVILLE AVE, MUNCIE, IN, 47303",
+        "lat": 40.221286,
+        "lon": -85.372929
+      }
+    },
+    {
+      "id": "fortwayne-1",
+      "city": "Fort Wayne",
+      "address": "1610 N Calhoun St, Fort Wayne, IN 46808",
+      "category": "vacant_lot",
+      "objective": "mixed_use",
+      "source": {
+        "url": "https://www.cityoffortwayne.in.gov/1416/Brownfields",
+        "title": "Brownfields | Fort Wayne, IN",
+        "quote": "conduct environmental cleanup activities at the North River South property located at 1610 N. Calhoun Street"
+      },
+      "geocode": {
+        "matchedAddress": "1610 N CALHOUN ST, FORT WAYNE, IN, 46808",
+        "lat": 41.088825,
+        "lon": -85.142195
+      }
+    },
+    {
+      "id": "fortwayne-2",
+      "city": "Fort Wayne",
+      "address": "200 E Berry St, Fort Wayne, IN 46802",
+      "category": "downtown_building",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://www.cityoffortwayne.in.gov/475/Redevelopment-Commission",
+        "title": "Redevelopment Commission | Fort Wayne, IN",
+        "quote": "Citizens Square 200 East Berry Street, Suite 320 Fort Wayne, IN 46802"
+      },
+      "geocode": {
+        "matchedAddress": "200 E BERRY ST, FORT WAYNE, IN, 46802",
+        "lat": 41.079469,
+        "lon": -85.137941
+      }
+    },
+    {
+      "id": "fortwayne-3",
+      "city": "Fort Wayne",
+      "address": "1830 Wayne Trace, Fort Wayne, IN 46803",
+      "category": "industrial_parcel",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://www.cityoffortwayne.in.gov/441/Enterprise-Center",
+        "title": "Enterprise Center | Fort Wayne, IN",
+        "quote": "The Urban Enterprise Center is a small business incubator that provides industrial, light manufacturing, production, and professional office space."
+      },
+      "geocode": {
+        "matchedAddress": "1830 WAYNE TRCE, FORT WAYNE, IN, 46803",
+        "lat": 41.0698,
+        "lon": -85.112607
+      }
+    },
+    {
+      "id": "fortwayne-4",
+      "city": "Fort Wayne",
+      "address": "918 E Pontiac St, Fort Wayne, IN 46803",
+      "category": "commercial_building",
+      "objective": "mixed_use",
+      "source": {
+        "url": "https://www.cityoffortwayne.in.gov/1464/Pontiac-Street-Market",
+        "title": "Pontiac Street Market | Fort Wayne, IN",
+        "quote": "The Pontiac Street Market, 918 E. Pontiac St., opened November 6, 2023 and provides healthy, affordable food options"
+      },
+      "geocode": {
+        "matchedAddress": "918 E PONTIAC ST, FORT WAYNE, IN, 46803",
+        "lat": 41.060608,
+        "lon": -85.125249
+      }
+    },
+    {
+      "id": "indianapolis-1",
+      "city": "Indianapolis",
+      "address": "202 N Alabama St, Indianapolis, IN 46204",
+      "category": "downtown_building",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://www.planning.org/consultants/rfp/9330711/",
+        "title": "RFP/RFQ Details (APA): City of Indianapolis, Old City Hall properties",
+        "quote": "202 North Alabama is the location of the Old City Hall building, and 222 North Alabama Street is a vacant parking lot"
+      },
+      "geocode": {
+        "matchedAddress": "202 N ALABAMA ST, INDIANAPOLIS, IN, 46204",
+        "lat": 39.769872,
+        "lon": -86.15262
+      }
+    },
+    {
+      "id": "indianapolis-2",
+      "city": "Indianapolis",
+      "address": "6900 English Ave, Indianapolis, IN 46219",
+      "category": "industrial_parcel",
+      "objective": "mixed_use",
+      "source": {
+        "url": "https://www.in.gov/ifa/brownfields/files/7.8.25-MS.pdf",
+        "title": "Indiana Brownfields Program Site List 6/2025 (Indiana Finance Authority)",
+        "quote": "4201211 Ford Motor Company 6900 English Ave Indianapolis Marion 46219 109.987"
+      },
+      "geocode": {
+        "matchedAddress": "6900 ENGLISH AVE, INDIANAPOLIS, IN, 46219",
+        "lat": 39.761419,
+        "lon": -86.04728
+      }
+    },
+    {
+      "id": "gary-1",
+      "city": "Gary",
+      "address": "529 Washington Street, Gary, IN 46402",
+      "category": "downtown_building",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://cdn.prod.website-files.com/679d2bad171099fb1b0348fe/69c19c6cd2a94ebc78fe328c_EDA%20RFP%20Addendum%202.pdf",
+        "title": "Gary Redevelopment Commission, NWI Works Gary, Request for Proposal",
+        "quote": "adaptive reuse of a vacant 37,000 square foot building located at 529 Washington Street in Gary, Indiana"
+      },
+      "geocode": {
+        "matchedAddress": "529 WASHINGTON ST, GARY, IN, 46402",
+        "lat": 41.600673,
+        "lon": -87.338345
+      }
+    },
+    {
+      "id": "gary-2",
+      "city": "Gary",
+      "address": "6001 West Industrial Highway, Gary, IN 46406",
+      "category": "industrial_parcel",
+      "objective": "mixed_use",
+      "source": {
+        "url": "https://properties.zoomprospector.com/northwestin/property/6001-West-Industrial-Highway-Gary-Indiana/D81F6EC9-5DD4-407E-B2CF-6BDBC9ED48E1",
+        "title": "GARY IN Property report | Vacant land for Lease 6001 West Industrial Highway, 70 acres",
+        "quote": "Type of space: Flex, Industrial, Mixed Use"
+      },
+      "geocode": {
+        "matchedAddress": "6001 INDUSTRIAL HWY, GARY, IN, 46406",
+        "lat": 41.621978,
+        "lon": -87.411045
+      }
+    },
+    {
+      "id": "fishers-1",
+      "city": "Fishers",
+      "address": "11670 Maple St, Fishers, IN 46038",
+      "category": "vacant_lot",
+      "objective": "mixed_use",
+      "source": {
+        "url": "https://properties.zoomprospector.com/FISHERSIN/property/11670-Maple-St-Fishers-Indiana/4B788A8C-934E-4C37-9682-3ECE83855CCB",
+        "title": "FISHERS IN Property report | Vacant land for Sale 11670 Maple St, 0.21 acres",
+        "quote": "Vacant land for Sale 11670 Maple St, 0.21 acres"
+      },
+      "geocode": {
+        "matchedAddress": "11670 MAPLE ST, FISHERS, IN, 46038",
+        "lat": 39.958062,
+        "lon": -86.014376
+      }
+    },
+    {
+      "id": "fishers-2",
+      "city": "Fishers",
+      "address": "14016 Britton Park Rd, Fishers, IN 46038",
+      "category": "industrial_parcel",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://properties.zoomprospector.com/FISHERSIN/property/14016-Britton-Park-Rd-Fishers-Indiana/1FF1E858-0141-40B3-ADEC-FF9F4FAA3C67",
+        "title": "FISHERS IN Property report | Property for Lease 14016 Britton Park Rd, 6500 sqft",
+        "quote": "Office/warehouse space available in Fishers, IN. Excellent access to SR 37, I-69 and I-465."
+      },
+      "geocode": {
+        "matchedAddress": "14016 BRITTON PARK RD, FISHERS, IN, 46038",
+        "lat": 39.991776,
+        "lon": -86.00768
+      }
+    },
+    {
+      "id": "bloomington-1",
+      "city": "Bloomington",
+      "address": "401 N Morton St, Bloomington, IN 47404",
+      "category": "downtown_building",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://bloomington.in.gov/city/showers-city-hall",
+        "title": "Showers City Hall and Fernandez Plaza | City of Bloomington, Indiana",
+        "quote": "The Showers Building is the physical location for Bloomington's City Hall."
+      },
+      "geocode": {
+        "matchedAddress": "401 N MORTON ST, BLOOMINGTON, IN, 47404",
+        "lat": 39.169572,
+        "lon": -86.536197
+      }
+    },
+    {
+      "id": "bloomington-2",
+      "city": "Bloomington",
+      "address": "3802 W Industrial Blvd, Bloomington, IN 47403",
+      "category": "industrial_parcel",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://www.bloomingtonedc.com/news-and-media/latest-news-and-press-releases/economic-development-content/p/item/67724/monroe-county-commercial-and-industrial-sites-ready-for-investment",
+        "title": "Monroe County Commercial and Industrial Sites Ready for Investment (Bloomington Economic Development Corporation)",
+        "quote": "PIC Industrial Park, 3802 W Industrial Blvd., offers a 2,300-square-foot warehouse/office suite"
+      },
+      "geocode": {
+        "matchedAddress": "3802 INDUSTRIAL BLVD, BLOOMINGTON, IN, 47403",
+        "lat": 39.143972,
+        "lon": -86.580821
+      }
+    },
+    {
+      "id": "lafayette-1",
+      "city": "Lafayette",
+      "address": "605 Main St, Lafayette, IN 47901",
+      "category": "downtown_building",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://lafayette.in.gov/AgendaCenter/ViewFile/Agenda/_10232025-1989?packet=true",
+        "title": "Lafayette Redevelopment Commission agenda packet, October 23, 2025",
+        "quote": "Lessor acquired the real property located at 605 Main Street, Lafayette, Indiana for purposes of economic revitalization"
+      },
+      "geocode": {
+        "matchedAddress": "605 MAIN ST, LAFAYETTE, IN, 47901",
+        "lat": 40.419079,
+        "lon": -86.890503
+      }
+    },
+    {
+      "id": "lafayette-2",
+      "city": "Lafayette",
+      "address": "3500 Newcastle Rd, Lafayette, IN 47905",
+      "category": "industrial_parcel",
+      "objective": "mixed_use",
+      "source": {
+        "url": "https://properties.zoomprospector.com/greaterlafayette/property/3500-Newcastle-Rd.-Lafayette-Indiana/07C5991C-4AD9-4588-A9AA-D2239169A1D6",
+        "title": "LAFAYETTE IN Property report | Vacant Land for Sale 3500 Newcastle Rd., 16.25 acres",
+        "quote": "Prime 16.25-acre industrial land available at 3500 Newcastle Road, Lafayette, Indiana. Zoned I-3"
+      },
+      "geocode": {
+        "matchedAddress": "3500 NEWCASTLE RD, LAFAYETTE, IN, 47905",
+        "lat": 40.368292,
+        "lon": -86.802005
+      }
+    },
+    {
+      "id": "evansville-1",
+      "city": "Evansville",
+      "address": "900 W Indiana Street, Evansville, IN 47712",
+      "category": "industrial_parcel",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://properties.zoomprospector.com/evansvillein/property/900-W-Indiana-Street-EVANSVILLE-IN-47712-Evansville-Indiana/243C3C4B-F0AE-41EB-ABF0-AA0BE3D8FEB5",
+        "title": "EVANSVILLE IN Property report | 900 W Indiana Street (Greater Evansville, E-REP)",
+        "quote": "Previously operated by GE Appliances, a Haier Company, the center was formerly an appliance development center."
+      },
+      "geocode": {
+        "matchedAddress": "900 W INDIANA ST, EVANSVILLE, IN, 47710",
+        "lat": 37.978425,
+        "lon": -87.576279
+      }
+    },
+    {
+      "id": "evansville-2",
+      "city": "Evansville",
+      "address": "711 John Street, Evansville, IN 47713",
+      "category": "commercial_building",
+      "objective": "adaptive_reuse",
+      "source": {
+        "url": "https://properties.zoomprospector.com/evansvillein/property/711-John-Street-Evansville-IN--Evansville-Indiana/ABC613C0-018A-476A-BF30-6FF73E0AFC10",
+        "title": "EVANSVILLE IN Property report | Property for Lease 711 John Street, Evansville, IN, 16654 sqft",
+        "quote": "Ideal for Professional and/or Medical Office (Zoned M-1) Situated on bus route near Downtown Evansville on Lloyd Expressway."
+      },
+      "geocode": {
+        "matchedAddress": "711 JOHN ST, EVANSVILLE, IN, 47713",
+        "lat": 37.97627,
+        "lon": -87.554469
+      }
+    }
+  ]
+}
