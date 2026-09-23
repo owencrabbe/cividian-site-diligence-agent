@@ -5,7 +5,7 @@ This integrates the handoff reader, auditor, live benchmark and submission PRs w
 ## Corrections before release
 
 - Every Tavily API entry point, including fixture recording, now requires separate explicit credit approval and atomically reserves Basic Search (1), Advanced Search (2), Basic Extract (1 per five URLs) or Advanced Extract (2 per five URLs). Failed/uncertain attempts remain charged. Counters are recorded before dispatch. The Redis total persists across days and hosts. Configuration is off by default; no spending allowance or key was created.
-- The optional PDF fetch pins an allowed public IPv4 address and refuses private/special ranges, redirects, credentials, nonstandard ports, compression and over-limit responses. Tests use a small injected DNS result, not a resource-exhaustion probe. Hashing document bytes does not independently authenticate Tavily's extracted text; ordinance rows remain unverified.
+- The optional PDF fetch honors the caller deadline (also retaining its independent eight-second cap), pins an allowed public IPv4 address and refuses private/special ranges, redirects, credentials, nonstandard ports, compression and over-limit responses. Tests use a small injected DNS result, not a resource-exhaustion probe. Hashing document bytes does not independently authenticate Tavily's extracted text; ordinance rows remain unverified.
 - The auditor locally validates the entire schema, one unique verdict per input, exact disputed substrings and receipt metadata. Malformed output is audit unavailable. Provider exceptions settle the conservative reservation and preserve labeled evidence. A finding cannot mix an unverified ordinance citation with a confirmed citation to evade the deterministic gate.
 - Benchmark preflight includes the remaining daily allowance, configured model prices, Unicode byte bounds and a separate Tavily batch allowance. A failed or empty canary stops later modes. An unavailable reader or auditor prevents the full-agent mode from claiming completed acceptance. Failed runs retain metadata receipts. Local drafts use a unique guest workspace and are removed after each mode. The live CLI requires the existing shared budget store and a verified sufficient provider-credit balance; it refuses hosted execution or shared account storage. Numeric overlap remains explicitly limited and is not called factual accuracy.
 
@@ -24,3 +24,20 @@ The production owner acceptance used the existing authenticated account through 
 No new live Tavily, Lightning or Nano structured-output acceptance is claimed by these fixture tests. Main-site Nebius key installation, Tavily authorization, additional provider credit for a full 24-site benchmark, native Excel, actual city-pilot consent and billing-provider acceptance remain distinct from a software release. The current Nebius provider trial showed about $0.99 and 27 days remaining. Existing application caps stay $5 cumulative, $1/day, $0.25/run and concurrency 3. No top-up or increased cap was purchased.
 
 The public video/Devpost submission still needs the actual public URL, personal eligibility/team facts and a submission receipt. Historical private-file deletion remains separate from rewriting Git history. The prior resource-exhaustion review rejection was not retried.
+
+## Integration rollout
+
+PR #118 merged as `42e2f4085f7ad93a7069fac4b5a146cacbe01cc1` after all nine
+required checks, both Vercel previews, code review and the full local release
+suite passed. The amd64 container build and runtime smoke also passed; the
+advisory multi-architecture build was still running at this checkpoint.
+
+The controlled audit UI check passed at 1440 and 390 pixels: exact disputed
+words are struck through, keyboard-focusable and labeled partly supported,
+with no overflow or browser exceptions. The receipt explicitly identifies
+the response as a local fixture. This is not live model evidence.
+
+The other release session's September 22 hosted receipt proves Super reasoning
+and a Nano 30B audit on public commit `27d9217`, before the stricter audit
+checks in this patch. That dated receipt is retained separately. The public
+update with these safeguards is tracked in public-edition PR #2.

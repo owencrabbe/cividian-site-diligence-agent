@@ -1,9 +1,9 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-22T20:46:07.371Z",
+  "generatedAt": "2026-09-23T00:11:33.272Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "7d81d98cd602eb0aef3ac5bc1ac33cc58154f597",
-  "branch": "codex/handoff-integration-20260922",
+  "sourceCommit": "515741705624e2d2069cff20c1d1f539906d09ef",
+  "branch": "codex/handoff-final-receipts-20260922",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
   "entries": [
@@ -195,7 +195,7 @@
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 9872,
-      "sha256": "1066390a50d73a3cfe394740bfcd36eeb8bc8b3d94547ac9e57cc1e7217c5c39",
+      "sha256": "dcfffc61b60a57186f2b095231724afd09b073d9bbf13b1d92dcd968131c7f38",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -222,8 +222,8 @@
     },
     {
       "path": "docs/hackathon/RELEASE_HARDENING_20260922.md",
-      "bytes": 4861,
-      "sha256": "e50fb36eb90455dda029c978cf879f748c7bda9e5b640be0252c9fe6854f7d98",
+      "bytes": 5853,
+      "sha256": "e78c33a315d8d51144fc36d6e8cd0a03338716cae2d948c8d3b4ec37fb90eaf0",
       "origin": "docs/hackathon/RELEASE_HARDENING_20260922.md",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -237,7 +237,7 @@
     {
       "path": "EXCLUSIONS.md",
       "bytes": 1743,
-      "sha256": "0bb670518ea3a5667976fb9a5d83f8c01971ab3fc3faafbcc58dac26f9717a52",
+      "sha256": "605774d2e08e31a284dea979395709eb70c0f691e1fc9fdaaaaf6b7183d8a04f",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -460,8 +460,8 @@
     },
     {
       "path": "lib/diligence/zoning.js",
-      "bytes": 41478,
-      "sha256": "b2b19a861b1168ac3c77d23a4c0de9fdab10cee1bda1abd9f137f1ecea22a997",
+      "bytes": 41523,
+      "sha256": "56306172b4909f4888c614f9ee6be847cfbabd68ddcb3b9a99904f99358ee230",
       "origin": "lib/diligence/zoning.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
