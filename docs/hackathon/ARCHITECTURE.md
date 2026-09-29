@@ -276,7 +276,7 @@ host is production-like.
 
 - Session required (guest or account). Anonymous callers get 401.
 - POST requires same origin. Rate limits per IP and per action.
-- Input caps: query 200 chars, assumptions bounded and validated, packet 24 KB,
+- Input caps: query 200 chars, assumptions bounded and validated, packet 48 KB,
   model output 24 KB, up to 3000 output tokens, 20 s provider timeout, one
   bounded retry on 429 or 5xx honoring Retry-After within the deadline.
 - Concurrency cap on live runs, daily and per-run dollar caps.

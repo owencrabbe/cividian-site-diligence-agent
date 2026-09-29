@@ -133,8 +133,8 @@ transparency panel of the workspace.
 
 | Item | Assumption | Estimate |
 | --- | --- | --- |
-| One live run | packet about 24 KB (about 8,000 tokens in), up to 3,000 tokens out, Nemotron 3 Super list price $0.30 in and $0.90 out per million (verified in the signed-in Nebius model card and price table on 2026-09-20; excluding taxes) | about $0.0051 |
-| Judging period | 60 live runs per day for 15 days | about $4.59 |
+| One live run | packet up to 48 KB (about 16,000 tokens in with a full zoning read), up to 3,000 tokens out, Nemotron 3 Super list price $0.30 in and $0.90 out per million (verified in the signed-in Nebius model card and price table on 2026-09-20; excluding taxes) | at most about $0.0075 |
+| Judging period | 60 live runs per day for 15 days | at most about $6.75 |
 | Guardrail | `DILIGENCE_DAILY_BUDGET_USD=1` is a ceiling, with conservative reservations reducing usable capacity; `DILIGENCE_PER_RUN_BUDGET_USD=0.25` blocks any single oversized run | |
 | Vercel and isolated Redis | dedicated Vercel project on existing hosting; isolated Upstash Free with autoUpgrade=false and prodPack=false | no new paid database plan |
 
