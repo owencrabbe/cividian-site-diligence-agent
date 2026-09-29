@@ -287,12 +287,44 @@ test("ranking: the adopted ordinance outranks agendas and department pages, ties
   assert.deepEqual(zoning.rankResults([]), []);
 });
 
-test("muncie sources: the county egov document host counts only for a document that names Muncie", () => {
+test("adopted ordinances: each hand-confirmed document passes the official-source check for its own jurisdiction only", () => {
+  const muncie = { ok: true, level: "city", name: "Muncie", state: "IN", label: "City of Muncie" };
+  const county = { ok: true, level: "county", name: "Delaware County", state: "IN", label: "Delaware County" };
+  const anderson = { ok: true, level: "city", name: "Anderson", state: "IN", label: "City of Anderson" };
+  for (const j of [muncie, county]) {
+    const list = zoning.adoptedOrdinances(j);
+    assert.equal(list.length, 1);
+    for (const o of list) { assert.equal(o.pinned, true); assert.match(o.url, /^https:\/\//); assert.equal(zoning.officialUrl(o.url, o.title, j).ok, true, o.url); }
+  }
+  assert.equal(zoning.officialUrl(zoning.adoptedOrdinances(muncie)[0].url, "Zoning Ordinance", anderson).ok, false);
+  assert.deepEqual(zoning.adoptedOrdinances(anderson), []);
+});
+
+test("adopted ordinances: the pinned document is read first and gets the full text allowance", async () => {
+  const fx = fixtures.find((f) => /muncie/.test(f.file));
+  assert.ok(fx, "the Muncie fixture exists");
+  budget.__test.reset();
   const j = { ok: true, level: "city", name: "Muncie", state: "IN", label: "City of Muncie" };
-  assert.ok(zoning.allowedDomains(j).some((d) => d === "co.delaware.in.us" || d === "www.co.delaware.in.us"));
-  assert.equal(zoning.officialUrl("https://www.co.delaware.in.us/egov/documents/1755008842_81353.pdf", "City of Muncie Comprehensive Zoning Ordinance", j).ok, true);
-  assert.equal(zoning.officialUrl("https://www.co.delaware.in.us/egov/documents/1755008842_81353.pdf", "Yorktown Zoning Ordinance", j).ok, false);
-  assert.equal(zoning.officialUrl("https://www.co.delaware.in.us/other/muncie-zoning.pdf", "City of Muncie Zoning Ordinance", j).ok, false);
+  const pinnedUrl = zoning.adoptedOrdinances(j)[0].url;
+  const filler = "Front yard setback: 25 feet. Parking: 2 spaces per unit. ".repeat(3000);
+  const body = "R-1 Residence Zone. Permitted uses: single-unit dwellings. Minimum lot area: 7,200 square feet. " + filler;
+  const seen = {};
+  const s = scripted(fx, { deps: {
+    adopted: zoning.adoptedOrdinances,
+    extract: async ({ urls }) => { seen.urls = urls; return { ok: true, credits: 1, requestId: "e", results: urls.map((u) => ({ url: u, rawContent: u === pinnedUrl ? body : "Planning page. " + filler })), failed: [] }; },
+    complete: async (request, opts) => { seen.packet = JSON.parse(request.user); return { ok: true, requestedModel: opts.model, returnedModel: opts.model, requestId: "r", latencyMs: 1, attempts: 1, usage: { inputTokens: 1, outputTokens: 1 }, finishReason: "stop", output: { district_candidates: [], permitted_uses: [], conditional_uses: [], dimensional_standards: [] } }; },
+  } });
+  const out = await zoning.readZoning(fx.site, { env: LIVE, ...s.deps });
+  budget.__test.reset();
+  assert.equal(out.meta.jurisdiction.label, "City of Muncie", out.meta.reason);
+  assert.equal(out.meta.documents[0].url, pinnedUrl);
+  assert.equal(out.meta.documents[0].id, "zdoc_1");
+  assert.equal(out.meta.documents[0].pinned, true);
+  assert.equal(seen.urls[0], pinnedUrl);
+  const docs = seen.packet.documents || seen.packet.docs || [];
+  const first = docs.find((d) => (d.doc_id || d.id) === "zdoc_1");
+  const other = docs.find((d) => (d.doc_id || d.id) !== "zdoc_1");
+  if (first && other) assert.ok(String(first.text || "").length > String(other.text || "").length);
 });
 
 test("reader budget: the output cap fits a full answer of quoted items", () => {
