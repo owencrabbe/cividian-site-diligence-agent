@@ -341,7 +341,7 @@ test("packet: bounded, deterministic, id-addressed; injected text in a parcel ad
   assert.ok(built.packet.site.parcelAddress.includes("IGNORE ALL PREVIOUS"), "the text is kept as data, not stripped, so the validator is what defends");
   const ids = packetMod.packetIds(built.packet);
   assert.ok(ids.evidence.has("ev_parcel_lot_area") && ids.scenarios.has("scn_residential_infill") && ids.questions.has("q_zoning_district"));
-  const huge = { ...started.brief, evidence: Array.from({ length: 80 }, (_, i) => ({ ...started.brief.evidence[0], id: "ev_x_" + i, text: "t".repeat(400) })) };
+  const huge = { ...started.brief, evidence: Array.from({ length: 200 }, (_, i) => ({ ...started.brief.evidence[0], id: "ev_x_" + i, text: "t".repeat(400) })) };
   const trimmed = packetMod.buildPacket(huge);
   const untrimmed = JSON.stringify(packetMod.buildPacket({ ...huge, questionLibrary: [] }).packet).length;
   assert.ok(trimmed.truncated.length > 0, "oversized packets are trimmed by policy: " + trimmed.truncated.join(","));
