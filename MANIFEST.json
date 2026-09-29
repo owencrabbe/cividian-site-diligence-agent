@@ -1,9 +1,9 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-29T19:31:49.492Z",
+  "generatedAt": "2026-09-29T20:48:14.128Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "a8a22d2c81690899b0ddde6dedf73756ed03c66b",
-  "branch": "fix/hackathon-packet-budget-20260929",
+  "sourceCommit": "984238b62dcfa046ae59d781ce7738d8de64a2ae",
+  "branch": "export/2026-09-29",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
   "entries": [
@@ -196,7 +196,7 @@
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 9872,
-      "sha256": "e4f6d148828a4491474c9610f8f5710fb45d8579369003bc6f6495bf9c097f59",
+      "sha256": "42ff3e28f6a15d5d156f9b829a819e6caf52cfc4a4c60f5da326c59caebdc5f8",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -238,7 +238,7 @@
     {
       "path": "EXCLUSIONS.md",
       "bytes": 1933,
-      "sha256": "7ecd1d2e2088a13c1a536075ffe71892beebefd2d090e22d37db2af5bce0f33d",
+      "sha256": "0e5483fba40d5f27f2d737fd1fab19533a574c938cb67959ada796bc7185f29c",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -307,8 +307,8 @@
     },
     {
       "path": "lib/diligence/brief.js",
-      "bytes": 36641,
-      "sha256": "2116f46cafa26f97c5ec3cf3f4f6c30765367ccca2cdea2e5c3594a899cd1930",
+      "bytes": 37272,
+      "sha256": "d9faace7f56be9ee8489fd028bf5ed864466a4bf10429aa004c206a5f6907612",
       "origin": "lib/diligence/brief.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
