@@ -1,6 +1,6 @@
 # Site Diligence Agent evaluation results
 
-Generated 2026-09-29T19:31:53.751Z by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic, except that the zoning cases wrap real ordinance text fetched from official hosts in constructed Tavily and reader shapes (test/diligence/fixtures/zoning); the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.
+Generated 2026-09-29T20:48:18.377Z by `node scripts/diligence-eval.mjs`. Sources are scripted and synthetic, except that the zoning cases wrap real ordinance text fetched from official hosts in constructed Tavily and reader shapes (test/diligence/fixtures/zoning); the model stage is the deterministic fixture or a scripted answer. These results establish validator and pipeline behavior, not live model quality. Live Nemotron runs are recorded separately in VERIFICATION_RECEIPTS.md.
 
 | Case | Coverage | Readiness | Inference | Checks | Result |
 | --- | --- | --- | --- | --- | --- |
@@ -96,7 +96,7 @@ Review criterion: The failure is named, the attempt is charged to the budget, an
 - PASS reasoning basis null (null)
 - PASS inference provider_unavailable (provider_unavailable)
 - PASS status deterministic_only (deterministic_only)
-- PASS budget settled ({"store":"memory","day":"2026-09-29","dailyUsd":1,"reservedUsd":0,"spentUsd":0.019472,"runs":1,"inflight":0,"remainingUsd":0.980528,"approvedUsd":5,"expiresAt":null,"totalReservedUsd":0,"totalSpentUsd":0.019472,"totalRemainingUsd":4.980528,"lastLiveOkAt":null,"creditExhaustedAt":null,"tavilyCalls":0,"tavilyCredits":0})
+- PASS budget settled ({"store":"memory","day":"2026-09-29","dailyUsd":1,"reservedUsd":0,"spentUsd":0.019846,"runs":1,"inflight":0,"remainingUsd":0.980154,"approvedUsd":5,"expiresAt":null,"totalReservedUsd":0,"totalSpentUsd":0.019846,"totalRemainingUsd":4.980154,"lastLiveOkAt":null,"creditExhaustedAt":null,"tavilyCalls":0,"tavilyCredits":0})
 
 ### city_versus_site_scope
 
