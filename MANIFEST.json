@@ -1,9 +1,9 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-29T18:56:59.048Z",
+  "generatedAt": "2026-09-29T19:18:31.249Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "9fcdadc4785947a2a609b26f9a25e628909e36ce",
-  "branch": "fix/hackathon-zoning-reader-20260929",
+  "sourceCommit": "191c4503fb17a5ed9341b0bb4bd7aebeba0511fe",
+  "branch": "fix/hackathon-muncie-ordinance-20260929",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
   "entries": [
@@ -196,7 +196,7 @@
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 9872,
-      "sha256": "4c67b1578cdd6f49b2ffd36dc5a11d7d37301467821f4e7cb493ebbd4231dda6",
+      "sha256": "6e04c733f1a309edc02dae913bd62aa85bd1022d6a0fe53547cd8e9d2e17f309",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -238,7 +238,7 @@
     {
       "path": "EXCLUSIONS.md",
       "bytes": 1933,
-      "sha256": "30d98872c9b4b8f554261adb51dea3b1c02ff6d926f81d58499590a1f29c1ea5",
+      "sha256": "b603018bedab5990fc20aec688136ce75163245f69d8ce75a8df185baab78431",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -475,8 +475,8 @@
     },
     {
       "path": "lib/diligence/zoning.js",
-      "bytes": 44549,
-      "sha256": "7ce8d91447cb5c816607d6d22edfef01d48fc0478040128c4b62fc4e25080dd1",
+      "bytes": 46553,
+      "sha256": "2a4c42faef28795f2f813aa682f3b9c1992e2b3d570d155d86bfd756bd154947",
       "origin": "lib/diligence/zoning.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -860,8 +860,8 @@
     },
     {
       "path": "test/diligence/helpers.mjs",
-      "bytes": 10005,
-      "sha256": "907dd82c4448db16f12c2bde5718414f79d47ffd2aa8242a308b162bb83f1a88",
+      "bytes": 10140,
+      "sha256": "6fc6bbf673426e807bbfb2b291fa4658825923dcd44d318377c6a90af06a007d",
       "origin": "test/diligence/helpers.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -902,8 +902,8 @@
     },
     {
       "path": "test/diligence/zoning.test.mjs",
-      "bytes": 26305,
-      "sha256": "8e002300c1e59fd31521f46ce2988a9257b7ea494376049618d3df767c338549",
+      "bytes": 28431,
+      "sha256": "0edaf1040dfce167f0a3170c23f4b32231d58337748941c16e5cabf292d4ce9c",
       "origin": "test/diligence/zoning.test.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -954,7 +954,7 @@
     {
       "name": "npm test in the export",
       "ok": true,
-      "detail": "pass 104 fail 0"
+      "detail": "pass 105 fail 0"
     },
     {
       "name": "evaluation set in the export",

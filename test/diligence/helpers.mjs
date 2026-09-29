@@ -109,6 +109,9 @@ export function zoningScripted(fx, over = {}) {
   return {
     calls,
     deps: {
+      // Fixtures describe search-only discovery; hand-confirmed ordinances
+      // are tested on their own.
+      adopted: () => [],
       placeLookup: async () => { calls.place++; return fx.place; },
       search: async (args) => { calls.search++; calls.searchArgs = args; return fx.search; },
       extract: async (args) => { calls.extract++; calls.extractArgs = args; return fx.extract; },
