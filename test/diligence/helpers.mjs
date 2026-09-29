@@ -58,12 +58,17 @@ export function gapsOk() {
 export const gapsNoKey = async () => ({ ok: false, coverage: "unavailable", note: "The Census API now requires a key for every request and none is configured in this environment." });
 export const zoningNoKey = async () => ({ ok: false, provider: null, envelope: null, source: "none", tried: [{ provider: "gridics", status: "no_key" }, { provider: "zoneomics", status: "no_key" }] });
 
+export const buildingsNone = async () => ({ ok: false, reason: "no_building_mapped" });
+export function buildingsOk(overrides = {}) {
+  return async () => ({ ok: true, provider: "usa_structures", sourceName: "USA Structures (FEMA and Oak Ridge National Laboratory)", url: "https://gis-fema.hub.arcgis.com/pages/usa-structures", buildingId: "123456", match: "address", distanceM: 4, address: "300 N HIGH STREET (" + SYNTHETIC + ")", occupancy: "Residential", primaryUse: "Single Family Dwelling", footprintSqft: 1800, levels: null, heightM: null, grossSqftEstimate: null, yearBuilt: null, imageDate: "2016-12-28", name: null, retrievedAt: "2026-09-19T12:00:00.000Z", ...overrides });
+}
+
 export const NOW_2026 = () => new Date("2026-09-19T12:00:00.000Z");
 
 export function deps(overrides = {}) {
   return {
     site: { geocode: geocodeOk(), county: countyOk, parcels: parcelsOk(), now: NOW_2026, ...(overrides.site || {}) },
-    evidence: { getCity: cityOk(), gaps: gapsOk(), zoning: zoningNoKey, now: NOW_2026, ...(overrides.evidence || {}) },
+    evidence: { getCity: cityOk(), gaps: gapsOk(), zoning: zoningNoKey, buildings: buildingsNone, now: NOW_2026, ...(overrides.evidence || {}) },
     scenarios: overrides.scenarios || {},
     env: overrides.env || { AUTH_SECRET: "x".repeat(40), DILIGENCE_FIXTURE_MODE: "1" },
     complete: overrides.complete,

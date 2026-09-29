@@ -1,9 +1,9 @@
 {
   "schema": "cividian.public-edition-manifest.v1",
-  "generatedAt": "2026-09-23T00:11:33.272Z",
+  "generatedAt": "2026-09-29T18:56:59.048Z",
   "sourceRepository": "owencrabbe/cividian (private)",
-  "sourceCommit": "515741705624e2d2069cff20c1d1f539906d09ef",
-  "branch": "codex/handoff-final-receipts-20260922",
+  "sourceCommit": "9fcdadc4785947a2a609b26f9a25e628909e36ce",
+  "branch": "fix/hackathon-zoning-reader-20260929",
   "sourceWorktreeDirty": false,
   "licenseApplied": "Apache-2.0",
   "entries": [
@@ -24,7 +24,8 @@
   ],
   "substituted": [
     "lib/diligence/host.js",
-    "lib/auth.js"
+    "lib/auth.js",
+    "lib/grade.js"
   ],
   "packages": [
     "jose",
@@ -75,8 +76,8 @@
     },
     {
       "path": "api/diligence.js",
-      "bytes": 7507,
-      "sha256": "7aa50c35e13adb74b1275bdb4af4b1148af9ff7ce74e7b8eb587546ecd9348d7",
+      "bytes": 9362,
+      "sha256": "2fa89e3c20f88c3945dcb49d5791482f85ff6f3f6a72319f23b3f50f87906238",
       "origin": "api/diligence.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -152,8 +153,8 @@
     },
     {
       "path": "diligence.html",
-      "bytes": 112243,
-      "sha256": "640accce70ec85765319cc5dc6e61a8c08246700b3e040b4afa24c7d6a4f90ee",
+      "bytes": 119028,
+      "sha256": "95582999742ad4e3b4bb1ab21badac5c451263bc51d140d6adcde248f28d589c",
       "origin": "diligence.html",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -195,7 +196,7 @@
     {
       "path": "docs/hackathon/EVAL_RESULTS.md",
       "bytes": 9872,
-      "sha256": "dcfffc61b60a57186f2b095231724afd09b073d9bbf13b1d92dcd968131c7f38",
+      "sha256": "4c67b1578cdd6f49b2ffd36dc5a11d7d37301467821f4e7cb493ebbd4231dda6",
       "origin": "generated during verification",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -236,8 +237,8 @@
     },
     {
       "path": "EXCLUSIONS.md",
-      "bytes": 1743,
-      "sha256": "605774d2e08e31a284dea979395709eb70c0f691e1fc9fdaaaaf6b7183d8a04f",
+      "bytes": 1933,
+      "sha256": "30d98872c9b4b8f554261adb51dea3b1c02ff6d926f81d58499590a1f29c1ea5",
       "origin": "generated",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -264,8 +265,8 @@
     },
     {
       "path": "lib/citydata.js",
-      "bytes": 13870,
-      "sha256": "e72fa3494114a0d9644e68c29c643c2455da09bb96bae8ca8b02735de929b06e",
+      "bytes": 21998,
+      "sha256": "2ecb49588dc21f1791ade4115d75ddb4b6740da38965e979f3e37b8c0b598366",
       "origin": "lib/citydata.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -306,8 +307,8 @@
     },
     {
       "path": "lib/diligence/brief.js",
-      "bytes": 33780,
-      "sha256": "82782e53e163ce3c0d61c6bbc24e2c344e031c2bd7aa65295e518d1e03c3ac7e",
+      "bytes": 36612,
+      "sha256": "d8cce9f37a39cd73afa5c1bd78a58945b51f87b06d30197f2b2a7b89cb0df8c2",
       "origin": "lib/diligence/brief.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -326,6 +327,13 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "lib/diligence/buildings.js",
+      "bytes": 10942,
+      "sha256": "39af6e32320bca35d772b935e2d0eb440433d3b8b210af8bc748acda9e487e54",
+      "origin": "lib/diligence/buildings.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "lib/diligence/credit.js",
       "bytes": 6025,
       "sha256": "889e26d8b515611b58741abbbc7757c8f00d3d80ed8e6c0eecbc8c4c605f4a40",
@@ -341,8 +349,8 @@
     },
     {
       "path": "lib/diligence/evidence.js",
-      "bytes": 24176,
-      "sha256": "d55f0994d529de9e464aebdbe48dc3c3563f87ef382f430138ab2e2eca1bf29a",
+      "bytes": 30685,
+      "sha256": "4d81133c9f1d51d837ad6ee1d6ae4172b12854558c3a6c780ac1a1db633a671e",
       "origin": "lib/diligence/evidence.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -389,6 +397,13 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "lib/diligence/property-web.js",
+      "bytes": 27817,
+      "sha256": "afab2e4926d82a560b83044bc278673c42f785fbd25f6413627eb3f4a9209057",
+      "origin": "lib/diligence/property-web.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "lib/diligence/render.js",
       "bytes": 17344,
       "sha256": "d774cdf3c19bc9c7f42eda001cb43ba1936c78072432ea741358bfb3be253fd8",
@@ -397,8 +412,8 @@
     },
     {
       "path": "lib/diligence/scenarios.js",
-      "bytes": 20518,
-      "sha256": "a789f3c252faf3618790b6da0e4c38ff8eefc742fbf9e2ca0cad7806655dd961",
+      "bytes": 22734,
+      "sha256": "9ccdbc98c0efa25ba1d4315d66dc6daf528be707beca9989d5f43b2a25c01e92",
       "origin": "lib/diligence/scenarios.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -411,8 +426,8 @@
     },
     {
       "path": "lib/diligence/site.js",
-      "bytes": 15326,
-      "sha256": "8735fbd4850768634bf9aa7abd28af3e92d40aadce0c0ee89b23d4dcc216dc2b",
+      "bytes": 15361,
+      "sha256": "4206a3621c47fa823c62b86d6402eb0c139c9c7db7a1c0d3c24d383296e839f8",
       "origin": "lib/diligence/site.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -425,15 +440,15 @@
     },
     {
       "path": "lib/diligence/standalone-host.mjs",
-      "bytes": 3597,
-      "sha256": "3279706bbb10502d18e1400df8aa621da9fabc16a6de7a25c5c98fec435841a3",
+      "bytes": 4475,
+      "sha256": "1c01a00c1fc91f4eb39e0f352c96d1181f5f40920dc298f653193cef5e98a439",
       "origin": "lib/diligence/standalone-host.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
       "path": "lib/diligence/standalone-server.mjs",
-      "bytes": 9022,
-      "sha256": "d296a0f7bfa951d0b90ce48294f6de32f0912e8544fa55e2bbd16c2005a1e67b",
+      "bytes": 8967,
+      "sha256": "69fb5e9141920e444b9c88291d56434be5e6eb9694eda3fc743169c27adee9e6",
       "origin": "lib/diligence/standalone-server.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -460,8 +475,8 @@
     },
     {
       "path": "lib/diligence/zoning.js",
-      "bytes": 41523,
-      "sha256": "56306172b4909f4888c614f9ee6be847cfbabd68ddcb3b9a99904f99358ee230",
+      "bytes": 44549,
+      "sha256": "7ce8d91447cb5c816607d6d22edfef01d48fc0478040128c4b62fc4e25080dd1",
       "origin": "lib/diligence/zoning.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -488,9 +503,16 @@
     },
     {
       "path": "lib/geocode.js",
-      "bytes": 6269,
-      "sha256": "65254d88ca4ad11f4206eb314a1ac008ca7416a24a324830ff1e1f6700ae4d3f",
+      "bytes": 10058,
+      "sha256": "2a914fae99900a061598b31e6ad8c7e139fd371c1367211fcbb2756922ec2a0b",
       "origin": "lib/geocode.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/grade.js",
+      "bytes": 120,
+      "sha256": "97ad62a77c7c08f6557a1a59e09a83295bcb5c44704d784ec1bb6d47dc6631a3",
+      "origin": "generated substitute for lib/grade.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
@@ -509,8 +531,8 @@
     },
     {
       "path": "lib/layers.js",
-      "bytes": 12956,
-      "sha256": "c7ac5739ba404995d7cb22449326a06fa2b7774e80f867cba51dceb08037faf0",
+      "bytes": 12932,
+      "sha256": "1426dca8fe4a3382e8eb36589a37694714cfea491f5c6d5c4ff4f794bbd2be72",
       "origin": "lib/layers.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -519,6 +541,13 @@
       "bytes": 10927,
       "sha256": "8ae18a7d0e20bec2e8aafb862f9066a4727561c163462fc97abbb1c790000ff4",
       "origin": "lib/log.js",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
+      "path": "lib/marketing-measurement.js",
+      "bytes": 4704,
+      "sha256": "68b5f352b9f1239e3bc660e2769b0ddcaf98360f16598957beac60fef8c100e2",
+      "origin": "lib/marketing-measurement.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
@@ -572,8 +601,8 @@
     },
     {
       "path": "lib/security.js",
-      "bytes": 4791,
-      "sha256": "1be3a63c947b2a43746dfe3e8944242341f66ac28e2cdbd9696a9408ba28f057",
+      "bytes": 6397,
+      "sha256": "d8a6ba2a03500fbd895cd11daba6c1bdb32f46df6a24703629da7c3babb84daa",
       "origin": "lib/security.js",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -775,8 +804,8 @@
     },
     {
       "path": "test/diligence/diligence.test.mjs",
-      "bytes": 66258,
-      "sha256": "c7a474f3ce7385eae72b5cf581e9fc882ba649d96218599d62c4720206cf5e37",
+      "bytes": 71048,
+      "sha256": "bebda6cd410b67ec4fb3d099ebdaf4c8cb353525df5f10d6d3c86728901484f5",
       "origin": "test/diligence/diligence.test.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -831,8 +860,8 @@
     },
     {
       "path": "test/diligence/helpers.mjs",
-      "bytes": 9293,
-      "sha256": "34225edf2df723410e9463e724710e14e3b68a708007435ac0a5e03e7f5ce71d",
+      "bytes": 10005,
+      "sha256": "907dd82c4448db16f12c2bde5718414f79d47ffd2aa8242a308b162bb83f1a88",
       "origin": "test/diligence/helpers.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -851,9 +880,16 @@
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
     {
+      "path": "test/diligence/property-web.test.mjs",
+      "bytes": 10772,
+      "sha256": "c7f8608e6ceb51ea0b05ab52141bdd9a351be6db9b59f3ffccc1e152013f77b1",
+      "origin": "test/diligence/property-web.test.mjs",
+      "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
+    },
+    {
       "path": "test/diligence/release-hardening.test.mjs",
-      "bytes": 4035,
-      "sha256": "ce450672595c9187fb3ce703a40475f5a995d6512d6c49ec8a4f34f79a473497",
+      "bytes": 5042,
+      "sha256": "daabc26edaf4ee789d2361324e46767e54bb24eac001b376ad01eedb08a548d0",
       "origin": "test/diligence/release-hardening.test.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -866,8 +902,8 @@
     },
     {
       "path": "test/diligence/zoning.test.mjs",
-      "bytes": 21930,
-      "sha256": "1417368d42816746d839eb93f3b7e3adc80628cff218d535f7f03ce1493f37c2",
+      "bytes": 26305,
+      "sha256": "8e002300c1e59fd31521f46ce2988a9257b7ea494376049618d3df767c338549",
       "origin": "test/diligence/zoning.test.mjs",
       "license": "Apache-2.0 (third-party terms preserved in NOTICE)"
     },
@@ -883,7 +919,7 @@
     {
       "name": "closure computed",
       "ok": true,
-      "detail": "66 files, packages jose,redis"
+      "detail": "69 files, packages jose,redis"
     },
     {
       "name": "runtime packages are the two allowed",
@@ -918,7 +954,7 @@
     {
       "name": "npm test in the export",
       "ok": true,
-      "detail": "pass 97 fail 0"
+      "detail": "pass 104 fail 0"
     },
     {
       "name": "evaluation set in the export",

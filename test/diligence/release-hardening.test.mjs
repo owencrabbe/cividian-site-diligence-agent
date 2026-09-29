@@ -54,3 +54,20 @@ test("source PDF connection cannot resolve a reviewed hostname to loopback or me
   await assert.rejects(sourceBytes("https://www.muncie.in.gov/code.pdf",["www.muncie.in.gov"],100,{lookup:async()=>[{address:"127.0.0.1",family:4}],request:()=>{connections++;}}),/source_address_refused/);
   assert.equal(connections,0);
 });
+
+test("host seam: the public edition's host exports every name the private host exports", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const names = (src) => {
+    const out = new Set();
+    for (const m of src.matchAll(/export\s*\{([^}]*)\}/g)) for (const n of m[1].split(",")) { const k = n.trim().split(/\s+as\s+/).pop(); if (k) out.add(k); }
+    for (const m of src.matchAll(/export\s+(?:async\s+)?(?:function|const|let|class)\s+([A-Za-z_$][\w$]*)/g)) out.add(m[1]);
+    return out;
+  };
+  const read = (p) => readFile(new URL(p, import.meta.url), "utf8");
+  const host = names(await read("../../lib/diligence/host.js"));
+  // In the public edition host.js is itself a re-export of the standalone host.
+  if (host.size === 0) return;
+  const standalone = names(await read("../../lib/diligence/standalone-host.mjs"));
+  const missing = [...host].filter((n) => !standalone.has(n));
+  assert.deepEqual(missing, [], "standalone-host.mjs must export: " + missing.join(", "));
+});

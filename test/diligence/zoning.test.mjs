@@ -202,6 +202,25 @@ test("jurisdiction: inside a place is city zoning, outside is county zoning, a f
   assert.ok(seen[0].url.startsWith(zoning.GEOCODER_URL + "?x=-85.387806&y=40.19628")); assert.equal(seen[0].init.redirect, "error");
 });
 
+test("jurisdiction names: Census legal suffixes and (balance) come off, and the search query leads with the name", async () => {
+  assert.equal(zoning.placeBasename("Indianapolis city (balance)"), "Indianapolis");
+  assert.equal(zoning.placeBasename("Louisville/Jefferson County metro government (balance)"), "Louisville/Jefferson County");
+  assert.equal(zoning.placeBasename("Nashville-Davidson metropolitan government (balance)"), "Nashville-Davidson");
+  assert.equal(zoning.placeBasename("Muncie city"), "Muncie");
+  assert.equal(zoning.placeBasename("Boise City city"), "Boise City", "a name that ends in City keeps it");
+  assert.equal(zoning.placeBasename("Fishers"), "Fishers");
+  const g = await zoning.censusPlaceLookup({ lat: 39.77, lon: -86.15 }, { transport: async () => ({ status: 200, text: async () => JSON.stringify({ result: { geographies: { "Incorporated Places": [{ NAME: "Indianapolis city (balance)", BASENAME: "Indianapolis city (balance)", GEOID: "1836003" }], Counties: [{ NAME: "Marion County", BASENAME: "Marion", GEOID: "18097" }] } } }) }) });
+  assert.equal(g.place.basename, "Indianapolis"); assert.equal(g.place.consolidated, true);
+  const indy = await zoning.resolveJurisdiction({ point: { lat: 39.77, lon: -86.15 }, state: "IN" }, { placeLookup: async () => g });
+  assert.equal(indy.label, "City of Indianapolis");
+  assert.equal(zoning.searchQuery(indy), "Indianapolis Marion County Indiana zoning ordinance");
+  assert.equal(zoning.officialUrl("https://library.municode.com/in/indianapolis_-_marion_county/codes/code_of_ordinances", "", indy).ok, true);
+  const muncie = await zoning.resolveJurisdiction({ point: { lat: 40.19, lon: -85.38 }, state: "IN" }, { placeLookup: async () => ({ ok: true, place: { name: "Muncie city", basename: "Muncie", geoid: "1851876", lsad: "city" }, county: { name: "Delaware County", basename: "Delaware", geoid: "18035" } }) });
+  assert.equal(zoning.searchQuery(muncie), "Muncie Indiana zoning ordinance", "no county for an ordinary city, no generic term padding");
+  assert.equal(zoning.officialUrl("https://delawarecounty.in.gov/city-of-muncie-comprehensive-zoning-ordinance", "City of Muncie Comprehensive Zoning Ordinance", muncie).ok, true);
+  assert.ok(zoning.ZONING_LIMITS.maxResults <= 10, "a basic search stays at one credit");
+});
+
 test("limits: an oversize PDF is refused before it is buffered, long text is truncated and flagged, images are skipped", async () => {
   const j = { level: "city", name: "Muncie", label: "City of Muncie", state: "IN" };
   const big = await zoning.hashDocument("https://library.municode.com/in/muncie/zoning.pdf", j, { transport: async () => ({ status: 200, headers: { get: (h) => (h === "content-length" ? String(9 * 1024 * 1024) : null) }, body: null }) });
@@ -251,6 +270,33 @@ test("reader requests: the reader model routes to its own region with reasoning 
   assert.equal(body.model, model); assert.deepEqual(body.chat_template_kwargs, { enable_thinking: false });
   assert.equal(body.response_format.type, "json_schema");
   assert.notEqual(nebius.estimateCost(model, 1e6, 1e6).usd, nebius.estimateCost(nebius.DEFAULT_MODEL, 1e6, 1e6).usd);
+});
+
+test("ranking: the adopted ordinance outranks agendas and department pages, ties keep search order", () => {
+  const results = [
+    { url: "https://www.muncie.in.gov/egov/documents/1_agenda.pdf", title: "agenda" },
+    { url: "https://library.municode.com/in/muncie/codes/code_of_ordinances", title: "Code of Ordinances | Muncie, IN | Municode Library" },
+    { url: "https://delawarecounty.in.gov/departments/planning/", title: "Delaware-Muncie Metropolitan Plan Commission - Delaware County, IN" },
+    { url: "https://www.co.delaware.in.us/egov/documents/1755008842_81353.pdf", title: "i City of Muncie Comprehensive Zoning Ordinance Table of Contents Article I" },
+    { url: "https://www.co.delaware.in.us/egov/documents/1753125403_33331.pdf", title: "1 DELAWARE-MUNCIE METROPOLITAN BOARD OF ZONING APPEALS" },
+  ];
+  const ranked = zoning.rankResults(results).map((r) => r.url);
+  assert.equal(ranked[0], results[3].url);
+  assert.deepEqual(ranked.slice(1, 3), [results[1].url, results[2].url]);
+  assert.ok(ranked.indexOf(results[0].url) > 2 && ranked.indexOf(results[4].url) > 2);
+  assert.deepEqual(zoning.rankResults([]), []);
+});
+
+test("muncie sources: the county egov document host counts only for a document that names Muncie", () => {
+  const j = { ok: true, level: "city", name: "Muncie", state: "IN", label: "City of Muncie" };
+  assert.ok(zoning.allowedDomains(j).some((d) => d === "co.delaware.in.us" || d === "www.co.delaware.in.us"));
+  assert.equal(zoning.officialUrl("https://www.co.delaware.in.us/egov/documents/1755008842_81353.pdf", "City of Muncie Comprehensive Zoning Ordinance", j).ok, true);
+  assert.equal(zoning.officialUrl("https://www.co.delaware.in.us/egov/documents/1755008842_81353.pdf", "Yorktown Zoning Ordinance", j).ok, false);
+  assert.equal(zoning.officialUrl("https://www.co.delaware.in.us/other/muncie-zoning.pdf", "City of Muncie Zoning Ordinance", j).ok, false);
+});
+
+test("reader budget: the output cap fits a full answer of quoted items", () => {
+  assert.ok(zoning.ZONING_LIMITS.readerMaxTokens >= 8000);
 });
 
 test("offline: no code path reached the network during this suite", () => {

@@ -813,6 +813,53 @@ test("uptime probe: two free GETs per host, a metadata-only receipt, and a down 
   assert.ok(!JSON.stringify(receipt).includes("should-not-copy"), "only named fields leave the response");
 });
 
+// ---------------------------------------------------------------------------
+// Existing building from OpenStreetMap: the brief sizes a structure without
+// the user typing it, and labels every such number as an unverified estimate.
+test("buildings: picks the footprint containing the point and computes its area", async () => {
+  const bmod = await import("../../lib/diligence/buildings.js");
+  const sq = squareAround(POINT.lat, POINT.lon, 20).coordinates[0];
+  const far = squareAround(POINT.lat + 0.0004, POINT.lon, 10).coordinates[0];
+  const way = (id, ring, tags) => ({ type: "way", id, tags, geometry: ring.map(([lon, lat]) => ({ lat, lon })) });
+  const b = bmod.pickBuilding(bmod.fromOverpass([way(2, far, { building: "garage" }), way(1, sq, { building: "house", "building:levels": "2", start_date: "1925" })]), POINT, null);
+  assert.equal(b.id, 1); assert.equal(b.match, "contains_point");
+  const d = bmod.describeBuilding(b);
+  assert.ok(Math.abs(d.footprintSqft - 400 * 10.7639) / (400 * 10.7639) < 0.02, "a 20 m square is about 4,305 sq ft");
+  assert.equal(d.levels, 2); assert.equal(d.grossSqftEstimate, d.footprintSqft * 2); assert.equal(d.yearBuilt, 1925);
+  assert.equal(bmod.pickBuilding(bmod.fromOverpass([way(2, far, { building: "garage" })]), POINT, null), null, "a building 45 m away is not the site's building");
+  // USA Structures: a recorded address beats geometry, and outbuildings never win.
+  const esri = (id, ring, attrs) => ({ attributes: { BUILD_ID: id, SQMETERS: ringAreaOf(ring), ...attrs }, geometry: { rings: [ring] } });
+  const ringAreaOf = (ring) => bmod.ringAreaSqm(ring);
+  const usa = bmod.fromUsaStructures([esri(7, sq, { PROP_ADDR: "301 NORTH HIGH STREET", OCC_CLS: "Commercial" }), esri(8, far, { PROP_ADDR: "300 NORTH HIGH STREET", OCC_CLS: "Residential", PRIM_OCC: "Single Family Dwelling", IMAGE_DATE: 1482883200000 })]);
+  const byAddr = bmod.describeBuilding(bmod.pickBuilding(usa, POINT, null, ["300 N High St, Muncie, IN"]));
+  assert.equal(byAddr.buildingId, "8"); assert.equal(byAddr.match, "address"); assert.equal(byAddr.occupancy, "Residential"); assert.equal(byAddr.imageDate, "2016-12-28");
+  assert.equal(bmod.addressKey("5009 Fletcher Street"), bmod.addressKey("5009 FLETCHER ST, ANDERSON"));
+  const calls = [];
+  const failed = await bmod.fetchBuilding(POINT, null, { fetch: async (url) => { calls.push(String(url)); throw Object.assign(new Error("t"), { name: "TimeoutError" }); } });
+  assert.equal(failed.ok, false); assert.match(failed.reason, /usa_structures: timed out; openstreetmap: timed out/);
+  assert.ok(calls[0].startsWith(bmod.USA_STRUCTURES_URL), "the federal inventory is read first");
+});
+
+test("buildings: a mapped footprint sizes adaptive reuse when the parcel has no building area", async () => {
+  const { buildingsOk } = await import("./helpers.mjs");
+  const s = await siteFor(SITE_INPUT, deps());
+  const g = await evidence.gatherEvidence(s, "adaptive_reuse", deps({ evidence: { buildings: buildingsOk() } }).evidence);
+  const fp = g.evidence.find((r) => r.id === "ev_building_footprint");
+  assert.equal(fp.value, 1800); assert.equal(fp.status, "unverified"); assert.equal(fp.applicability, "site");
+  assert.equal(g.evidence.find((r) => r.id === "ev_building_gross_estimate").status, "unavailable", "no tagged floors means no map-only gross estimate");
+  const ar = await scenarios.computeScenarios({ objective: "adaptive_reuse", evidence: g.evidence, assumptions: objectives.normalizeAssumptions("adaptive_reuse", {}).assumptions });
+  assert.equal(ar.scenarios[0].outputs.grossSqft, 3600, "footprint x the labeled existing-floors default of 2");
+  const input = ar.scenarios[0].inputs.find((i) => i.key === "existingBldgSqft");
+  assert.equal(input.basis, "source_estimate"); assert.equal(input.evidenceId, "ev_building_footprint");
+  const typed = await scenarios.computeScenarios({ objective: "adaptive_reuse", evidence: g.evidence, assumptions: objectives.normalizeAssumptions("adaptive_reuse", { existingBldgSqft: 5000 }).assumptions });
+  assert.equal(typed.scenarios[0].outputs.grossSqft, 5000, "a typed figure beats the map estimate");
+  const tagged = await evidence.gatherEvidence(s, "adaptive_reuse", deps({ evidence: { buildings: buildingsOk({ levels: 3, grossSqftEstimate: 5400 }) } }).evidence);
+  const ar3 = await scenarios.computeScenarios({ objective: "adaptive_reuse", evidence: tagged.evidence, assumptions: objectives.normalizeAssumptions("adaptive_reuse", {}).assumptions });
+  assert.equal(ar3.scenarios[0].outputs.grossSqft, 5400, "tagged floors are used before the assumption");
+  const none = await evidence.gatherEvidence(s, "adaptive_reuse", deps().evidence);
+  assert.equal(none.evidence.find((r) => r.id === "ev_building_footprint").status, "unavailable");
+});
+
 test("offline: no code path reached the network during this suite", () => {
   assert.deepEqual(networkAttempts(), []);
 });
